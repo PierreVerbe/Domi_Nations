@@ -15,12 +15,8 @@ public class Main {
 			for(int x= 0; x <= X_MAX; ++x){ 
 				StdDraw.clear(StdDraw.GRAY);
 				StdDraw.setPenColor(StdDraw.RED);
-		
-		
 				StdDraw.filledCircle(x, y, WIDTH); // display and pause for 20 ms StdDraw.show(20);
 			}
-		}
-			
-		
+		}	
 	}
 }
