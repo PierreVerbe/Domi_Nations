@@ -1,8 +1,6 @@
 //import edu.princeton.cs.introcs.StdDraw;
 
-import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
 	
@@ -10,15 +8,14 @@ public class Main {
 	public final static int Y_MAX= 24;
 	public final static float WIDTH= 0.5f;
 	ArrayList<Joueur> allPlayers = new ArrayList<>();
-	private static Scanner scan;
-	private static Scanner scan2;
-
+	public static Jeu MonJeu = new Jeu();
 	public static void main(String[] args) {
-		
+
 		System.out.println("Bienvenue dans le jeu Domination !");
-		
-		initGame(askNbPlayer());
-		
+		System.out.println(MonJeu.getListe_joueurs());
+		System.out.println(MonJeu.getNames());
+		MonJeu.initGame(MonJeu.askNbPlayer());
+		System.out.println(MonJeu.getNames());
 		System.out.println("Vous avez fini de jouer");
 		
 	}
@@ -37,32 +34,4 @@ public class Main {
 //		}
 //	}
 	
-	private static int askNbPlayer() {
-		scan = new Scanner(System.in);
-		System.out.print("Saisir le nombre de joueur : ");
-		int nbPlayer = scan.nextInt();
-		return nbPlayer;
-	}
-	public static void initGame(int nbJoueur) {
-		ArrayList<Joueur> allPlayers = new ArrayList<>();
-		Joueur J1 = new Joueur(Color.PINK);
-		Joueur J2 = new Joueur(Color.BLUE);
-		Joueur J3 = new Joueur(Color.RED);
-		Joueur J4 = new Joueur(Color.ORANGE);
-		allPlayers.add(J1);
-		allPlayers.add(J2);
-		allPlayers.add(J3);
-		allPlayers.add(J4);
-		
-		scan2 = new Scanner(System.in);
-		for(int i=0; i<nbJoueur;i++)
-		{
-			System.out.print("Saisir votre pseudo : ");
-			String pseudo = scan2.nextLine();
-			
-			allPlayers.get(i).setPseudo(pseudo);
-			System.out.println(allPlayers.get(i).getPseudo());
-
-		}
-	}
 }
