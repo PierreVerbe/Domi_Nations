@@ -9,6 +9,8 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("WSH");
 		
+		Pioche.ImportationTuiles();
+		
 		StdDraw.setXscale(-WIDTH, X_MAX+WIDTH);
 		StdDraw.setYscale(-WIDTH, Y_MAX+WIDTH);
 		for( int y= Y_MAX; y >= 0; --y){ 
