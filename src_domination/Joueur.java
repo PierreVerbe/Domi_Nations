@@ -2,8 +2,39 @@ import java.awt.Color;
 
 public class Joueur {
 	
-	String pseudo;
-	Color couleur;
-	int nb_points;
-	Plateau plateau = new Plateau();
+	private String pseudo = "NONAME";
+	private Color couleur = Color.BLACK;
+	private int nb_points = 0;
+	private Plateau plateau = new Plateau();
+	
+	public Joueur(Color couleur) {
+		this.pseudo = "NONAME";
+		this.couleur = couleur;
+		this.nb_points = 0;
+	}
+
+	public String getPseudo() {
+		return pseudo;
+	}
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+	}
+	public Color getCouleur() {
+		return couleur;
+	}
+	public void setCouleur(Color couleur) {
+		this.couleur = couleur;
+	}
+	public int getNb_points() {
+		return nb_points;
+	}
+	public void setNb_points(int nb_points) {
+		this.nb_points = nb_points;
+	}
+	public Plateau getPlateau() {
+		return plateau;
+	}
+	public void setPlateau(Plateau plateau) {
+		this.plateau = plateau;
+	}
 }
