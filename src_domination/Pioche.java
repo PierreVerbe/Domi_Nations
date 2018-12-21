@@ -10,11 +10,12 @@ public class Pioche {
 	
 	static ArrayList<Tuile> tuiles_piochees = new ArrayList<>();
 	static ArrayList<Tuile> liste_tuiles = new ArrayList<>();
+	static ArrayList<Tuile> tuiles_tour = new ArrayList<>();
 	
 	public static void ImportationTuiles() {
 		
 		
-		Path orderPath = Paths.get("D:\\Downloads\\dominos.csv");
+		Path orderPath = Paths.get("dominos.csv");
 		List<String> lines = null;
 		
 		try {
@@ -44,7 +45,7 @@ public class Pioche {
 		System.out.println(liste_tuiles);
 	}
 	
-	public static void PiocherTuile() {
+	public static void PiocherTuilesJeu() {
 		
 		int nbJoueurs = Jeu.getSizeList();
 		Random rand = new Random();
@@ -68,5 +69,24 @@ public class Pioche {
 			
 		}
 	}
-
+	
+	public static void PiocherTuilesTour() {
+		
+		int nbJoueurs = Jeu.getSizeList();
+		Random rand = new Random();
+		
+		if (nbJoueurs == 2 && nbJoueurs == 4) {
+			for (int i = 0; i < 4; i++) {
+				int indice = rand.nextInt(tuiles_piochees.size());
+				tuiles_tour.add(tuiles_piochees.get(indice));
+				tuiles_piochees.remove(indice);
+			}
+		} else if (nbJoueurs == 3) {
+			for (int i = 0; i < 3; i++) {
+				int indice = rand.nextInt(tuiles_piochees.size());
+				tuiles_tour.add(tuiles_piochees.get(indice));
+				tuiles_piochees.remove(indice);
+			}
+		}
+	}
 }

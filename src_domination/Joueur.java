@@ -6,11 +6,13 @@ public class Joueur {
 	private Color couleur = Color.BLACK;
 	private int nb_points = 0;
 	private Plateau plateau = new Plateau();
+	private int nbRois = 0;
 	
 	public Joueur(Color couleur) {
 		this.pseudo = "NONAME";
 		this.couleur = couleur;
 		this.nb_points = 0;
+		this.nbRois = 0;
 	}
 
 	public String getPseudo() {
@@ -37,4 +39,13 @@ public class Joueur {
 	public void setPlateau(Plateau plateau) {
 		this.plateau = plateau;
 	}
+
+	public int getNbRois() {
+		return nbRois;
+	}
+
+	public void setNbRois(int nbRois) {
+		this.nbRois = nbRois;
+	}
+	
 }
