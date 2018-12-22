@@ -8,8 +8,10 @@ public class Tuile {
 	String type_tuile1;
 	String type_tuile2;
 	
-	int position_x;
-	int position_y;
+	int position_x1;
+	int position_y1;
+	int position_x2;
+	int position_y2;
 	
 	
 	
@@ -50,18 +52,32 @@ public class Tuile {
 	public void setType_tuile2(String type_tuile2) {
 		this.type_tuile2 = type_tuile2;
 	}
-	public int getPosition_x() {
-		return position_x;
+	public int getPosition_x1() {
+		return position_x1;
 	}
-	public void setPosition_x(int position_x) {
-		this.position_x = position_x;
+	public void setPosition_x1(int position_x1) {
+		this.position_x1 = position_x1;
 	}
-	public int getPosition_y() {
-		return position_y;
+	public int getPosition_y1() {
+		return position_y1;
 	}
-	public void setPosition_y(int position_y) {
-		this.position_y = position_y;
+	public void setPosition_y1(int position_y1) {
+		this.position_y1 = position_y1;
 	}
+	public int getPosition_x2() {
+		return position_x2;
+	}
+	public void setPosition_x2(int position_x2) {
+		this.position_x2 = position_x2;
+	}
+	public int getPosition_y2() {
+		return position_y2;
+	}
+	public void setPosition_y2(int position_y2) {
+		this.position_y2 = position_y2;
+	}
+	
+
 	
 	
 }
