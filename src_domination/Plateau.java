@@ -8,7 +8,7 @@ public class Plateau {
 	
 	public void TuilesCompatibles(Tuile tuile1, Tuile tuile2) {
 		
-		if ()
+		//if ()
 	}
 
 }

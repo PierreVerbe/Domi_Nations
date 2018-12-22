@@ -13,6 +13,7 @@ public class Jeu {
 	public void setListe_joueurs(ArrayList<Joueur> liste_joueurs) {
 		this.liste_joueurs = liste_joueurs;
 	}
+	
 	public int getNb_tour() {
 		return nb_tour;
 	}

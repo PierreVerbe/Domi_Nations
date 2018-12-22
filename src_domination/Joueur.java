@@ -8,6 +8,8 @@ public class Joueur {
 	private Plateau plateau = new Plateau();
 	private int nbRois = 0;
 	
+	public Joueur(){}
+	
 	public Joueur(Color couleur) {
 		this.pseudo = "NONAME";
 		this.couleur = couleur;
@@ -39,13 +41,18 @@ public class Joueur {
 	public void setPlateau(Plateau plateau) {
 		this.plateau = plateau;
 	}
-
 	public int getNbRois() {
 		return nbRois;
 	}
-
 	public void setNbRois(int nbRois) {
 		this.nbRois = nbRois;
+	}
+	
+	public void infoJoueur()
+	{
+		System.out.println(this.pseudo);
+		System.out.println(this.couleur);
+		System.out.println(this.nbRois);
 	}
 	
 }
