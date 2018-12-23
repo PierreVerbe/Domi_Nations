@@ -13,6 +13,8 @@ public class Main {
 	public final static float WIDTH= 1;
 	
 	public static ArrayList<Joueur> allPlayers = new ArrayList<>();
+	//public static ArrayList<Plateau> allBordGame = new ArrayList<>();
+	
 	public static Jeu MonJeu = new Jeu();
 	public static Pioche MaPioche = new Pioche();
 	
@@ -23,6 +25,8 @@ public class Main {
 		StdDraw.enableDoubleBuffering();
 		int num_joueur = 0;
 		int t =0;
+		boolean flagChateau = false;
+		boolean flagChateauJ1 = false;
 
 		System.out.println("Bienvenue dans le jeu Domination !");
 		
@@ -56,6 +60,8 @@ public class Main {
 		for (int i=1; i<num_joueur+1; i++)
 		{
 			Joueur Monjoueur = new Joueur();
+			//Plateau MonPlateau = new Plateau(5,5);
+			
 			System.out.println("Bonjour joueur " + i);
 			
 			System.out.println("Pseudo joueur :");
@@ -90,12 +96,12 @@ public class Main {
 			
 			//Ajout du joueur au jeu
 			allPlayers.add(Monjoueur);
+			
 			System.out.println("Liste des joueurs");
 			System.out.println(allPlayers);
 			
-			//public void setCouleur(Color couleur);
-			//Monjoueur.pseudo=scan.nextLine();
-			
+			//Ajout du plateau
+			//allBordGame.add(MonPlateau);
 		}
 		
 		//ajout de la liste des joueurs dans l'instance MonJeu
@@ -105,12 +111,39 @@ public class Main {
 		
 		MaPioche.ImportationTuiles();
 		MaPioche.PiocherTuilesJeu();
+		System.out.println(MaPioche.tuiles_piochees.size());
 		
 		//affichage plateau avec un cercle qui suit le curseur
 		while(t< 10000)
 		{
-			//image des plateaux du jeu
-			affichageFenetre(num_joueur);
+			
+			//placement chateau
+			while(flagChateau == false)
+			{
+				//image des plateaux du jeu
+				affichageFenetre(num_joueur);
+				
+				if (flagChateauJ1 == false)
+				{
+				flagChateauJ1 = plateauPlacementPiece1("chateau");
+				MonJeu.liste_joueurs.get(0).affichagePlateauJoueur();
+				}
+				
+				
+				
+				//else if (flagChateauJ2 == false)
+				
+				
+				//plateauPlacementPiece2();
+				//plateauPlacementPiece3();
+				//plateauPlacementPiece4();
+				
+				//StdDraw.picture(StdDraw.mouseX(), StdDraw.mouseY(), "chateau.png");
+				StdDraw.show();
+				StdDraw.pause(1);
+				StdDraw.clear(StdDraw.GRAY);
+			}
+			
 			
 			//MaPioche.PiocherTuilesTour();
 			//System.out.println(MaPioche.tuiles_tour.get(0));
@@ -123,40 +156,15 @@ public class Main {
 			StdDraw.clear(StdDraw.GRAY);
 			t++;
 		}
-		StdDraw.show();
-		
-		
-		
-		/*
-		StdDraw.pause(2000);
-		StdDraw.clear(StdDraw.GRAY);
-		StdDraw.show();*/
-		
-		
+		StdDraw.show();		
 		
 		System.out.println(MonJeu.getListe_joueurs());
-		
 		
 		//System.out.println(MonJeu.getNames());
 		//MonJeu.initGame(MonJeu.askNbPlayer());
 		//System.out.println(MonJeu.getNames());
 		System.out.println("Vous avez fini de jouer");
-		
 	}
-	
-	
-//	public static void Pierre() {
-//		StdDraw.setXscale(-WIDTH, X_MAX+WIDTH);
-//		StdDraw.setYscale(-WIDTH, Y_MAX+WIDTH);
-//		for( int y= Y_MAX; y >= 0; --y){ 
-//			for(int x= 0; x <= X_MAX; ++x){ 
-//				StdDraw.clear(StdDraw.GRAY);
-//				StdDraw.setPenColor();
-//				StdDraw.filledCircle(x, y, 10); // display and pause for 20 ms StdDraw.show(20);
-//				StdDraw.pause(60);
-//			}
-//		}
-//	}
 	
 	public static void affichageFenetre(int nombreJoueurs)
 	{
@@ -167,6 +175,102 @@ public class Main {
 		//affichage des 2 derniers plateaux
 		if (nombreJoueurs >= 3)StdDraw.picture(540, 540, "Domination_plateau.png");
 		if (nombreJoueurs == 4)StdDraw.picture(180, 180, "Domination_plateau.png");
+	}
+	
+	public static boolean plateauPlacementPiece1(String mot)
+	{
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		//test cases joueur 1
+		for (int i=0; i<5; i++)
+		{
+			for (int j=0; j<5; j++)
+			{
+				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y >= 369 + j*TAILLE_CASE + j*TAILLE_LIGNE && y <= 369 + (j+1)*TAILLE_CASE + (j+1)*TAILLE_LIGNE))
+					{
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 369 + j*TAILLE_CASE + j*TAILLE_LIGNE, "chateau.png");
+					if (StdDraw.isMousePressed()) 
+					{
+						
+						if (j==0) j=4;
+						else if (j==1) j=3;
+						else if (j==2) j=2;
+						else if (j==3) j=1;
+						else if (j==4) j=0;
+						
+						MonJeu.liste_joueurs.get(0).setPlateauJoueur(i,j,mot);
+						return true;
+					}
+					}
+			}
+		}
+		return false;
+	}
+	
+	public static void plateauAffichage1()
+	{
+		String contenu;
+		for(int i=0; i<5; i++)
+		{
+			for(int j=0; j<5; j++)
+			{
+				contenu = MonJeu.liste_joueurs.get(0).getPlateauJoueur(i,j);
+			}
+		}
+	}
+	
+	public static void plateauPlacementPiece2()
+	{
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		//test cases joueur 2
+		for (int i=0; i<5; i++)
+		{
+			for (int j=0; j<5; j++)
+			{
+				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y >= 7 + j*TAILLE_CASE + j*TAILLE_LIGNE && y <= 7 + (j+1)*TAILLE_CASE + (j+1)*TAILLE_LIGNE))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 7 + j*TAILLE_CASE + j*TAILLE_LIGNE, "chateau.png");
+			}
+		}
+	}
+	
+	public static void plateauPlacementPiece3()
+	{
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		//test cases joueur 3
+		for (int i=0; i<5; i++)
+		{
+			for (int j=0; j<5; j++)
+			{
+				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y >= 369 + j*TAILLE_CASE + j*TAILLE_LIGNE && y <= 369 + (j+1)*TAILLE_CASE + (j+1)*TAILLE_LIGNE))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 369 + j*TAILLE_CASE + j*TAILLE_LIGNE, "chateau.png");
+			}
+		}
+	}
+	
+	public static void plateauPlacementPiece4()
+	{
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		//test cases joueur 1
+		for (int i=0; i<5; i++)
+		{
+			for (int j=0; j<5; j++)
+			{
+				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y >= 7 + j*TAILLE_CASE + j*TAILLE_LIGNE && y <= 7 + (j+1)*TAILLE_CASE + (j+1)*TAILLE_LIGNE))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 7 + j*TAILLE_CASE + j*TAILLE_LIGNE, "chateau.png");
+			}
+		}
 	}
 	
 }

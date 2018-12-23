@@ -5,7 +5,7 @@ public class Joueur {
 	private String pseudo = "NONAME";
 	private Color couleur = Color.BLACK;
 	private int nb_points = 0;
-	private Plateau plateau = new Plateau();
+	private Plateau plateau = new Plateau(5,5);
 	private int nbRois = 0;
 	
 	public Joueur(){}
@@ -41,6 +41,19 @@ public class Joueur {
 	public void setPlateau(Plateau plateau) {
 		this.plateau = plateau;
 	}
+	
+	public void setPlateauJoueur(int i, int j, String mot) {
+		this.plateau.RemplirPlateau(i,j,mot);
+	}
+	
+	public String getPlateauJoueur(int i, int j) {
+		return this.plateau.RecupererPlateau(i,j);
+	}
+	
+	public void affichagePlateauJoueur() {
+		this.plateau.affichagePlateau();
+	}
+	
 	public int getNbRois() {
 		return nbRois;
 	}

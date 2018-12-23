@@ -8,11 +8,16 @@ public class Plateau {
 	ArrayList<Tuile> tuile_joueur = new ArrayList<>();
 	String[][] tableau_tuiles_plateau = new String[longueur][largeur];
 	
+	public Plateau(){}
+	
+	public Plateau(int longueur, int largeur){
+		this.longueur=longueur;
+		this.largeur=largeur;
+		this.tableau_tuiles_plateau = new String[longueur][largeur];
+	}
+	
 	public boolean TuilesCompatibles(Tuile tuile1, Tuile tuile2) {
 		
-
-
-
 		if ((tuile1.getType_tuile1() == tuile2.getType_tuile1()) || (tuile1.getType_tuile1() == tuile2.getType_tuile2()) || (tuile1.getType_tuile2() == tuile2.getType_tuile1()) || (tuile1.getType_tuile2() == tuile2.getType_tuile2())) {	
 			return true;	
 		}
@@ -129,6 +134,29 @@ public class Plateau {
 				score = score + nbCouronnesDimension;
 			}
 		}
+	}
+	
+	public void RemplirPlateau(int i, int j, String mot) 
+	{
+		tableau_tuiles_plateau[i][j]=mot;
+	}
+	
+	public String RecupererPlateau(int i, int j) 
+	{
+		return tableau_tuiles_plateau[i][j];
+	}
+	
+	public void affichagePlateau() 
+	{
+		System.out.println("debut tab");
+		for(int i=0; i<5; i++)
+		{
+			for(int j=0; j<5; j++)
+			{
+				System.out.print(tableau_tuiles_plateau[i][j]);
+			}
+			System.out.println();
+		}		
 	}
 	
 	
