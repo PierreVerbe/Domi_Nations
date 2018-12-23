@@ -23,7 +23,6 @@ public class Plateau {
 		}
 		else
 			return false;
-
 	}
 	
 	/*public void CompterCouronnes() {
