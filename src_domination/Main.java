@@ -91,7 +91,7 @@ public class Main {
 			//Ajout du joueur au jeu
 			allPlayers.add(Monjoueur);
 			System.out.println("Liste des joueurs");
-			System.out.println(allPlayers);
+			//System.out.println(allPlayers);
 			
 			//public void setCouleur(Color couleur);
 			//Monjoueur.pseudo=scan.nextLine();
@@ -100,11 +100,18 @@ public class Main {
 		
 		//ajout de la liste des joueurs dans l'instance MonJeu
 		MonJeu.setListe_joueurs(allPlayers);
-		System.out.println(MonJeu.liste_joueurs);
+		
+		MonJeu.AffichageListeJoueurs();
+		//System.out.println(MonJeu.liste_joueurs);
 		
 		
 		MaPioche.ImportationTuiles();
 		MaPioche.PiocherTuilesJeu();
+		
+		System.out.println("Tuiles du jeu" + MaPioche.getTuiles_piochees());
+		MaPioche.PiocherTuilesTour();
+		
+		System.out.println("Tuiles du tour" + MaPioche.getTuiles_tour());
 		
 		//affichage plateau avec un cercle qui suit le curseur
 		while(t< 10000)
@@ -117,6 +124,8 @@ public class Main {
 			
 			StdDraw.filledCircle(StdDraw.mouseX(), StdDraw.mouseY(), 10);
 			StdDraw.setPenColor(StdDraw.RED);
+			
+			MonJeu.AffichagePioche();
 			
 			StdDraw.show();
 			StdDraw.pause(1);

@@ -12,7 +12,33 @@ public class Pioche {
 	static ArrayList<Tuile> liste_tuiles = new ArrayList<>();
 	static ArrayList<Tuile> tuiles_tour = new ArrayList<>();
 	
-	public static void ImportationTuiles() {
+	
+	
+	public static ArrayList<Tuile> getTuiles_piochees() {
+		return tuiles_piochees;
+	}
+
+	public static void setTuiles_piochees(ArrayList<Tuile> tuiles_piochees) {
+		Pioche.tuiles_piochees = tuiles_piochees;
+	}
+
+	public static ArrayList<Tuile> getListe_tuiles() {
+		return liste_tuiles;
+	}
+
+	public static void setListe_tuiles(ArrayList<Tuile> liste_tuiles) {
+		Pioche.liste_tuiles = liste_tuiles;
+	}
+
+	public static ArrayList<Tuile> getTuiles_tour() {
+		return tuiles_tour;
+	}
+
+	public static void setTuiles_tour(ArrayList<Tuile> tuiles_tour) {
+		Pioche.tuiles_tour = tuiles_tour;
+	}
+
+	public void ImportationTuiles() {
 		
 		
 		Path orderPath = Paths.get("dominos.csv");
@@ -42,10 +68,10 @@ public class Pioche {
             
 		}
 		
-		System.out.println(liste_tuiles);
+		//System.out.println(liste_tuiles);
 	}
 	
-	public static void PiocherTuilesJeu() {
+	public void PiocherTuilesJeu() {
 		
 		int nbJoueurs = Jeu.getSizeList();
 		Random rand = new Random();
@@ -70,7 +96,7 @@ public class Pioche {
 		}
 	}
 	
-	public static void PiocherTuilesTour() {
+	public void PiocherTuilesTour() {
 		
 		int nbJoueurs = Jeu.getSizeList();
 		Random rand = new Random();
@@ -78,14 +104,14 @@ public class Pioche {
 		if (nbJoueurs == 2 && nbJoueurs == 4) {
 			for (int i = 0; i < 4; i++) {
 				int indice = rand.nextInt(tuiles_piochees.size());
-				tuiles_tour.add(tuiles_piochees.get(indice));
-				tuiles_piochees.remove(indice);
+				Pioche.tuiles_tour.add(tuiles_piochees.get(indice));
+				Pioche.tuiles_piochees.remove(indice);
 			}
 		} else if (nbJoueurs == 3) {
 			for (int i = 0; i < 3; i++) {
 				int indice = rand.nextInt(tuiles_piochees.size());
-				tuiles_tour.add(tuiles_piochees.get(indice));
-				tuiles_piochees.remove(indice);
+				Pioche.tuiles_tour.add(tuiles_piochees.get(indice));
+				Pioche.tuiles_piochees.remove(indice);
 			}
 		}
 	}

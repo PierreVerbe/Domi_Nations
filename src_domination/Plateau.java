@@ -10,15 +10,11 @@ public class Plateau {
 	
 	public boolean TuilesCompatibles(Tuile tuile1, Tuile tuile2) {
 		
-
-
-
 		if ((tuile1.getType_tuile1() == tuile2.getType_tuile1()) || (tuile1.getType_tuile1() == tuile2.getType_tuile2()) || (tuile1.getType_tuile2() == tuile2.getType_tuile1()) || (tuile1.getType_tuile2() == tuile2.getType_tuile2())) {	
 			return true;	
 		}
 		else
 			return false;
-
 	}
 	
 	/*public void CompterCouronnes() {
