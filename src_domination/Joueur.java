@@ -1,5 +1,7 @@
 import java.awt.Color;
 
+import edu.princeton.cs.introcs.StdDraw;
+
 public class Joueur {
 	
 	private String pseudo = "NONAME";
@@ -66,6 +68,33 @@ public class Joueur {
 		System.out.println(this.pseudo);
 		System.out.println(this.couleur);
 		System.out.println(this.nbRois);
+	}
+	
+	//affichage des rois (image .png en 28*68px)
+	public void affichageRoi()
+	{
+		if (this.couleur == Color.BLUE)
+		{
+			if (this.nbRois == 1)StdDraw.picture( 750, 650, "roiBleu.png");
+			else
+			{
+				StdDraw.picture( 750, 650, "roiBleu.png");
+				StdDraw.picture( 780, 650, "roiBleu.png");
+			}
+		}
+		
+		if (this.couleur == Color.RED)
+		{
+			if (this.nbRois == 1)StdDraw.picture( 750, 550, "roiRouge.png");
+			else
+			{
+				StdDraw.picture( 750, 550, "roiRouge.png");
+				StdDraw.picture( 780, 550, "roiRouge.png");
+			}
+		}
+		
+		if (this.couleur == Color.GREEN)StdDraw.picture( 750, 450, "roiVert.png");
+		if (this.couleur == Color.PINK)StdDraw.picture( 750, 350, "roiRose.png");
 	}
 	
 }

@@ -13,7 +13,6 @@ public class Main {
 	public final static float WIDTH= 1;
 	
 	public static ArrayList<Joueur> allPlayers = new ArrayList<>();
-	//public static ArrayList<Plateau> allBordGame = new ArrayList<>();
 	
 	public static Jeu MonJeu = new Jeu();
 	public static Pioche MaPioche = new Pioche();
@@ -24,7 +23,8 @@ public class Main {
 		//feature doublebuffering
 		StdDraw.enableDoubleBuffering();
 		int num_joueur = 0;
-		int t =0;
+		
+		boolean boucleJeu = false;
 		boolean flagChateau = false;
 		boolean flagChateauJ1 = false;
 		boolean flagChateauJ2 = false;
@@ -62,13 +62,9 @@ public class Main {
 		//paramétrage des joueurs
 		for (int i=1; i<num_joueur+1; i++)
 		{
-			Joueur Monjoueur = new Joueur();
-			//Plateau MonPlateau = new Plateau(5,5);
-			
+			Joueur Monjoueur = new Joueur();			
 			System.out.println("Bonjour joueur " + i);
-			
 			System.out.println("Pseudo joueur :");
-			
 			Monjoueur.setPseudo(scan.nextLine());
 			
 			//définition des couleurs des joueurs
@@ -100,118 +96,89 @@ public class Main {
 			//Ajout du joueur au jeu
 			allPlayers.add(Monjoueur);
 			
-			System.out.println("Liste des joueurs");
-			System.out.println(allPlayers);
-			
-			//Ajout du plateau
-			//allBordGame.add(MonPlateau);
+			//System.out.println("Liste des joueurs");
+			//System.out.println(allPlayers);
 		}
 		
 		//ajout de la liste des joueurs dans l'instance MonJeu
 		MonJeu.setListe_joueurs(allPlayers);
-		System.out.println(MonJeu.liste_joueurs);
-		
+		//System.out.println(MonJeu.liste_joueurs.size());
 		
 		MaPioche.ImportationTuiles();
 		MaPioche.PiocherTuilesJeu();
-		System.out.println(MaPioche.tuiles_piochees.size());
 		
 		//affichage plateau avec un cercle qui suit le curseur
-		while(t< 10000)
+		while(boucleJeu == false)
 		{
-			
-			//placement chateau
+			//placement des chateaux pour chacun des joueurs
 			while(flagChateau == false)
 			{
-				//image des plateaux du jeu
-				affichageFenetre(num_joueur);
-				
-				//affichage des tuiles du plateaux déjà placé
-				plateauAffichage1();
-				plateauAffichage2();
-				try
-				{
-					plateauAffichage3();
-				}
-				catch(java.lang.IndexOutOfBoundsException e) {}
-				
-				try
-				{
-					plateauAffichage4();
-				}
-				catch(java.lang.IndexOutOfBoundsException e) {}
-				
+				//préparation affichage de tous les éléments de la fenêtre
+				affichageGlobal(num_joueur);
 				
 				if (flagChateauJ1 == false)
 				{
-					flagChateauJ1 = plateauPlacementPiece1("chateau");
-					MonJeu.liste_joueurs.get(0).affichagePlateauJoueur();
+					flagChateauJ1 = affichagePieceJoueur1("chateau");
+					//pour debug
+					//MonJeu.liste_joueurs.get(0).affichagePlateauJoueur();
 				}
 				
 				else if(flagChateauJ2 == false)
 				{
-					flagChateauJ2 = plateauPlacementPiece2("chateau");
-					MonJeu.liste_joueurs.get(1).affichagePlateauJoueur();
+					flagChateauJ2 = affichagePieceJoueur2("chateau");
+					//pour debug
+					//MonJeu.liste_joueurs.get(1).affichagePlateauJoueur();
 					if(num_joueur==2 && flagChateauJ2==true)flagChateau=true;
 				}
 				
 				else if(num_joueur >= 3 && flagChateauJ3 == false)
 				{
-					flagChateauJ3 = plateauPlacementPiece3("chateau");
-					MonJeu.liste_joueurs.get(2).affichagePlateauJoueur();
+					flagChateauJ3 = affichagePieceJoueur3("chateau");
+					//pour debug
+					//MonJeu.liste_joueurs.get(2).affichagePlateauJoueur();
 					if(num_joueur==3 && flagChateauJ3==true)flagChateau=true;
 				}
 				
 				else if(num_joueur == 4 && flagChateauJ4 == false)
 				{
-					flagChateauJ4 = plateauPlacementPiece4("chateau");
-					MonJeu.liste_joueurs.get(3).affichagePlateauJoueur();
+					flagChateauJ4 = affichagePieceJoueur4("chateau");
+					//pour debug
+					//MonJeu.liste_joueurs.get(3).affichagePlateauJoueur();
 					if(num_joueur==4 && flagChateauJ4==true)flagChateau=true;
 				}
 				
+				//affichage de tous les éléments de la fenêtre
 				StdDraw.show();
 				StdDraw.pause(1);
 				StdDraw.clear(StdDraw.GRAY);
 			}
 			
-			//image des plateaux du jeu
-			affichageFenetre(num_joueur);
+			//préparation affichage de tous les éléments de la fenêtre
+			affichageGlobal(num_joueur);
+			
+			//affichage des rois
+			for (int i=0; i<4; i++)
+			{
+				try
+				{
+					MonJeu.liste_joueurs.get(i).affichageRoi();
+				}
+				catch(java.lang.IndexOutOfBoundsException e) {}
+			}
 			
 			//affichage des tuiles du plateaux déjà placé
-			plateauAffichage1();
-			plateauAffichage2();
-			
-			try
-			{
-				plateauAffichage3();
-			}
-			catch(java.lang.IndexOutOfBoundsException e) {}
-			
-			try
-			{
-				plateauAffichage4();
-			}
-			catch(java.lang.IndexOutOfBoundsException e) {}
-			
-			//.png pion 28*68
-			StdDraw.picture( 750, 650, "roiBleu.png");
-			StdDraw.picture( 780, 650, "roiBleu.png");
-			StdDraw.picture( 750, 550, "roiRouge.png");
-			StdDraw.picture( 780, 550, "roiRouge.png");
-			StdDraw.picture( 750, 450, "roiVert.png");
-			StdDraw.picture( 750, 350, "roiRose.png");
-			
-			//affichage des tuiles du plateaux déjà placé
-			//MaPioche.PiocherTuilesTour();
+			MaPioche.PiocherTuilesTour();
+			MaPioche.AffichageTuilesTour();
 			//System.out.println(MaPioche.tuiles_tour.get(0));
 			
 			StdDraw.filledCircle(StdDraw.mouseX(), StdDraw.mouseY(), 10);
 			StdDraw.setPenColor(StdDraw.RED);
 			
+			//affichage de tous les éléments de la fenêtre
 			StdDraw.show();
 			StdDraw.pause(1);
 			StdDraw.clear(StdDraw.GRAY);
-			t++;
+			
 		}
 		StdDraw.show();		
 		
@@ -223,7 +190,28 @@ public class Main {
 		System.out.println("Vous avez fini de jouer");
 	}
 	
-	public static void affichageFenetre(int nombreJoueurs)
+	public static void affichageGlobal(int nombreJoueurs)
+	{
+		//image des plateaux du jeu
+		affichagePlateauJoueurs(nombreJoueurs);
+		
+		//affichage des tuiles du plateaux déjà placé
+		affichageMemoireJoueur1();
+		affichageMemoireJoueur2();
+		try
+		{
+			affichageMemoireJoueur3();
+		}
+		catch(java.lang.IndexOutOfBoundsException e) {}
+		
+		try
+		{
+			affichageMemoireJoueur4();
+		}
+		catch(java.lang.IndexOutOfBoundsException e) {}
+	}
+	
+	public static void affichagePlateauJoueurs(int nombreJoueurs)
 	{
 		//affichage des 2 premiers plateaux
 		StdDraw.picture(180, 540, "Domination_plateau.png");
@@ -234,7 +222,7 @@ public class Main {
 		if (nombreJoueurs == 4)StdDraw.picture(180, 180, "Domination_plateau.png");
 	}
 	
-	public static boolean plateauPlacementPiece1(String mot)
+	public static boolean affichagePieceJoueur1(String mot)
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
@@ -260,7 +248,7 @@ public class Main {
 		return false;
 	}
 	
-	public static void plateauAffichage1()
+	public static void affichageMemoireJoueur1()
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
@@ -279,7 +267,7 @@ public class Main {
 	
 	//##########################################################
 	
-	public static boolean plateauPlacementPiece2(String mot)
+	public static boolean affichagePieceJoueur2(String mot)
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
@@ -305,7 +293,7 @@ public class Main {
 		return false;
 	}
 	
-	public static void plateauAffichage2()
+	public static void affichageMemoireJoueur2()
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
@@ -324,7 +312,7 @@ public class Main {
 	
 	// #############################################
 	
-	public static boolean plateauPlacementPiece3(String mot)
+	public static boolean affichagePieceJoueur3(String mot)
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
@@ -350,7 +338,7 @@ public class Main {
 		return false;
 	}
 	
-	public static void plateauAffichage3()
+	public static void affichageMemoireJoueur3()
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
@@ -369,7 +357,7 @@ public class Main {
 	
 	//#########################################################
 	
-	public static boolean plateauPlacementPiece4(String mot)
+	public static boolean affichagePieceJoueur4(String mot)
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
@@ -395,7 +383,7 @@ public class Main {
 		return false;
 	}
 	
-	public static void plateauAffichage4()
+	public static void affichageMemoireJoueur4()
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
@@ -407,9 +395,7 @@ public class Main {
 			{
 				contenu = MonJeu.liste_joueurs.get(3).getPlateauJoueur(j,i);
 				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "chateau.png");
-	
 			}
 		}
 	}
-	
 }

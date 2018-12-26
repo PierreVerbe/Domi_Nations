@@ -77,6 +77,18 @@ public class Tuile {
 		this.position_y2 = position_y2;
 	}
 	
+	public void infoTuile()
+	{
+		System.out.println("numéro : " + this.numero);
+		System.out.println("nbCouronnes1 : " + this.nbCouronnes1);
+		System.out.println("nbCouronnes2 : " + this.nbCouronnes2);
+		System.out.println("type_tuile1 : " + this.type_tuile1);
+		System.out.println("type_tuile2 : " + this.type_tuile2);
+		System.out.println("position_x1 : " + this.position_x1);
+		System.out.println("position_y1 : " + this.position_y1);
+		System.out.println("position_x2 : " + this.position_x2);
+		System.out.println("position_y2 : " + this.position_y2);
+	}
 
 	
 	

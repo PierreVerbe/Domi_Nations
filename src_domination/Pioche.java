@@ -115,4 +115,12 @@ public class Pioche {
 			}
 		}
 	}
+	
+	public void AffichageTuilesTour() {
+		for(int i=0; i<this.tuiles_tour.size(); i++)
+		{
+			this.tuiles_tour.get(i).infoTuile();
+		}
+		
+	}
 }
