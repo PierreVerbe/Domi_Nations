@@ -27,6 +27,9 @@ public class Main {
 		int t =0;
 		boolean flagChateau = false;
 		boolean flagChateauJ1 = false;
+		boolean flagChateauJ2 = false;
+		boolean flagChateauJ3 = false;
+		boolean flagChateauJ4 = false;
 
 		System.out.println("Bienvenue dans le jeu Domination !");
 		
@@ -123,28 +126,82 @@ public class Main {
 				//image des plateaux du jeu
 				affichageFenetre(num_joueur);
 				
+				//affichage des tuiles du plateaux déjà placé
+				plateauAffichage1();
+				plateauAffichage2();
+				try
+				{
+					plateauAffichage3();
+				}
+				catch(java.lang.IndexOutOfBoundsException e) {}
+				
+				try
+				{
+					plateauAffichage4();
+				}
+				catch(java.lang.IndexOutOfBoundsException e) {}
+				
+				
 				if (flagChateauJ1 == false)
 				{
-				flagChateauJ1 = plateauPlacementPiece1("chateau");
-				MonJeu.liste_joueurs.get(0).affichagePlateauJoueur();
+					flagChateauJ1 = plateauPlacementPiece1("chateau");
+					MonJeu.liste_joueurs.get(0).affichagePlateauJoueur();
 				}
 				
+				else if(flagChateauJ2 == false)
+				{
+					flagChateauJ2 = plateauPlacementPiece2("chateau");
+					MonJeu.liste_joueurs.get(1).affichagePlateauJoueur();
+					if(num_joueur==2 && flagChateauJ2==true)flagChateau=true;
+				}
 				
+				else if(num_joueur >= 3 && flagChateauJ3 == false)
+				{
+					flagChateauJ3 = plateauPlacementPiece3("chateau");
+					MonJeu.liste_joueurs.get(2).affichagePlateauJoueur();
+					if(num_joueur==3 && flagChateauJ3==true)flagChateau=true;
+				}
 				
-				//else if (flagChateauJ2 == false)
+				else if(num_joueur == 4 && flagChateauJ4 == false)
+				{
+					flagChateauJ4 = plateauPlacementPiece4("chateau");
+					MonJeu.liste_joueurs.get(3).affichagePlateauJoueur();
+					if(num_joueur==4 && flagChateauJ4==true)flagChateau=true;
+				}
 				
-				
-				//plateauPlacementPiece2();
-				//plateauPlacementPiece3();
-				//plateauPlacementPiece4();
-				
-				//StdDraw.picture(StdDraw.mouseX(), StdDraw.mouseY(), "chateau.png");
 				StdDraw.show();
 				StdDraw.pause(1);
 				StdDraw.clear(StdDraw.GRAY);
 			}
 			
+			//image des plateaux du jeu
+			affichageFenetre(num_joueur);
 			
+			//affichage des tuiles du plateaux déjà placé
+			plateauAffichage1();
+			plateauAffichage2();
+			
+			try
+			{
+				plateauAffichage3();
+			}
+			catch(java.lang.IndexOutOfBoundsException e) {}
+			
+			try
+			{
+				plateauAffichage4();
+			}
+			catch(java.lang.IndexOutOfBoundsException e) {}
+			
+			//.png pion 28*68
+			StdDraw.picture( 750, 650, "roiBleu.png");
+			StdDraw.picture( 780, 650, "roiBleu.png");
+			StdDraw.picture( 750, 550, "roiRouge.png");
+			StdDraw.picture( 780, 550, "roiRouge.png");
+			StdDraw.picture( 750, 450, "roiVert.png");
+			StdDraw.picture( 750, 350, "roiRose.png");
+			
+			//affichage des tuiles du plateaux déjà placé
 			//MaPioche.PiocherTuilesTour();
 			//System.out.println(MaPioche.tuiles_tour.get(0));
 			
@@ -184,26 +241,19 @@ public class Main {
 		double x = StdDraw.mouseX();
 		double y = StdDraw.mouseY();
 		
-		//test cases joueur 1
+		//test cases joueur 1 -- validé faire la même pour les autres joueurs 2,3,4
 		for (int i=0; i<5; i++)
 		{
 			for (int j=0; j<5; j++)
 			{
-				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y >= 369 + j*TAILLE_CASE + j*TAILLE_LIGNE && y <= 369 + (j+1)*TAILLE_CASE + (j+1)*TAILLE_LIGNE))
+				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE))
 					{
-					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 369 + j*TAILLE_CASE + j*TAILLE_LIGNE, "chateau.png");
-					if (StdDraw.isMousePressed()) 
-					{
-						
-						if (j==0) j=4;
-						else if (j==1) j=3;
-						else if (j==2) j=2;
-						else if (j==3) j=1;
-						else if (j==4) j=0;
-						
-						MonJeu.liste_joueurs.get(0).setPlateauJoueur(i,j,mot);
-						return true;
-					}
+						if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "chateau.png");
+						if (StdDraw.isMousePressed()) 
+						{	
+							MonJeu.liste_joueurs.get(0).setPlateauJoueur(j,i,mot);
+							return true;
+						}
 					}
 			}
 		}
@@ -212,17 +262,24 @@ public class Main {
 	
 	public static void plateauAffichage1()
 	{
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		
 		String contenu;
 		for(int i=0; i<5; i++)
 		{
 			for(int j=0; j<5; j++)
 			{
-				contenu = MonJeu.liste_joueurs.get(0).getPlateauJoueur(i,j);
+				contenu = MonJeu.liste_joueurs.get(0).getPlateauJoueur(j,i);
+				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "chateau.png");
+	
 			}
 		}
 	}
 	
-	public static void plateauPlacementPiece2()
+	//##########################################################
+	
+	public static boolean plateauPlacementPiece2(String mot)
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
@@ -234,12 +291,40 @@ public class Main {
 		{
 			for (int j=0; j<5; j++)
 			{
-				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y >= 7 + j*TAILLE_CASE + j*TAILLE_LIGNE && y <= 7 + (j+1)*TAILLE_CASE + (j+1)*TAILLE_LIGNE))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 7 + j*TAILLE_CASE + j*TAILLE_LIGNE, "chateau.png");
+				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE))
+				{
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "chateau.png");
+					if (StdDraw.isMousePressed()) 
+					{	
+						MonJeu.liste_joueurs.get(1).setPlateauJoueur(j,i,mot);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static void plateauAffichage2()
+	{
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		
+		String contenu;
+		for(int i=0; i<5; i++)
+		{
+			for(int j=0; j<5; j++)
+			{
+				contenu = MonJeu.liste_joueurs.get(1).getPlateauJoueur(j,i);
+				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "chateau.png");
+	
 			}
 		}
 	}
 	
-	public static void plateauPlacementPiece3()
+	// #############################################
+	
+	public static boolean plateauPlacementPiece3(String mot)
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
@@ -251,24 +336,78 @@ public class Main {
 		{
 			for (int j=0; j<5; j++)
 			{
-				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y >= 369 + j*TAILLE_CASE + j*TAILLE_LIGNE && y <= 369 + (j+1)*TAILLE_CASE + (j+1)*TAILLE_LIGNE))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 369 + j*TAILLE_CASE + j*TAILLE_LIGNE, "chateau.png");
+				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE))
+				{
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "chateau.png");
+					if (StdDraw.isMousePressed()) 
+					{	
+						MonJeu.liste_joueurs.get(2).setPlateauJoueur(j,i,mot);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static void plateauAffichage3()
+	{
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		
+		String contenu;
+		for(int i=0; i<5; i++)
+		{
+			for(int j=0; j<5; j++)
+			{
+				contenu = MonJeu.liste_joueurs.get(2).getPlateauJoueur(j,i);
+				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "chateau.png");
+	
 			}
 		}
 	}
 	
-	public static void plateauPlacementPiece4()
+	//#########################################################
+	
+	public static boolean plateauPlacementPiece4(String mot)
 	{
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
 		double x = StdDraw.mouseX();
 		double y = StdDraw.mouseY();
 		
-		//test cases joueur 1
+		//test cases joueur 4
 		for (int i=0; i<5; i++)
 		{
 			for (int j=0; j<5; j++)
 			{
-				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y >= 7 + j*TAILLE_CASE + j*TAILLE_LIGNE && y <= 7 + (j+1)*TAILLE_CASE + (j+1)*TAILLE_LIGNE))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 7 + j*TAILLE_CASE + j*TAILLE_LIGNE, "chateau.png");
+				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE))
+				{
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "chateau.png");
+					if (StdDraw.isMousePressed()) 
+					{	
+						MonJeu.liste_joueurs.get(3).setPlateauJoueur(j,i,mot);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static void plateauAffichage4()
+	{
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		
+		String contenu;
+		for(int i=0; i<5; i++)
+		{
+			for(int j=0; j<5; j++)
+			{
+				contenu = MonJeu.liste_joueurs.get(3).getPlateauJoueur(j,i);
+				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "chateau.png");
+	
 			}
 		}
 	}
