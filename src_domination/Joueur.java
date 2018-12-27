@@ -75,26 +75,26 @@ public class Joueur {
 	{
 		if (this.couleur == Color.BLUE)
 		{
-			if (this.nbRois == 1)StdDraw.picture( 750, 650, "roiBleu.png");
+			if (this.nbRois == 1)StdDraw.picture( 750, 650, "img/roiBleu.png");
 			else
 			{
-				StdDraw.picture( 750, 650, "roiBleu.png");
-				StdDraw.picture( 780, 650, "roiBleu.png");
+				StdDraw.picture( 750, 650, "img/roiBleu.png");
+				StdDraw.picture( 780, 650, "img/roiBleu.png");
 			}
 		}
 		
 		if (this.couleur == Color.RED)
 		{
-			if (this.nbRois == 1)StdDraw.picture( 750, 550, "roiRouge.png");
+			if (this.nbRois == 1)StdDraw.picture( 750, 550, "img/roiRouge.png");
 			else
 			{
-				StdDraw.picture( 750, 550, "roiRouge.png");
-				StdDraw.picture( 780, 550, "roiRouge.png");
+				StdDraw.picture( 750, 550, "img/roiRouge.png");
+				StdDraw.picture( 780, 550, "img/roiRouge.png");
 			}
 		}
 		
-		if (this.couleur == Color.GREEN)StdDraw.picture( 750, 450, "roiVert.png");
-		if (this.couleur == Color.PINK)StdDraw.picture( 750, 350, "roiRose.png");
+		if (this.couleur == Color.GREEN)StdDraw.picture( 750, 450, "img/roiVert.png");
+		if (this.couleur == Color.PINK)StdDraw.picture( 750, 350, "img/roiRose.png");
 	}
 	
 }
