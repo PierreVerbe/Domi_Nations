@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import edu.princeton.cs.introcs.StdDraw;
+
 public class Pioche {
 	
 	static ArrayList<Tuile> tuiles_piochees = new ArrayList<>();
@@ -101,7 +103,7 @@ public class Pioche {
 		int nbJoueurs = Jeu.getSizeList();
 		Random rand = new Random();
 		
-		if (nbJoueurs == 2 && nbJoueurs == 4) {
+		if (nbJoueurs == 2 || nbJoueurs == 4) {
 			for (int i = 0; i < 4; i++) {
 				int indice = rand.nextInt(tuiles_piochees.size());
 				Pioche.tuiles_tour.add(tuiles_piochees.get(indice));
@@ -116,11 +118,66 @@ public class Pioche {
 		}
 	}
 	
-	public void AffichageTuilesTour() {
+	public void ViderTuilesTour() 
+	{
+		int nb_tuile_tour = this.tuiles_tour.size();
+		
+		for (int i=nb_tuile_tour-1; i>-1; i--)this.tuiles_tour.remove(i);		
+	}
+	
+	public void AffichageTuilesTour() {	
+		StdDraw.picture(0, 0, "img/champs.png");
 		for(int i=0; i<this.tuiles_tour.size(); i++)
 		{
-			this.tuiles_tour.get(i).infoTuile();
-		}
+			//if (i ==0 )AffichageTuile(1040, 270, this.tuiles_tour.get(0).getType_tuile1(), this.tuiles_tour.get(0).getType_tuile2());
+			switch (i) {
+			case 0:
+				AffichageTuile(1040, 270, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				break;
+				
+			case 1:
+				this.AffichageTuile(1040, 360, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				break;
+				
+			case 2:
+				this.AffichageTuile(1040, 450, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				break;
+				
+			case 3:
+				this.AffichageTuile(1040, 540, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				break;
+			}
+			System.out.println(this.tuiles_tour.get(i).getType_tuile1());
+			//this.tuiles_tour.get(i).infoTuile();
+		}	
+	}
+	
+	public void AffichageTuile(int x, int y, String terrain1, int couronne1, String terrain2, int couronne2)
+	{	
+		//première partie de la tuile (partie gauche)
+		//terrains
+		if (terrain1.equals("Champs"))StdDraw.picture(x, y, "img/champs.png");
+		else if (terrain1.equals("Mer"))StdDraw.picture(x, y, "img/mer.png");
+		else if (terrain1.equals("Foret"))StdDraw.picture(x, y, "img/foret.png");
+		else if (terrain1.equals("Prairie"))StdDraw.picture(x, y, "img/prairie.png");
+		else if (terrain1.equals("Mine"))StdDraw.picture(x, y, "img/mine.png");
+		else if (terrain1.equals("Montagne"))StdDraw.picture(x, y, "img/montagne.png");
+		//couronnes
+		if (couronne1 == 1)StdDraw.picture(x, y, "img/1couronne.png");
+		else if (couronne1 == 2)StdDraw.picture(x, y, "img/2couronnes.png");
+		else if (couronne1 == 3)StdDraw.picture(x, y, "img/3couronnes.png");
 		
+		//deuxième partie de la tuile (partie droite)
+		//terrains
+		if (terrain2.equals("Champs"))StdDraw.picture(x+68, y, "img/champs.png");
+		else if (terrain2.equals("Mer"))StdDraw.picture(x+68, y, "img/mer.png");
+		else if (terrain2.equals("Foret"))StdDraw.picture(x+68, y, "img/foret.png");
+		else if (terrain2.equals("Prairie"))StdDraw.picture(x+68, y, "img/prairie.png");
+		else if (terrain2.equals("Mine"))StdDraw.picture(x+68, y, "img/mine.png");
+		else if (terrain2.equals("Montagne"))StdDraw.picture(x+68, y, "img/montagne.png");	
+		//couronnes
+		if (couronne2 == 1)StdDraw.picture(x+68, y, "img/1couronne.png");
+		else if (couronne2 == 2)StdDraw.picture(x+68, y, "img/2couronnes.png");
+		else if (couronne2== 3)StdDraw.picture(x+68, y, "img/3couronnes.png");
 	}
 }

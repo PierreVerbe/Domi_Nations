@@ -167,19 +167,27 @@ public class Main {
 			}
 			
 			//affichage des tuiles du plateaux déjà placé
-			MaPioche.PiocherTuilesTour();
-			MaPioche.AffichageTuilesTour();
-			//System.out.println(MaPioche.tuiles_tour.get(0));
+			if (MaPioche.tuiles_piochees.size() != 0)
+			{
+				System.out.println("Avant la pioche : " + MaPioche.tuiles_tour.size());
+	
+				MaPioche.PiocherTuilesTour();
+				
+				System.out.println("Après la pioche : " + MaPioche.tuiles_tour.size());
+				MaPioche.AffichageTuilesTour();
+				MaPioche.ViderTuilesTour();
+				System.out.println("Fin tour : " + MaPioche.tuiles_tour.size());
+			}
 			
 			StdDraw.filledCircle(StdDraw.mouseX(), StdDraw.mouseY(), 10);
 			StdDraw.setPenColor(StdDraw.RED);
 			
 			//affichage de tous les éléments de la fenêtre
 			StdDraw.show();
-			StdDraw.pause(1);
+			StdDraw.pause(1000);
 			StdDraw.clear(StdDraw.GRAY);
-			
 		}
+		
 		StdDraw.show();		
 		
 		System.out.println(MonJeu.getListe_joueurs());
