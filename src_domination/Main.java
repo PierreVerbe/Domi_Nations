@@ -1,6 +1,7 @@
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,13 +24,22 @@ public class Main {
 		//feature doublebuffering
 		StdDraw.enableDoubleBuffering();
 		int num_joueur = 0;
+
+		//SetUp Font texte
+		Font font = new Font("Arial", Font.BOLD, 60);
+		StdDraw.setFont(font);
+		   
+		boolean boucleJeu = false;	
 		
-		boolean boucleJeu = false;
 		boolean flagChateau = false;
 		boolean flagChateauJ1 = false;
 		boolean flagChateauJ2 = false;
 		boolean flagChateauJ3 = false;
 		boolean flagChateauJ4 = false;
+		
+		int NbRoiPlace = 0;
+		int CompteurOrdrejoueur = 0;
+		boolean flagFinTourJeu = false;
 
 		System.out.println("Bienvenue dans le jeu Domination !");
 		
@@ -56,7 +66,6 @@ public class Main {
 			if( num_joueur == 1 || num_joueur == 0 || num_joueur > 4) num_joueur = 0;
 		}
 		
-		System.out.println("Fin choix joueur");
 		scan.nextLine();
 		
 		//paramétrage des joueurs
@@ -65,6 +74,8 @@ public class Main {
 			Joueur Monjoueur = new Joueur();			
 			System.out.println("Bonjour joueur " + i);
 			System.out.println("Pseudo joueur :");
+			//initialisation de l'ordre des joueurs
+			MonJeu.ordre_tour_joueur.add(i);
 			Monjoueur.setPseudo(scan.nextLine());
 			
 			//définition des couleurs des joueurs
@@ -95,9 +106,13 @@ public class Main {
 			
 			//Ajout du joueur au jeu
 			allPlayers.add(Monjoueur);
-			
-			//System.out.println("Liste des joueurs");
-			//System.out.println(allPlayers);
+		}
+		
+		//fin initialisation de l'ordre des joueurs
+		if(num_joueur == 2) 
+		{
+		MonJeu.ordre_tour_joueur.add(1);
+		MonJeu.ordre_tour_joueur.add(2);
 		}
 		
 		//ajout de la liste des joueurs dans l'instance MonJeu
@@ -107,15 +122,18 @@ public class Main {
 		MaPioche.ImportationTuiles();
 		MaPioche.PiocherTuilesJeu();
 		
+		//initialisation du premier tour de jeu
+		MonJeu.nb_tour = 1;
+		
 		//affichage plateau avec un cercle qui suit le curseur
 		while(boucleJeu == false)
 		{
+			//préparation affichage de tous les éléments de la fenêtre
+			affichageGlobal(num_joueur);
+			
 			//placement des chateaux pour chacun des joueurs
-			while(flagChateau == false)
+			if(flagChateau == false)
 			{
-				//préparation affichage de tous les éléments de la fenêtre
-				affichageGlobal(num_joueur);
-				
 				if (flagChateauJ1 == false)
 				{
 					flagChateauJ1 = affichagePieceJoueur1("chateau");
@@ -146,45 +164,199 @@ public class Main {
 					//MonJeu.liste_joueurs.get(3).affichagePlateauJoueur();
 					if(num_joueur==4 && flagChateauJ4==true)flagChateau=true;
 				}
-				
-				//affichage de tous les éléments de la fenêtre
-				StdDraw.show();
-				StdDraw.pause(1);
-				StdDraw.clear(StdDraw.GRAY);
 			}
 			
-			//préparation affichage de tous les éléments de la fenêtre
-			affichageGlobal(num_joueur);
-			
-			//affichage des rois
-			for (int i=0; i<4; i++)
+			else if (flagChateau == true && NbRoiPlace != sommeRoi() )
 			{
-				try
+				//affichage des tuiles du plateaux déjà placé
+				if ((MaPioche.tuiles_piochees.size() != 0 && flagFinTourJeu==true) || MonJeu.nb_tour == 1)
 				{
-					MonJeu.liste_joueurs.get(i).affichageRoi();
+					MaPioche.ViderTuilesTour();
+					//Reste à ranger dans l'ordre croissant les tuiles
+					//penser a vider la liste des tuile du tour 
+					MaPioche.PiocherTuilesTour();
 				}
-				catch(java.lang.IndexOutOfBoundsException e) {}
-			}
-			
-			//affichage des tuiles du plateaux déjà placé
-			if (MaPioche.tuiles_piochees.size() != 0)
-			{
-				System.out.println("Avant la pioche : " + MaPioche.tuiles_tour.size());
-	
-				MaPioche.PiocherTuilesTour();
 				
-				System.out.println("Après la pioche : " + MaPioche.tuiles_tour.size());
 				MaPioche.AffichageTuilesTour();
-				MaPioche.ViderTuilesTour();
-				System.out.println("Fin tour : " + MaPioche.tuiles_tour.size());
-			}
+				
+				System.out.println(MonJeu.ordre_tour_joueur);
+				
+				//Lorsque un joueur a placé son roi on passe au second joueur, etc...
+				if(num_joueur == 2)
+					{
+					if (MonJeu.liste_joueurs.get(0).choix_tuile_tour.size()==1 && CompteurOrdrejoueur==0)CompteurOrdrejoueur++;
+					else if (MonJeu.liste_joueurs.get(1).choix_tuile_tour.size()==1 && CompteurOrdrejoueur==1)CompteurOrdrejoueur++;
+					else if (MonJeu.liste_joueurs.get(0).choix_tuile_tour.size()==2 && CompteurOrdrejoueur==2)CompteurOrdrejoueur++;
+					//else if (MonJeu.liste_joueurs.get(1).choix_tuile_tour.size()==2 && CompteurOrdrejoueur==3)CompteurOrdrejoueur++;
+					}
+				else if(num_joueur > 2 && MonJeu.liste_joueurs.get(CompteurOrdrejoueur).choix_tuile_tour.size()!=0)CompteurOrdrejoueur++;
+				
+				
+				System.out.println("CompteurOrdrejoueur : " +  CompteurOrdrejoueur);
+				
+				//affichage des rois
+				//Sélection premier roi joueur 1
+				if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=616 && StdDraw.mouseY()<=684 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 1 && MonJeu.liste_joueurs.get(0).choix_tuile_tour.size()==0)
+				{
+					while(StdDraw.isMousePressed());
+					while (!StdDraw.isMousePressed())
+					{
+						//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+						affichageGlobal(num_joueur);
+						MaPioche.AffichageTuilesTour();
+						
+						
+						MonJeu.liste_joueurs.get(0).choix_tuile_tour(num_joueur, false);
+						System.out.println("je prends " + MonJeu.liste_joueurs.get(0).choix_tuile_tour);
+						
+						
+						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiBleu.png");
+						StdDraw.show();
+						StdDraw.pause(1);
+						StdDraw.clear(StdDraw.GRAY);
+					}
+					NbRoiPlace++;
+				}
+				
+				//Sélection deuxième roi joueur 1
+				else if(StdDraw.mouseX()>=780-14  && StdDraw.mouseX()<=780+14 && StdDraw.mouseY()>=616 && StdDraw.mouseY()<=684 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 1 && MonJeu.liste_joueurs.get(0).choix_tuile_tour.size()==1)
+				{
+					while(StdDraw.isMousePressed());
+					while (!StdDraw.isMousePressed())
+					{
+						//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+						affichageGlobal(num_joueur);
+						MaPioche.AffichageTuilesTour();
+						
+						
+						MonJeu.liste_joueurs.get(0).choix_tuile_tour(num_joueur, true);
+						System.out.println("je prends " + MonJeu.liste_joueurs.get(0).choix_tuile_tour);
+						
+						
+						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiBleu.png");
+						StdDraw.show();
+						StdDraw.pause(1);
+						StdDraw.clear(StdDraw.GRAY);
+					}
+					NbRoiPlace++;
+				}
+				
+				//Sélection premier roi joueur 2
+				else if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=516 && StdDraw.mouseY()<=584 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 2 && MonJeu.liste_joueurs.get(1).choix_tuile_tour.size()==0)
+				{
+					while(StdDraw.isMousePressed());
+					while (!StdDraw.isMousePressed())
+					{
+						//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+						affichageGlobal(num_joueur);
+						MaPioche.AffichageTuilesTour();
+						
+						MonJeu.liste_joueurs.get(1).choix_tuile_tour(num_joueur, false);
+						System.out.println("je prends " + MonJeu.liste_joueurs.get(1).choix_tuile_tour);
+						
+						
+						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiRouge.png");
+						StdDraw.show();
+						StdDraw.pause(1);
+						StdDraw.clear(StdDraw.GRAY);
+					}
+					NbRoiPlace++;
+				}
+				
+				//Sélection deuxième roi joueur 2
+				else if(StdDraw.mouseX()>=780-14  && StdDraw.mouseX()<=780+14 && StdDraw.mouseY()>=516 && StdDraw.mouseY()<=584 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 2 && MonJeu.liste_joueurs.get(1).choix_tuile_tour.size()==1)
+				{
+					while(StdDraw.isMousePressed());
+					while (!StdDraw.isMousePressed())
+					{
+						//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+						affichageGlobal(num_joueur);
+						MaPioche.AffichageTuilesTour();
+						
+						
+						MonJeu.liste_joueurs.get(1).choix_tuile_tour(num_joueur, true);
+						System.out.println("je prends " + MonJeu.liste_joueurs.get(1).choix_tuile_tour);
+						
+						
+						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiRouge.png");
+						StdDraw.show();
+						StdDraw.pause(1);
+						StdDraw.clear(StdDraw.GRAY);
+					}
+					NbRoiPlace++;
+				}
+				
+				//Sélection roi joueur 3
+				else if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=416 && StdDraw.mouseY()<=484 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 3 && MonJeu.liste_joueurs.get(CompteurOrdrejoueur).choix_tuile_tour.size()==0)
+				{
+					while(StdDraw.isMousePressed());
+					while (!StdDraw.isMousePressed())
+					{
+						//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+						affichageGlobal(num_joueur);
+						MaPioche.AffichageTuilesTour();
+						
+						MonJeu.liste_joueurs.get(2).choix_tuile_tour(num_joueur, false);
+						System.out.println("je prends " + MonJeu.liste_joueurs.get(2).choix_tuile_tour);
+						
+						
+						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiVert.png");
+						StdDraw.show();
+						StdDraw.pause(1);
+						StdDraw.clear(StdDraw.GRAY);
+					}
+					NbRoiPlace++;
+				}
+				
+				//Sélection roi joueur 4
+				else if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=316 && StdDraw.mouseY()<=384 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 4 && MonJeu.liste_joueurs.get(CompteurOrdrejoueur).choix_tuile_tour.size()==0)
+				{
+					while(StdDraw.isMousePressed());
+					while (!StdDraw.isMousePressed())
+					{
+						//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+						affichageGlobal(num_joueur);
+						MaPioche.AffichageTuilesTour();
+						
+						MonJeu.liste_joueurs.get(3).choix_tuile_tour(num_joueur, false);
+						System.out.println("je prends " + MonJeu.liste_joueurs.get(3).choix_tuile_tour);
+						
+						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiRose.png");
+						StdDraw.show();
+						StdDraw.pause(1);
+						StdDraw.clear(StdDraw.GRAY);
+					}
+					NbRoiPlace++;
+				}
+				
+				else 
+				{
+					for (int i=0; i<MonJeu.liste_joueurs.size(); i++)
+					{
+							MonJeu.liste_joueurs.get(i).affichageRoi();
+					}
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				MonJeu.nb_tour = MonJeu.nb_tour+1;
 			
-			StdDraw.filledCircle(StdDraw.mouseX(), StdDraw.mouseY(), 10);
-			StdDraw.setPenColor(StdDraw.RED);
+			
+				
+				
+				
+				StdDraw.filledCircle(StdDraw.mouseX(), StdDraw.mouseY(), 10);
+				StdDraw.setPenColor(StdDraw.RED);
+			}
 			
 			//affichage de tous les éléments de la fenêtre
 			StdDraw.show();
-			StdDraw.pause(1000);
+			StdDraw.pause(1);
 			StdDraw.clear(StdDraw.GRAY);
 		}
 		
@@ -221,13 +393,37 @@ public class Main {
 	
 	public static void affichagePlateauJoueurs(int nombreJoueurs)
 	{
+		Font font = new Font("Arial", Font.BOLD, 20);
+		StdDraw.setFont(font);
+		
 		//affichage des 2 premiers plateaux
 		StdDraw.picture(180, 540, "img/Domination_plateau.png");
+		StdDraw.text(180, 540,"Plateau du joueur 1");
 		StdDraw.picture(540, 180, "img/Domination_plateau.png");
+		StdDraw.text(540, 180,"Plateau du joueur 2");
 		
 		//affichage des 2 derniers plateaux
-		if (nombreJoueurs >= 3)StdDraw.picture(540, 540, "img/Domination_plateau.png");
-		if (nombreJoueurs == 4)StdDraw.picture(180, 180, "img/Domination_plateau.png");
+		if (nombreJoueurs >= 3)
+		{
+			StdDraw.picture(540, 540, "img/Domination_plateau.png");
+			StdDraw.text(540, 540,"Plateau du joueur 3");
+		}
+		if (nombreJoueurs == 4)
+		{
+			StdDraw.picture(180, 180, "img/Domination_plateau.png");
+			StdDraw.text(180, 180,"Plateau du joueur 4");
+		}
+		
+	}
+	
+	public static int sommeRoi()
+	{
+		int somme =0;
+		for(int i=0; i<MonJeu.getListe_joueurs().size(); i++)
+		{
+			somme = somme + MonJeu.liste_joueurs.get(i).getNbRois();
+		}
+		return somme;
 	}
 	
 	public static boolean affichagePieceJoueur1(String mot)
@@ -407,3 +603,10 @@ public class Main {
 		}
 	}
 }
+
+
+
+// a faire ranger les tuiles dans l'ordre croissant
+//test tuile pas deja prise
+// nouvel ordre joueur prochain tour
+//incrémenté les tours

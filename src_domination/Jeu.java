@@ -8,6 +8,10 @@ public class Jeu {
 	int nb_tour;
 	ArrayList<Tuile> liste_tuiles = new ArrayList<>();
 	
+	//attibut pierre
+	static ArrayList<Integer> ordre_tour_joueur = new ArrayList<Integer>();
+	
+	
 	
 	public ArrayList<Joueur> getListe_joueurs() {
 		return liste_joueurs;

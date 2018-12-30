@@ -125,34 +125,32 @@ public class Pioche {
 		for (int i=nb_tuile_tour-1; i>-1; i--)this.tuiles_tour.remove(i);		
 	}
 	
-	public void AffichageTuilesTour() {	
-		StdDraw.picture(0, 0, "img/champs.png");
+	public void AffichageTuilesTour() 
+	{	
 		for(int i=0; i<this.tuiles_tour.size(); i++)
 		{
-			//if (i ==0 )AffichageTuile(1040, 270, this.tuiles_tour.get(0).getType_tuile1(), this.tuiles_tour.get(0).getType_tuile2());
 			switch (i) {
+			
 			case 0:
-				AffichageTuile(1040, 270, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				this.AffichageTuile(1040, 540, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
 				break;
 				
 			case 1:
-				this.AffichageTuile(1040, 360, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
-				break;
-				
-			case 2:
 				this.AffichageTuile(1040, 450, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
 				break;
 				
+			case 2:
+				this.AffichageTuile(1040, 360, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				break;
+				
 			case 3:
-				this.AffichageTuile(1040, 540, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				this.AffichageTuile(1040, 270, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
 				break;
 			}
-			System.out.println(this.tuiles_tour.get(i).getType_tuile1());
-			//this.tuiles_tour.get(i).infoTuile();
 		}	
 	}
 	
-	public void AffichageTuile(int x, int y, String terrain1, int couronne1, String terrain2, int couronne2)
+	public void AffichageTuile(double x, double y, String terrain1, int couronne1, String terrain2, int couronne2)
 	{	
 		//première partie de la tuile (partie gauche)
 		//terrains

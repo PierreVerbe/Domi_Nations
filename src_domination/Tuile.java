@@ -88,8 +88,5 @@ public class Tuile {
 		System.out.println("position_y1 : " + this.position_y1);
 		System.out.println("position_x2 : " + this.position_x2);
 		System.out.println("position_y2 : " + this.position_y2);
-	}
-
-	
-	
+	}	
 }
