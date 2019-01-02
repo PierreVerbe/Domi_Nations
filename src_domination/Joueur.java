@@ -76,7 +76,7 @@ public class Joueur {
 	
 	//affichage des rois (image .png en 28*68px)
 	public void affichageRoi()
-	{
+	{		
 		if (this.couleur == Color.BLUE)
 		{
 			if (this.nbRois == 1)StdDraw.picture( 750, 650, "img/roiBleu.png");
@@ -101,10 +101,46 @@ public class Joueur {
 		if (this.couleur == Color.PINK)StdDraw.picture( 750, 350, "img/roiRose.png");
 	}
 	
+	public boolean isTuileOccupied(int numTuile)
+	{
+		for (int i=0; i<Jeu.liste_joueurs.get(0).choix_tuile_tour.size(); i++)
+		{
+			if (Jeu.liste_joueurs.get(0).choix_tuile_tour.get(i) == numTuile) return true;
+		}
+		
+		for (int i=0; i<Jeu.liste_joueurs.get(1).choix_tuile_tour.size(); i++)
+		{
+			if (Jeu.liste_joueurs.get(1).choix_tuile_tour.get(i) == numTuile) return true;
+		}
+		
+		try 
+		{
+			for (int i=0; i<Jeu.liste_joueurs.get(2).choix_tuile_tour.size(); i++)
+			{
+				if (Jeu.liste_joueurs.get(2).choix_tuile_tour.get(i) == numTuile) return true;
+			}
+		}
+		
+		catch (java.lang.IndexOutOfBoundsException e) {}
+		
+		try 
+		{
+			for (int i=0; i<Jeu.liste_joueurs.get(3).choix_tuile_tour.size(); i++)
+			{
+				if (Jeu.liste_joueurs.get(3).choix_tuile_tour.get(i) == numTuile) return true;
+			}
+		}
+		
+		catch (java.lang.IndexOutOfBoundsException e) {}
+		
+		return false;
+				
+	}
+	
 	public void choix_tuile_tour(int Nbjoueur, boolean flagRoi2)
 	{
 		final int L_TUILE = 136;
-		//&& !StdDraw.isMousePressed()
+		
 		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=540-(L_TUILE/4) && StdDraw.mouseY()<=540+(L_TUILE/4))
 		{
 			
@@ -115,15 +151,16 @@ public class Joueur {
 			else if (this.couleur == Color.PINK)StdDraw.picture( 1040+(L_TUILE/4), 540, "img/roiRose.png");
 			
 			StdDraw.show();
-			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1)
+			
+			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(1) == false)
 				{
-				
 				//remédier au problème de remplissage de la liste
 				if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(1);
 				else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(1);
-				
 				System.out.println("validé");
 				}
+			
+			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(1) == true)System.out.println("occupé");
 		}
 		
 		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=450-(L_TUILE/4) && StdDraw.mouseY()<=450+(L_TUILE/4))
@@ -136,15 +173,16 @@ public class Joueur {
 			else if (this.couleur == Color.PINK)StdDraw.picture( 1040+(L_TUILE/4), 450, "img/roiRose.png");
 			
 			StdDraw.show();
-			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1)
+			
+			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(2) == false)
 				{
-				
 				//remédier au problème de remplissage de la liste
 				if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(2);
-				else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(2);
-								
+				else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(2);			
 				System.out.println("validé");
 				}
+			
+			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(2) == true)System.out.println("occupé");
 		}
 		
 		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=360-(L_TUILE/4) && StdDraw.mouseY()<=360+(L_TUILE/4))
@@ -157,15 +195,16 @@ public class Joueur {
 			else if (this.couleur == Color.PINK)StdDraw.picture( 1040+(L_TUILE/4), 360, "img/roiRose.png");
 			
 			StdDraw.show();
-			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1)
+			
+			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(3) == false)
 				{
-				
 				//remédier au problème de remplissage de la liste
 				if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(3);
 				else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(3);
-				
 				System.out.println("validé");
 				}
+			
+			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(3) == true)System.out.println("occupé");
 		}
 		
 		if(Nbjoueur != 3)
@@ -180,15 +219,16 @@ public class Joueur {
 				else if (this.couleur == Color.PINK)StdDraw.picture( 1040+(L_TUILE/4), 270, "img/roiRose.png");
 				
 				StdDraw.show();
-				if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1)
+				
+				if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(4) == false)
 					{
-					
 					//remédier au problème de remplissage de la liste
 					if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(4);
 					else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(4);
-					
 					System.out.println("validé");
 					}
+				
+				else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(4) == true)System.out.println("occupé");
 			}
 		}
 	}

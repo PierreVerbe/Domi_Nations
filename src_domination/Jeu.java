@@ -11,8 +11,6 @@ public class Jeu {
 	//attibut pierre
 	static ArrayList<Integer> ordre_tour_joueur = new ArrayList<Integer>();
 	
-	
-	
 	public ArrayList<Joueur> getListe_joueurs() {
 		return liste_joueurs;
 	}
@@ -31,9 +29,14 @@ public class Jeu {
 	public void setListe_tuiles(ArrayList<Tuile> liste_tuiles) {
 		this.liste_tuiles = liste_tuiles;
 	}
-	
 	public static int getSizeList() {
 		return liste_joueurs.size();
+	}	
+	public static ArrayList<Integer> getOrdre_tour_joueur() {
+		return ordre_tour_joueur;
+	}
+	public static void setOrdre_tour_joueur(ArrayList<Integer> ordre_tour_joueur) {
+		Jeu.ordre_tour_joueur = ordre_tour_joueur;
 	}
 	
 	public void AffichageListeJoueurs()
@@ -111,6 +114,19 @@ public class Jeu {
 		}
 		/*StdDraw.filledRectangle(1200, 700, 10, 10);
 		StdDraw.setPenColor(StdDraw.RED);*/
+	}
+	
+	public void AffichageRoiTour()
+	{
+		final int L_TUILE = 136;
+		
+		for (int i=0; i<Jeu.getOrdre_tour_joueur().size(); i++)
+		{	
+			if(this.ordre_tour_joueur.get(i) == 1)StdDraw.picture( 1040+(L_TUILE/4), 540 - i*90, "img/roiBleu.png");
+			else if(this.ordre_tour_joueur.get(i) == 2)StdDraw.picture( 1040+(L_TUILE/4), 540 - i*90, "img/roiRouge.png");
+			else if(this.ordre_tour_joueur.get(i) == 3)StdDraw.picture( 1040+(L_TUILE/4), 540 - i*90, "img/roiVert.png");
+			else if(this.ordre_tour_joueur.get(i) == 4)StdDraw.picture( 1040+(L_TUILE/4), 540 - i*90, "img/roiRose.png");	
+		}
 	}
 
 }
