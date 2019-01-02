@@ -1,19 +1,17 @@
 
 public class Tuile {
 	
-	int numero;
-	int nbCouronnes1;
-	int nbCouronnes2;
+	private int numero;
+	private int nbCouronnes1;
+	private int nbCouronnes2;
+	private String type_tuile1;
+	private String type_tuile2;
+	private int position_x1; //sert à rien
+	private int position_y1; //sert à rien
+	private int position_x2; //sert à rien
+	private int position_y2; //sert à rien
 	
-	String type_tuile1;
-	String type_tuile2;
-	
-	int position_x1;
-	int position_y1;
-	int position_x2;
-	int position_y2;
-	
-	
+	public Tuile(){}
 	
 	public Tuile(int numero, int nbCouronnes1, int nbCouronnes2, String type_tuile1, String type_tuile2) {
 		this.numero = numero;
@@ -77,8 +75,7 @@ public class Tuile {
 		this.position_y2 = position_y2;
 	}
 	
-	public void infoTuile()
-	{
+	public void infoTuile(){
 		System.out.println("numéro : " + this.numero);
 		System.out.println("nbCouronnes1 : " + this.nbCouronnes1);
 		System.out.println("nbCouronnes2 : " + this.nbCouronnes2);

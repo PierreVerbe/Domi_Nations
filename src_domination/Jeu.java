@@ -4,18 +4,18 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Jeu {
 	
-	static ArrayList<Joueur> liste_joueurs = new ArrayList<>();
-	int nb_tour;
-	ArrayList<Tuile> liste_tuiles = new ArrayList<>();
+	private ArrayList<Joueur> liste_joueurs = new ArrayList<>();
+	private int nb_tour;
+	private ArrayList<Tuile> liste_tuiles = new ArrayList<>();
+	private ArrayList<Integer> ordre_tour_joueur = new ArrayList<Integer>(); //attribut pierre
 	
-	//attibut pierre
-	static ArrayList<Integer> ordre_tour_joueur = new ArrayList<Integer>();
+	public Jeu(){}
 	
 	public ArrayList<Joueur> getListe_joueurs() {
 		return liste_joueurs;
 	}
 	public void setListe_joueurs(ArrayList<Joueur> liste_joueurs) {
-		Jeu.liste_joueurs = liste_joueurs;
+		this.liste_joueurs = liste_joueurs;
 	}
 	public int getNb_tour() {
 		return nb_tour;
@@ -29,14 +29,14 @@ public class Jeu {
 	public void setListe_tuiles(ArrayList<Tuile> liste_tuiles) {
 		this.liste_tuiles = liste_tuiles;
 	}
-	public static int getSizeList() {
-		return liste_joueurs.size();
+	public int getSizeList() {
+		return this.liste_joueurs.size();
 	}	
-	public static ArrayList<Integer> getOrdre_tour_joueur() {
+	public ArrayList<Integer> getOrdre_tour_joueur() {
 		return ordre_tour_joueur;
 	}
-	public static void setOrdre_tour_joueur(ArrayList<Integer> ordre_tour_joueur) {
-		Jeu.ordre_tour_joueur = ordre_tour_joueur;
+	public void setOrdre_tour_joueur(ArrayList<Integer> ordre_tour_joueur) {
+		this.ordre_tour_joueur = ordre_tour_joueur;
 	}
 	
 	public void AffichageListeJoueurs()
@@ -46,13 +46,14 @@ public class Jeu {
 		}
 	}
 	
+	/* Pas utilisé 
 	public void AffichagePioche()
 	{
 		int posX = 1200;
 		int posY = 700;
 		
 		for (int i = 0; i < Pioche.getTuiles_tour().size(); i++) {
-			String terrain1 = Pioche.getTuiles_tour().get(i).type_tuile1;
+			String terrain1 = Pioche.getTuiles_tour().get(i).getType_tuile1();
 			
 			if (terrain1.equals("Champs")) {
 				StdDraw.filledRectangle(posX, posY, 10, 10);
@@ -81,7 +82,7 @@ public class Jeu {
 			
 			posX = posX + 30;
 			
-			String terrain2 = Pioche.getTuiles_tour().get(i).type_tuile2;
+			String terrain2 = Pioche.getTuiles_tour().get(i).getType_tuile2();
 			
 			if (terrain2.equals("Champs")) {
 				StdDraw.filledRectangle(posX, posY, 10, 10);
@@ -113,14 +114,14 @@ public class Jeu {
 			posY = posY + 50;
 		}
 		/*StdDraw.filledRectangle(1200, 700, 10, 10);
-		StdDraw.setPenColor(StdDraw.RED);*/
-	}
+		StdDraw.setPenColor(StdDraw.RED);
+	} */
 	
 	public void AffichageRoiTour()
 	{
 		final int L_TUILE = 136;
 		
-		for (int i=0; i<Jeu.getOrdre_tour_joueur().size(); i++)
+		for (int i=0; i<this.getOrdre_tour_joueur().size(); i++)
 		{	
 			if(this.ordre_tour_joueur.get(i) == 1)StdDraw.picture( 1040+(L_TUILE/4), 540 - i*90, "img/roiBleu.png");
 			else if(this.ordre_tour_joueur.get(i) == 2)StdDraw.picture( 1040+(L_TUILE/4), 540 - i*90, "img/roiRouge.png");
@@ -128,5 +129,22 @@ public class Jeu {
 			else if(this.ordre_tour_joueur.get(i) == 4)StdDraw.picture( 1040+(L_TUILE/4), 540 - i*90, "img/roiRose.png");	
 		}
 	}
-
+	
+	public boolean isTuileOccupied(int numTuile){
+		for (int i=0; i<this.getListe_joueurs().get(0).getChoix_tuile_tour().size(); i++)if (this.getListe_joueurs().get(0).getChoix_tuile_tour().get(i) == numTuile) return true;
+		for (int i=0; i<this.getListe_joueurs().get(1).getChoix_tuile_tour().size(); i++)if (this.getListe_joueurs().get(1).getChoix_tuile_tour().get(i) == numTuile) return true;
+		
+		try {
+			for (int i=0; i<this.getListe_joueurs().get(2).getChoix_tuile_tour().size(); i++){
+				if (this.getListe_joueurs().get(2).getChoix_tuile_tour().get(i) == numTuile) return true;
+			}
+		}
+		catch (java.lang.IndexOutOfBoundsException e) {}
+		
+		try {
+			for (int i=0; i<this.getListe_joueurs().get(3).getChoix_tuile_tour().size(); i++)if (this.getListe_joueurs().get(3).getChoix_tuile_tour().get(i) == numTuile) return true;
+		}
+		catch (java.lang.IndexOutOfBoundsException e) {}
+		return false;			
+	}
 }

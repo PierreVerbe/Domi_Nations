@@ -10,18 +10,9 @@ public class Joueur {
 	private int nb_points = 0;
 	private Plateau plateau = new Plateau(5,5);
 	private int nbRois = 0;
-	
-	//attibut pierre
-	ArrayList<Integer> choix_tuile_tour = new ArrayList<Integer>();
+	private ArrayList<Integer> choix_tuile_tour = new ArrayList<Integer>(); //new attribut pierre
 	
 	public Joueur(){}
-	
-	public Joueur(Color couleur) {
-		this.pseudo = "NONAME";
-		this.couleur = couleur;
-		this.nb_points = 0;
-		this.nbRois = 0;
-	}
 
 	public String getPseudo() {
 		return pseudo;
@@ -41,57 +32,46 @@ public class Joueur {
 	public void setNb_points(int nb_points) {
 		this.nb_points = nb_points;
 	}
-	public Plateau getPlateau() {
-		return plateau;
-	}
-	public void setPlateau(Plateau plateau) {
-		this.plateau = plateau;
-	}
-	
 	public void setPlateauJoueur(int i, int j, String mot) {
 		this.plateau.RemplirPlateau(i,j,mot);
 	}
-	
 	public String getPlateauJoueur(int i, int j) {
 		return this.plateau.RecupererPlateau(i,j);
 	}
-	
 	public void affichagePlateauJoueur() {
 		this.plateau.affichagePlateau();
 	}
-	
 	public int getNbRois() {
 		return nbRois;
 	}
 	public void setNbRois(int nbRois) {
 		this.nbRois = nbRois;
 	}
-	
-	public void infoJoueur()
-	{
+	public ArrayList<Integer> getChoix_tuile_tour() {
+		return choix_tuile_tour;
+	}
+	public void setChoix_tuile_tour(ArrayList<Integer> choix_tuile_tour) {
+		this.choix_tuile_tour = choix_tuile_tour;
+	}
+	public void infoJoueur(){
 		System.out.println(this.pseudo);
 		System.out.println(this.couleur);
 		System.out.println(this.nbRois);
 	}
 	
-	//affichage des rois (image .png en 28*68px)
-	public void affichageRoi()
-	{		
-		if (this.couleur == Color.BLUE)
-		{
+	//affichage des rois, image format png en 28*68px
+	public void affichageRoi(){		
+		if (this.couleur == Color.BLUE){
 			if (this.nbRois == 1)StdDraw.picture( 750, 650, "img/roiBleu.png");
-			else
-			{
+			else{
 				StdDraw.picture( 750, 650, "img/roiBleu.png");
 				StdDraw.picture( 780, 650, "img/roiBleu.png");
 			}
 		}
 		
-		if (this.couleur == Color.RED)
-		{
+		if (this.couleur == Color.RED){
 			if (this.nbRois == 1)StdDraw.picture( 750, 550, "img/roiRouge.png");
-			else
-			{
+			else{
 				StdDraw.picture( 750, 550, "img/roiRouge.png");
 				StdDraw.picture( 780, 550, "img/roiRouge.png");
 			}
@@ -101,49 +81,10 @@ public class Joueur {
 		if (this.couleur == Color.PINK)StdDraw.picture( 750, 350, "img/roiRose.png");
 	}
 	
-	public boolean isTuileOccupied(int numTuile)
-	{
-		for (int i=0; i<Jeu.liste_joueurs.get(0).choix_tuile_tour.size(); i++)
-		{
-			if (Jeu.liste_joueurs.get(0).choix_tuile_tour.get(i) == numTuile) return true;
-		}
-		
-		for (int i=0; i<Jeu.liste_joueurs.get(1).choix_tuile_tour.size(); i++)
-		{
-			if (Jeu.liste_joueurs.get(1).choix_tuile_tour.get(i) == numTuile) return true;
-		}
-		
-		try 
-		{
-			for (int i=0; i<Jeu.liste_joueurs.get(2).choix_tuile_tour.size(); i++)
-			{
-				if (Jeu.liste_joueurs.get(2).choix_tuile_tour.get(i) == numTuile) return true;
-			}
-		}
-		
-		catch (java.lang.IndexOutOfBoundsException e) {}
-		
-		try 
-		{
-			for (int i=0; i<Jeu.liste_joueurs.get(3).choix_tuile_tour.size(); i++)
-			{
-				if (Jeu.liste_joueurs.get(3).choix_tuile_tour.get(i) == numTuile) return true;
-			}
-		}
-		
-		catch (java.lang.IndexOutOfBoundsException e) {}
-		
-		return false;
-				
-	}
-	
-	public void choix_tuile_tour(int Nbjoueur, boolean flagRoi2)
-	{
+	public void choix_tuile_tour(Jeu monJeu, int Nbjoueur, boolean flagRoi2){
 		final int L_TUILE = 136;
 		
-		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=540-(L_TUILE/4) && StdDraw.mouseY()<=540+(L_TUILE/4))
-		{
-			
+		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=540-(L_TUILE/4) && StdDraw.mouseY()<=540+(L_TUILE/4)){
 			//couleur pion sur tuile
 			if (this.couleur == Color.BLUE)StdDraw.picture( 1040+(L_TUILE/4), 540, "img/roiBleu.png");
 			else if (this.couleur == Color.RED)StdDraw.picture( 1040+(L_TUILE/4), 540, "img/roiRouge.png");
@@ -152,20 +93,17 @@ public class Joueur {
 			
 			StdDraw.show();
 			
-			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(1) == false)
-				{
+			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(1) == false){
 				//remédier au problème de remplissage de la liste
 				if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(1);
 				else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(1);
 				System.out.println("validé");
 				}
 			
-			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(1) == true)System.out.println("occupé");
+			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(1) == true)System.out.println("occupé");
 		}
 		
-		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=450-(L_TUILE/4) && StdDraw.mouseY()<=450+(L_TUILE/4))
-		{
-			
+		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=450-(L_TUILE/4) && StdDraw.mouseY()<=450+(L_TUILE/4)){
 			//couleur pion sur tuile
 			if (this.couleur == Color.BLUE)StdDraw.picture( 1040+(L_TUILE/4), 450, "img/roiBleu.png");
 			else if (this.couleur == Color.RED)StdDraw.picture( 1040+(L_TUILE/4), 450, "img/roiRouge.png");
@@ -174,20 +112,17 @@ public class Joueur {
 			
 			StdDraw.show();
 			
-			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(2) == false)
-				{
+			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(2) == false){
 				//remédier au problème de remplissage de la liste
 				if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(2);
 				else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(2);			
 				System.out.println("validé");
 				}
 			
-			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(2) == true)System.out.println("occupé");
+			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(2) == true)System.out.println("occupé");
 		}
 		
-		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=360-(L_TUILE/4) && StdDraw.mouseY()<=360+(L_TUILE/4))
-		{
-			
+		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=360-(L_TUILE/4) && StdDraw.mouseY()<=360+(L_TUILE/4)){
 			//couleur pion sur tuile
 			if (this.couleur == Color.BLUE)StdDraw.picture( 1040+(L_TUILE/4), 360, "img/roiBleu.png");
 			else if (this.couleur == Color.RED)StdDraw.picture( 1040+(L_TUILE/4), 360, "img/roiRouge.png");
@@ -196,22 +131,18 @@ public class Joueur {
 			
 			StdDraw.show();
 			
-			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(3) == false)
-				{
+			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(3) == false){
 				//remédier au problème de remplissage de la liste
 				if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(3);
 				else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(3);
 				System.out.println("validé");
 				}
 			
-			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(3) == true)System.out.println("occupé");
+			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(3) == true)System.out.println("occupé");
 		}
 		
-		if(Nbjoueur != 3)
-		{
-			while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=270-(L_TUILE/4) && StdDraw.mouseY()<=270+(L_TUILE/4))
-			{
-				
+		if(Nbjoueur != 3){
+			while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=270-(L_TUILE/4) && StdDraw.mouseY()<=270+(L_TUILE/4)){
 				//couleur pion sur tuile
 				if (this.couleur == Color.BLUE)StdDraw.picture( 1040+(L_TUILE/4), 270, "img/roiBleu.png");
 				else if (this.couleur == Color.RED)StdDraw.picture( 1040+(L_TUILE/4), 270, "img/roiRouge.png");
@@ -220,15 +151,14 @@ public class Joueur {
 				
 				StdDraw.show();
 				
-				if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(4) == false)
-					{
+				if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(4) == false){
 					//remédier au problème de remplissage de la liste
 					if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(4);
 					else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(4);
 					System.out.println("validé");
 					}
 				
-				else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && isTuileOccupied(4) == true)System.out.println("occupé");
+				else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(4) == true)System.out.println("occupé");
 			}
 		}
 	}

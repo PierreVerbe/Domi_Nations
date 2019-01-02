@@ -82,7 +82,7 @@ public class Main {
 			System.out.println("Bonjour joueur " + i);
 			System.out.println("Pseudo joueur :");
 			//initialisation de l'ordre des joueurs
-			MonJeu.ordre_tour_joueur.add(i);
+			MonJeu.getOrdre_tour_joueur().add(i);
 			Monjoueur.setPseudo(scan.nextLine());
 			
 			//définition des couleurs des joueurs
@@ -118,8 +118,8 @@ public class Main {
 		//fin initialisation de l'ordre des joueurs
 		if(num_joueur == 2) 
 		{
-		MonJeu.ordre_tour_joueur.add(1);
-		MonJeu.ordre_tour_joueur.add(2);
+		MonJeu.getOrdre_tour_joueur().add(1);
+		MonJeu.getOrdre_tour_joueur().add(2);
 		}
 		
 		//ajout de la liste des joueurs dans l'instance MonJeu
@@ -127,7 +127,7 @@ public class Main {
 		//System.out.println(MonJeu.liste_joueurs.size());
 		
 		MaPioche.ImportationTuiles();
-		MaPioche.PiocherTuilesJeu();
+		MaPioche.PiocherTuilesJeu(MonJeu);
 		
 		//initialisation du premier tour de jeu
 		//MonJeu.nb_tour = 1;
@@ -176,34 +176,34 @@ public class Main {
 			else if (flagChateau == true && NbRoiPlace != sommeRoi() )
 			{
 				//affichage des tuiles du plateaux déjà placé
-				if ((MaPioche.tuiles_piochees.size() != 0 && flagFinTourJeu==true) || MonJeu.nb_tour == 0)
+				if ((MaPioche.getTuiles_piochees().size() != 0 && flagFinTourJeu==true) || MonJeu.getNb_tour() == 0)
 				{
-					MonJeu.nb_tour = MonJeu.nb_tour+1;
+					MonJeu.setNb_tour(MonJeu.getNb_tour()+1);
 					MaPioche.ViderTuilesTour();
 					//Reste à ranger dans l'ordre croissant les tuiles
 					//penser a vider la liste des tuile du tour 
-					MaPioche.PiocherTuilesTour();
+					MaPioche.PiocherTuilesTour(MonJeu);
 				}
 				
 				MaPioche.AffichageTuilesTour();
 				
-				System.out.println(MonJeu.ordre_tour_joueur);
+				System.out.println(MonJeu.getOrdre_tour_joueur());
 				
 				//Lorsque un joueur a placé son roi on passe au second joueur, etc...
 				if(num_joueur == 2)
 					{
-					if (MonJeu.liste_joueurs.get(0).choix_tuile_tour.size()==1 && CompteurOrdrejoueur==0)CompteurOrdrejoueur++;
-					else if (MonJeu.liste_joueurs.get(1).choix_tuile_tour.size()==1 && CompteurOrdrejoueur==1)CompteurOrdrejoueur++;
-					else if (MonJeu.liste_joueurs.get(0).choix_tuile_tour.size()==2 && CompteurOrdrejoueur==2)CompteurOrdrejoueur++;
+					if (MonJeu.getListe_joueurs().get(0).getChoix_tuile_tour().size()==1 && CompteurOrdrejoueur==0)CompteurOrdrejoueur++;
+					else if (MonJeu.getListe_joueurs().get(1).getChoix_tuile_tour().size()==1 && CompteurOrdrejoueur==1)CompteurOrdrejoueur++;
+					else if (MonJeu.getListe_joueurs().get(0).getChoix_tuile_tour().size()==2 && CompteurOrdrejoueur==2)CompteurOrdrejoueur++;
 					//else if (MonJeu.liste_joueurs.get(1).choix_tuile_tour.size()==2 && CompteurOrdrejoueur==3)CompteurOrdrejoueur++;
 					}
-				else if(num_joueur > 2 && MonJeu.liste_joueurs.get(CompteurOrdrejoueur).choix_tuile_tour.size()!=0)CompteurOrdrejoueur++;
+				else if(num_joueur > 2 && MonJeu.getListe_joueurs().get(CompteurOrdrejoueur).getChoix_tuile_tour().size()!=0)CompteurOrdrejoueur++;
 				
 				System.out.println("CompteurOrdrejoueur : " +  CompteurOrdrejoueur);
 				
 				//affichage des rois
 				//Sélection premier roi joueur 1
-				if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=616 && StdDraw.mouseY()<=684 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 1 && MonJeu.liste_joueurs.get(0).choix_tuile_tour.size()==0)
+				if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=616 && StdDraw.mouseY()<=684 && StdDraw.isMousePressed() && MonJeu.getOrdre_tour_joueur().get(CompteurOrdrejoueur) == 1 && MonJeu.getListe_joueurs().get(0).getChoix_tuile_tour().size()==0)
 				{
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed())
@@ -212,19 +212,19 @@ public class Main {
 						affichageGlobal(num_joueur);
 						MaPioche.AffichageTuilesTour();
 						
-						MonJeu.liste_joueurs.get(0).choix_tuile_tour(num_joueur, false);
-						System.out.println("je prends " + MonJeu.liste_joueurs.get(0).choix_tuile_tour);
+						MonJeu.getListe_joueurs().get(0).choix_tuile_tour(MonJeu, num_joueur, false);
+						System.out.println("je prends " + MonJeu.getListe_joueurs().get(0).getChoix_tuile_tour());
 						
 						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiBleu.png");
 						StdDraw.show();
 						StdDraw.pause(1);
 						StdDraw.clear(StdDraw.GRAY);
 					}
-					if (MonJeu.liste_joueurs.get(0).choix_tuile_tour.size() == 1)NbRoiPlace++;
+					if (MonJeu.getListe_joueurs().get(0).getChoix_tuile_tour().size() == 1)NbRoiPlace++;
 				}
 				
 				//Sélection deuxième roi joueur 1
-				else if(StdDraw.mouseX()>=780-14  && StdDraw.mouseX()<=780+14 && StdDraw.mouseY()>=616 && StdDraw.mouseY()<=684 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 1 && MonJeu.liste_joueurs.get(0).choix_tuile_tour.size()==1)
+				else if(StdDraw.mouseX()>=780-14  && StdDraw.mouseX()<=780+14 && StdDraw.mouseY()>=616 && StdDraw.mouseY()<=684 && StdDraw.isMousePressed() && MonJeu.getOrdre_tour_joueur().get(CompteurOrdrejoueur) == 1 && MonJeu.getListe_joueurs().get(0).getChoix_tuile_tour().size()==1)
 				{
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed())
@@ -233,19 +233,19 @@ public class Main {
 						affichageGlobal(num_joueur);
 						MaPioche.AffichageTuilesTour();
 						
-						MonJeu.liste_joueurs.get(0).choix_tuile_tour(num_joueur, true);
-						System.out.println("je prends " + MonJeu.liste_joueurs.get(0).choix_tuile_tour);
+						MonJeu.getListe_joueurs().get(0).choix_tuile_tour(MonJeu, num_joueur, true);
+						System.out.println("je prends " + MonJeu.getListe_joueurs().get(0).getChoix_tuile_tour());
 						
 						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiBleu.png");
 						StdDraw.show();
 						StdDraw.pause(1);
 						StdDraw.clear(StdDraw.GRAY);
 					}
-					if (MonJeu.liste_joueurs.get(0).choix_tuile_tour.size() == 2)NbRoiPlace++;
+					if (MonJeu.getListe_joueurs().get(0).getChoix_tuile_tour().size() == 2)NbRoiPlace++;
 				}
 				
 				//Sélection premier roi joueur 2
-				else if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=516 && StdDraw.mouseY()<=584 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 2 && MonJeu.liste_joueurs.get(1).choix_tuile_tour.size()==0)
+				else if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=516 && StdDraw.mouseY()<=584 && StdDraw.isMousePressed() && MonJeu.getOrdre_tour_joueur().get(CompteurOrdrejoueur) == 2 && MonJeu.getListe_joueurs().get(1).getChoix_tuile_tour().size()==0)
 				{
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed())
@@ -254,19 +254,19 @@ public class Main {
 						affichageGlobal(num_joueur);
 						MaPioche.AffichageTuilesTour();
 						
-						MonJeu.liste_joueurs.get(1).choix_tuile_tour(num_joueur, false);
-						System.out.println("je prends " + MonJeu.liste_joueurs.get(1).choix_tuile_tour);
+						MonJeu.getListe_joueurs().get(1).choix_tuile_tour(MonJeu, num_joueur, false);
+						System.out.println("je prends " + MonJeu.getListe_joueurs().get(1).getChoix_tuile_tour());
 						
 						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiRouge.png");
 						StdDraw.show();
 						StdDraw.pause(1);
 						StdDraw.clear(StdDraw.GRAY);
 					}
-					if (MonJeu.liste_joueurs.get(1).choix_tuile_tour.size() == 1)NbRoiPlace++;
+					if (MonJeu.getListe_joueurs().get(1).getChoix_tuile_tour().size() == 1)NbRoiPlace++;
 				}
 				
 				//Sélection deuxième roi joueur 2
-				else if(StdDraw.mouseX()>=780-14  && StdDraw.mouseX()<=780+14 && StdDraw.mouseY()>=516 && StdDraw.mouseY()<=584 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 2 && MonJeu.liste_joueurs.get(1).choix_tuile_tour.size()==1)
+				else if(StdDraw.mouseX()>=780-14  && StdDraw.mouseX()<=780+14 && StdDraw.mouseY()>=516 && StdDraw.mouseY()<=584 && StdDraw.isMousePressed() && MonJeu.getOrdre_tour_joueur().get(CompteurOrdrejoueur) == 2 && MonJeu.getListe_joueurs().get(1).getChoix_tuile_tour().size()==1)
 				{
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed())
@@ -275,19 +275,19 @@ public class Main {
 						affichageGlobal(num_joueur);
 						MaPioche.AffichageTuilesTour();
 						
-						MonJeu.liste_joueurs.get(1).choix_tuile_tour(num_joueur, true);
-						System.out.println("je prends " + MonJeu.liste_joueurs.get(1).choix_tuile_tour);
+						MonJeu.getListe_joueurs().get(1).choix_tuile_tour(MonJeu, num_joueur, true);
+						System.out.println("je prends " + MonJeu.getListe_joueurs().get(1).getChoix_tuile_tour());
 						
 						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiRouge.png");
 						StdDraw.show();
 						StdDraw.pause(1);
 						StdDraw.clear(StdDraw.GRAY);
 					}
-					if (MonJeu.liste_joueurs.get(1).choix_tuile_tour.size() == 2)NbRoiPlace++;
+					if (MonJeu.getListe_joueurs().get(1).getChoix_tuile_tour().size() == 2)NbRoiPlace++;
 				}
 				
 				//Sélection roi joueur 3
-				else if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=416 && StdDraw.mouseY()<=484 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 3 && MonJeu.liste_joueurs.get(CompteurOrdrejoueur).choix_tuile_tour.size()==0)
+				else if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=416 && StdDraw.mouseY()<=484 && StdDraw.isMousePressed() && MonJeu.getOrdre_tour_joueur().get(CompteurOrdrejoueur) == 3 && MonJeu.getListe_joueurs().get(CompteurOrdrejoueur).getChoix_tuile_tour().size()==0)
 				{
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed())
@@ -296,19 +296,19 @@ public class Main {
 						affichageGlobal(num_joueur);
 						MaPioche.AffichageTuilesTour();
 						
-						MonJeu.liste_joueurs.get(2).choix_tuile_tour(num_joueur, false);
-						System.out.println("je prends " + MonJeu.liste_joueurs.get(2).choix_tuile_tour);
+						MonJeu.getListe_joueurs().get(2).choix_tuile_tour(MonJeu, num_joueur, false);
+						System.out.println("je prends " + MonJeu.getListe_joueurs().get(2).getChoix_tuile_tour());
 						
 						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiVert.png");
 						StdDraw.show();
 						StdDraw.pause(1);
 						StdDraw.clear(StdDraw.GRAY);
 					}
-					if (MonJeu.liste_joueurs.get(2).choix_tuile_tour.size() == 1)NbRoiPlace++;
+					if (MonJeu.getListe_joueurs().get(2).getChoix_tuile_tour().size() == 1)NbRoiPlace++;
 				}
 				
 				//Sélection roi joueur 4
-				else if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=316 && StdDraw.mouseY()<=384 && StdDraw.isMousePressed() && MonJeu.ordre_tour_joueur.get(CompteurOrdrejoueur) == 4 && MonJeu.liste_joueurs.get(CompteurOrdrejoueur).choix_tuile_tour.size()==0)
+				else if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=316 && StdDraw.mouseY()<=384 && StdDraw.isMousePressed() && MonJeu.getOrdre_tour_joueur().get(CompteurOrdrejoueur) == 4 && MonJeu.getListe_joueurs().get(CompteurOrdrejoueur).getChoix_tuile_tour().size()==0)
 				{
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed())
@@ -317,22 +317,22 @@ public class Main {
 						affichageGlobal(num_joueur);
 						MaPioche.AffichageTuilesTour();
 						
-						MonJeu.liste_joueurs.get(3).choix_tuile_tour(num_joueur, false);
-						System.out.println("je prends " + MonJeu.liste_joueurs.get(3).choix_tuile_tour);
+						MonJeu.getListe_joueurs().get(3).choix_tuile_tour(MonJeu, num_joueur, false);
+						System.out.println("je prends " + MonJeu.getListe_joueurs().get(3).getChoix_tuile_tour());
 						
 						StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiRose.png");
 						StdDraw.show();
 						StdDraw.pause(1);
 						StdDraw.clear(StdDraw.GRAY);
 					}
-					if (MonJeu.liste_joueurs.get(3).choix_tuile_tour.size() == 1)NbRoiPlace++;
+					if (MonJeu.getListe_joueurs().get(3).getChoix_tuile_tour().size() == 1)NbRoiPlace++;
 				}
 				
 				else 
 				{
-					for (int i=0; i<MonJeu.liste_joueurs.size(); i++)
+					for (int i=0; i<MonJeu.getListe_joueurs().size(); i++)
 					{
-							MonJeu.liste_joueurs.get(i).affichageRoi();
+							MonJeu.getListe_joueurs().get(i).affichageRoi();
 					}
 				}
 				
@@ -345,29 +345,29 @@ public class Main {
 				//pour vider la liste d'ordre de jeu des joueurs
 				System.out.println("vidage liste");
 				
-				for(int i=MonJeu.ordre_tour_joueur.size()-1; i>-1; i--)
+				for(int i=MonJeu.getOrdre_tour_joueur().size()-1; i>-1; i--)
 				{
-					MonJeu.ordre_tour_joueur.remove(i);
-					System.out.println(MonJeu.ordre_tour_joueur);
+					MonJeu.getOrdre_tour_joueur().remove(i);
+					System.out.println(MonJeu.getOrdre_tour_joueur());
 				}
 				
 				System.out.println("fin vidage liste");
 				
 				//condition de rebouclage pour 2, 3, 4 joueur pour liste ordre joueurs 
-				while(((num_joueur == 3 || num_joueur == 4) && MonJeu.ordre_tour_joueur.size() != num_joueur) || (num_joueur == 2 && MonJeu.ordre_tour_joueur.size() != 4))
+				while(((num_joueur == 3 || num_joueur == 4) && MonJeu.getOrdre_tour_joueur().size() != num_joueur) || (num_joueur == 2 && MonJeu.getOrdre_tour_joueur().size() != 4))
 				{
-					for (int i=0; i<MonJeu.liste_joueurs.size(); i++)
+					for (int i=0; i<MonJeu.getListe_joueurs().size(); i++)
 					{
-						for (int j=0; j<MonJeu.liste_joueurs.get(i).choix_tuile_tour.size(); j++)
+						for (int j=0; j<MonJeu.getListe_joueurs().get(i).getChoix_tuile_tour().size(); j++)
 						{
 							System.out.println("i : " + i + ", j : " + j);
-							System.out.println(MonJeu.liste_joueurs.get(i).choix_tuile_tour.size());
-							if (MonJeu.ordre_tour_joueur.size() == 0 && MonJeu.liste_joueurs.get(i).choix_tuile_tour.get(j) == 1) MonJeu.ordre_tour_joueur.add(i+1);
-							else if (MonJeu.ordre_tour_joueur.size() == 1 && MonJeu.liste_joueurs.get(i).choix_tuile_tour.get(j) == 2) MonJeu.ordre_tour_joueur.add(i+1);
-							else if (MonJeu.ordre_tour_joueur.size() == 2 && MonJeu.liste_joueurs.get(i).choix_tuile_tour.get(j) == 3) MonJeu.ordre_tour_joueur.add(i+1);
-							else if (MonJeu.ordre_tour_joueur.size() == 3 && MonJeu.liste_joueurs.get(i).choix_tuile_tour.get(j) == 4) MonJeu.ordre_tour_joueur.add(i+1);
+							System.out.println(MonJeu.getListe_joueurs().get(i).getChoix_tuile_tour().size());
+							if (MonJeu.getOrdre_tour_joueur().size() == 0 && MonJeu.getListe_joueurs().get(i).getChoix_tuile_tour().get(j) == 1) MonJeu.getOrdre_tour_joueur().add(i+1);
+							else if (MonJeu.getOrdre_tour_joueur().size() == 1 && MonJeu.getListe_joueurs().get(i).getChoix_tuile_tour().get(j) == 2) MonJeu.getOrdre_tour_joueur().add(i+1);
+							else if (MonJeu.getOrdre_tour_joueur().size() == 2 && MonJeu.getListe_joueurs().get(i).getChoix_tuile_tour().get(j) == 3) MonJeu.getOrdre_tour_joueur().add(i+1);
+							else if (MonJeu.getOrdre_tour_joueur().size() == 3 && MonJeu.getListe_joueurs().get(i).getChoix_tuile_tour().get(j) == 4) MonJeu.getOrdre_tour_joueur().add(i+1);
 							
-							System.out.println(MonJeu.ordre_tour_joueur);
+							System.out.println(MonJeu.getOrdre_tour_joueur());
 						}
 					}
 				}
@@ -400,8 +400,8 @@ public class Main {
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
 							
-							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.tuiles_tour.get(0).getType_tuile1(), MaPioche.tuiles_tour.get(0).getNbCouronnes1(), MaPioche.tuiles_tour.get(0).getType_tuile2(), MaPioche.tuiles_tour.get(0).getNbCouronnes2());
-							flagTuile1 = affichageTuileJoueur1(MaPioche.tuiles_tour.get(0));
+							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(0).getType_tuile1(), MaPioche.getTuiles_tour().get(0).getNbCouronnes1(), MaPioche.getTuiles_tour().get(0).getType_tuile2(), MaPioche.getTuiles_tour().get(0).getNbCouronnes2());
+							flagTuile1 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(0));
 							
 							System.out.println("flagTuile1 :" + flagTuile1);
 							
@@ -413,7 +413,7 @@ public class Main {
 					}
 				}
 				
-				if (flagTuile1==true)MonJeu.liste_joueurs.get(0).affichagePlateauJoueur();
+				if (flagTuile1==true)MonJeu.getListe_joueurs().get(0).affichagePlateauJoueur();
 				
 				//System.out.println(MonJeu.ordre_tour_joueur);
 			}
@@ -487,7 +487,7 @@ public class Main {
 		int somme =0;
 		for(int i=0; i<MonJeu.getListe_joueurs().size(); i++)
 		{
-			somme = somme + MonJeu.liste_joueurs.get(i).getNbRois();
+			somme = somme + MonJeu.getListe_joueurs().get(i).getNbRois();
 		}
 		return somme;
 	}
@@ -505,26 +505,25 @@ public class Main {
 			for (int j=0; j<5; j++)
 			{
 				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE))
-					{
-						
-					if (maPetiteTuile.type_tuile1.equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-					else if (maPetiteTuile.type_tuile1.equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-					else if (maPetiteTuile.type_tuile1.equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-					else if (maPetiteTuile.type_tuile1.equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-					else if (maPetiteTuile.type_tuile1.equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-					else if (maPetiteTuile.type_tuile1.equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+				{
+					if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+					else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+					else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+					else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+					else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+					else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
 					
-					if (maPetiteTuile.type_tuile2.equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-					else if (maPetiteTuile.type_tuile2.equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-					else if (maPetiteTuile.type_tuile2.equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-					else if (maPetiteTuile.type_tuile2.equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-					else if (maPetiteTuile.type_tuile2.equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-					else if (maPetiteTuile.type_tuile2.equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+					if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+					else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+					else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+					else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+					else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+					else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
 					
 					if (StdDraw.isMousePressed()) 
 					{	
-						MonJeu.liste_joueurs.get(0).setPlateauJoueur(j,i,maPetiteTuile.type_tuile1);
-						MonJeu.liste_joueurs.get(0).setPlateauJoueur(j,i+1,maPetiteTuile.type_tuile2);
+						MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1());
+						MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2());
 						return true;
 					}
 					}
@@ -550,7 +549,7 @@ public class Main {
 						if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
 						if (StdDraw.isMousePressed()) 
 						{	
-							MonJeu.liste_joueurs.get(0).setPlateauJoueur(j,i,mot);
+							MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,mot);
 							return true;
 						}
 					}
@@ -569,7 +568,7 @@ public class Main {
 		{
 			for(int j=0; j<5; j++)
 			{
-				contenu = MonJeu.liste_joueurs.get(0).getPlateauJoueur(j,i);
+				contenu = MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j,i);
 				System.out.println("contenu : " + contenu);
 				
 				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
@@ -602,7 +601,7 @@ public class Main {
 					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
 					if (StdDraw.isMousePressed()) 
 					{	
-						MonJeu.liste_joueurs.get(1).setPlateauJoueur(j,i,mot);
+						MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,mot);
 						return true;
 					}
 				}
@@ -621,7 +620,7 @@ public class Main {
 		{
 			for(int j=0; j<5; j++)
 			{
-				contenu = MonJeu.liste_joueurs.get(1).getPlateauJoueur(j,i);
+				contenu = MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j,i);
 				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
 	
 			}
@@ -647,7 +646,7 @@ public class Main {
 					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
 					if (StdDraw.isMousePressed()) 
 					{	
-						MonJeu.liste_joueurs.get(2).setPlateauJoueur(j,i,mot);
+						MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,mot);
 						return true;
 					}
 				}
@@ -666,7 +665,7 @@ public class Main {
 		{
 			for(int j=0; j<5; j++)
 			{
-				contenu = MonJeu.liste_joueurs.get(2).getPlateauJoueur(j,i);
+				contenu = MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j,i);
 				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
 	
 			}
@@ -692,7 +691,7 @@ public class Main {
 					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
 					if (StdDraw.isMousePressed()) 
 					{	
-						MonJeu.liste_joueurs.get(3).setPlateauJoueur(j,i,mot);
+						MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,mot);
 						return true;
 					}
 				}
@@ -711,7 +710,7 @@ public class Main {
 		{
 			for(int j=0; j<5; j++)
 			{
-				contenu = MonJeu.liste_joueurs.get(3).getPlateauJoueur(j,i);
+				contenu = MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j,i);
 				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
 			}
 		}
@@ -725,5 +724,12 @@ public class Main {
 // nouvel ordre joueur prochain tour
 //incrémenté les tours
 // ~ - fixe bug spam click sur roi
+//ajouter les couronne sur le plateau et au deplacement de la tuile
+
 
 //fonction de fin de tour (faire liste tour de jeu, tuile choisi joueur à 0, la lsite des tuile du tour )
+
+//rendre clean
+//déplacer le fonction du main et en créer plus
+// mettre des this dan sles class
+//camelCase variable, methode, fonction, instances

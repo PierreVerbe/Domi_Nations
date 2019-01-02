@@ -10,39 +10,32 @@ import edu.princeton.cs.introcs.StdDraw;
 
 public class Pioche {
 	
-	static ArrayList<Tuile> tuiles_piochees = new ArrayList<>();
-	static ArrayList<Tuile> liste_tuiles = new ArrayList<>();
-	static ArrayList<Tuile> tuiles_tour = new ArrayList<>();
+	private ArrayList<Tuile> tuiles_piochees = new ArrayList<>();
+	private ArrayList<Tuile> liste_tuiles = new ArrayList<>();
+	private ArrayList<Tuile> tuiles_tour = new ArrayList<>();
 	
+	public Pioche(){}
 	
-	
-	public static ArrayList<Tuile> getTuiles_piochees() {
+	public ArrayList<Tuile> getTuiles_piochees() {
 		return tuiles_piochees;
 	}
-
-	public static void setTuiles_piochees(ArrayList<Tuile> tuiles_piochees) {
-		Pioche.tuiles_piochees = tuiles_piochees;
+	public void setTuiles_piochees(ArrayList<Tuile> tuiles_piochees) {
+		this.tuiles_piochees = tuiles_piochees;
 	}
-
-	public static ArrayList<Tuile> getListe_tuiles() {
+	public ArrayList<Tuile> getListe_tuiles() {
 		return liste_tuiles;
 	}
-
-	public static void setListe_tuiles(ArrayList<Tuile> liste_tuiles) {
-		Pioche.liste_tuiles = liste_tuiles;
+	public void setListe_tuiles(ArrayList<Tuile> liste_tuiles) {
+		this.liste_tuiles = liste_tuiles;
 	}
-
-	public static ArrayList<Tuile> getTuiles_tour() {
+	public ArrayList<Tuile> getTuiles_tour() {
 		return tuiles_tour;
 	}
-
-	public static void setTuiles_tour(ArrayList<Tuile> tuiles_tour) {
-		Pioche.tuiles_tour = tuiles_tour;
+	public void setTuiles_tour(ArrayList<Tuile> tuiles_tour) {
+		this.tuiles_tour = tuiles_tour;
 	}
 
 	public void ImportationTuiles() {
-		
-		
 		Path orderPath = Paths.get("dominos.csv");
 		List<String> lines = null;
 		
@@ -52,7 +45,6 @@ public class Pioche {
 		catch (IOException e){
 			System.out.println("Impossible d'importer le fichier");
 		}
-		
 		
 		for (int i = 1; i < lines.size(); i++) {
             String[] split = lines.get(i).split(",");
@@ -64,18 +56,12 @@ public class Pioche {
             int numeroDomino = Integer.valueOf(split[4]);
             
             Tuile t = new Tuile(numeroDomino, nbCouronnes1, nbCouronnes2, type1, type2);
-            
             liste_tuiles.add(t);
-            
-            
-		}
-		
-		//System.out.println(liste_tuiles);
+		}	
 	}
 	
-	public void PiocherTuilesJeu() {
-		
-		int nbJoueurs = Jeu.getSizeList();
+	public void PiocherTuilesJeu(Jeu monJeu) {
+		int nbJoueurs = monJeu.getSizeList();
 		Random rand = new Random();
 		
 		if (nbJoueurs == 2) {
@@ -84,53 +70,50 @@ public class Pioche {
 				tuiles_piochees.add(liste_tuiles.get(indice));
 				liste_tuiles.remove(indice);
 			}
-		} else if (nbJoueurs == 3) {
+		} 
+		
+		else if (nbJoueurs == 3) {
 			for (int i = 0; i < 36; i++) {
 				int indice = rand.nextInt(liste_tuiles.size());
 				tuiles_piochees.add(liste_tuiles.get(indice));
 				liste_tuiles.remove(indice);
 			}
-		} else if (nbJoueurs == 4) {
-			tuiles_piochees = liste_tuiles;
-			
-			
-			
+		} 
+		
+		else if (nbJoueurs == 4) {
+			tuiles_piochees = liste_tuiles;	
 		}
 	}
 	
-	public void PiocherTuilesTour() {
-		
-		int nbJoueurs = Jeu.getSizeList();
+	public void PiocherTuilesTour(Jeu monJeu) {
+		int nbJoueurs = monJeu.getSizeList();
 		Random rand = new Random();
 		
 		if (nbJoueurs == 2 || nbJoueurs == 4) {
 			for (int i = 0; i < 4; i++) {
 				int indice = rand.nextInt(tuiles_piochees.size());
-				Pioche.tuiles_tour.add(tuiles_piochees.get(indice));
-				Pioche.tuiles_piochees.remove(indice);
+				tuiles_tour.add(tuiles_piochees.get(indice));
+				tuiles_piochees.remove(indice);
 			}
-		} else if (nbJoueurs == 3) {
+		} 
+		
+		else if (nbJoueurs == 3) {
 			for (int i = 0; i < 3; i++) {
 				int indice = rand.nextInt(tuiles_piochees.size());
-				Pioche.tuiles_tour.add(tuiles_piochees.get(indice));
-				Pioche.tuiles_piochees.remove(indice);
+				tuiles_tour.add(tuiles_piochees.get(indice));
+				tuiles_piochees.remove(indice);
 			}
 		}
 	}
 	
-	public void ViderTuilesTour() 
-	{
+	public void ViderTuilesTour() {
 		int nb_tuile_tour = this.tuiles_tour.size();
-		
 		for (int i=nb_tuile_tour-1; i>-1; i--)this.tuiles_tour.remove(i);		
 	}
 	
-	public void AffichageTuilesTour() 
-	{	
-		for(int i=0; i<this.tuiles_tour.size(); i++)
-		{
+	public void AffichageTuilesTour() {	
+		for(int i=0; i<this.tuiles_tour.size(); i++){
 			switch (i) {
-			
 			case 0:
 				this.AffichageTuile(1040, 540, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
 				break;
@@ -150,8 +133,7 @@ public class Pioche {
 		}	
 	}
 	
-	public void AffichageTuile(double x, double y, String terrain1, int couronne1, String terrain2, int couronne2)
-	{	
+	public void AffichageTuile(double x, double y, String terrain1, int couronne1, String terrain2, int couronne2){	
 		//première partie de la tuile (partie gauche)
 		//terrains
 		if (terrain1.equals("Champs"))StdDraw.picture(x, y, "img/champs.png");
