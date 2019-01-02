@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.util.ArrayList;
 
 import edu.princeton.cs.introcs.StdDraw;
@@ -116,6 +117,105 @@ public class Jeu {
 		/*StdDraw.filledRectangle(1200, 700, 10, 10);
 		StdDraw.setPenColor(StdDraw.RED);
 	} */
+	
+	public void affichageGlobal(int nombreJoueurs){
+		affichagePlateauJoueurs(nombreJoueurs); //image des plateaux du jeu
+		affichageMemoireJoueur1(); //affichage des tuiles du plateaux 1
+		affichageMemoireJoueur2(); //affichage des tuiles du plateaux 1
+		try {
+			affichageMemoireJoueur3();
+		}
+		
+		catch(java.lang.IndexOutOfBoundsException e) {}
+		
+		try{
+			affichageMemoireJoueur4();
+		}
+		
+		catch(java.lang.IndexOutOfBoundsException e) {}
+	}
+	
+	public void affichagePlateauJoueurs(int nombreJoueurs){
+		Font font = new Font("Arial", Font.BOLD, 20);
+		StdDraw.setFont(font);
+		
+		//affichage des 2 premiers plateaux
+		StdDraw.picture(180, 540, "img/Domination_plateau.png");
+		StdDraw.text(180, 540,"Plateau du joueur 1");
+		StdDraw.picture(540, 180, "img/Domination_plateau.png");
+		StdDraw.text(540, 180,"Plateau du joueur 2");
+		
+		//affichage des 2 derniers plateaux
+		if (nombreJoueurs >= 3){
+			StdDraw.picture(540, 540, "img/Domination_plateau.png");
+			StdDraw.text(540, 540,"Plateau du joueur 3");
+		}
+		
+		if (nombreJoueurs == 4){
+			StdDraw.picture(180, 180, "img/Domination_plateau.png");
+			StdDraw.text(180, 180,"Plateau du joueur 4");
+		}
+	}
+	
+	public void affichageMemoireJoueur1(){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		
+		String contenu;
+		for(int i=0; i<5; i++){
+			for(int j=0; j<5; j++){
+				contenu = this.getListe_joueurs().get(0).getPlateauJoueur(j,i);
+				System.out.println("contenu : " + contenu);
+				
+				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+				else if (("Champs").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+				else if (("Mer").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+				else if (("Foret").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+				else if (("Prairie").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+				else if (("Mine").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+				else if (("Montagne").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+			}
+		}
+	}
+	
+	public void affichageMemoireJoueur2(){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		String contenu;
+		
+		for(int i=0; i<5; i++){
+			for(int j=0; j<5; j++){
+				contenu = this.getListe_joueurs().get(1).getPlateauJoueur(j,i);
+				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+			}
+		}
+	}
+	
+	public void affichageMemoireJoueur3(){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		String contenu;
+		
+		for(int i=0; i<5; i++){
+			for(int j=0; j<5; j++){
+				contenu = this.getListe_joueurs().get(2).getPlateauJoueur(j,i);
+				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+			}
+		}
+	}
+	
+	public void affichageMemoireJoueur4(){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		String contenu;
+		
+		for(int i=0; i<5; i++){
+			for(int j=0; j<5; j++){
+				contenu = this.getListe_joueurs().get(3).getPlateauJoueur(j,i);
+				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+			}
+		}
+	}
 	
 	public void AffichageRoiTour()
 	{
