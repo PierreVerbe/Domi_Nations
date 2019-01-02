@@ -152,7 +152,7 @@ public class Plateau {
 		{
 			for(int j=0; j<5; j++)
 			{
-				System.out.print(tableau_tuiles_plateau[i][j]);
+				System.out.print(tableau_tuiles_plateau[i][j] + " ");
 			}
 			System.out.println();
 		}		
