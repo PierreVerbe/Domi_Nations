@@ -54,9 +54,14 @@ public class Joueur {
 		this.choix_tuile_tour = choix_tuile_tour;
 	}
 	public void infoJoueur(){
-		System.out.println(this.pseudo);
-		System.out.println(this.couleur);
-		System.out.println(this.nbRois);
+		System.out.println("Caractéristiques joueurs:");
+		System.out.println("Pseudo -> " + this.pseudo);
+		if (this.couleur == Color.BLUE) System.out.println("Votre couleur -> Bleu");
+		else if (this.couleur == Color.RED) System.out.println("Votre couleur -> Rouge");
+		else if (this.couleur == Color.GREEN) System.out.println("Votre couleur -> Vert");
+		else if (this.couleur == Color.PINK) System.out.println("Votre couleur -> Rose");
+		System.out.println("Nombre de rois -> " +this.nbRois);
+		System.out.println();
 	}
 	
 	//affichage des rois, image format png en 28*68px
@@ -79,6 +84,133 @@ public class Joueur {
 		
 		if (this.couleur == Color.GREEN)StdDraw.picture( 750, 450, "img/roiVert.png");
 		if (this.couleur == Color.PINK)StdDraw.picture( 750, 350, "img/roiRose.png");
+	}
+	
+	//Sélection premier roi joueur 1
+	public void placementRoiJ1p(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
+		if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=616 && StdDraw.mouseY()<=684 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 1 && this.choix_tuile_tour.size()==0){
+			while(StdDraw.isMousePressed());
+			while (!StdDraw.isMousePressed()){
+				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				monJeu.affichageGlobal(nbJoueur);
+				maPioche.AffichageTuilesTour();
+				
+				this.choix_tuile_tour(monJeu, nbJoueur, false);
+				//System.out.println("je prends " + this.getChoix_tuile_tour());
+				
+				StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiBleu.png");
+				StdDraw.show();
+				StdDraw.pause(1);
+				StdDraw.clear(StdDraw.GRAY);
+			}
+			if (this.getChoix_tuile_tour().size() == 1)monJeu.addNb_roi_place();
+			}
+	}
+	
+	//Sélection deuxième roi joueur 1
+	public void placementRoiJ1d(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
+		if(StdDraw.mouseX()>=780-14  && StdDraw.mouseX()<=780+14 && StdDraw.mouseY()>=616 && StdDraw.mouseY()<=684 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 1 && this.choix_tuile_tour.size()==1){
+			while(StdDraw.isMousePressed());
+			while (!StdDraw.isMousePressed()){
+				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				monJeu.affichageGlobal(nbJoueur);
+				maPioche.AffichageTuilesTour();
+				
+				monJeu.getListe_joueurs().get(0).choix_tuile_tour(monJeu, nbJoueur, true);
+				//System.out.println("je prends " + monJeu.getListe_joueurs().get(0).getChoix_tuile_tour());
+				
+				StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiBleu.png");
+				StdDraw.show();
+				StdDraw.pause(1);
+				StdDraw.clear(StdDraw.GRAY);
+			}
+			if (monJeu.getListe_joueurs().get(0).getChoix_tuile_tour().size() == 2)monJeu.addNb_roi_place();
+		}
+	}
+	
+	//Sélection premier roi joueur 2
+	public void placementRoiJ2p(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
+		if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=516 && StdDraw.mouseY()<=584 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 2 && this.choix_tuile_tour.size()==0){
+			while(StdDraw.isMousePressed());
+			while (!StdDraw.isMousePressed()){
+				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				monJeu.affichageGlobal(nbJoueur);
+				maPioche.AffichageTuilesTour();
+				
+				monJeu.getListe_joueurs().get(1).choix_tuile_tour(monJeu, nbJoueur, false);
+				//System.out.println("je prends " + monJeu.getListe_joueurs().get(1).getChoix_tuile_tour());
+				
+				StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiRouge.png");
+				StdDraw.show();
+				StdDraw.pause(1);
+				StdDraw.clear(StdDraw.GRAY);
+			}
+			if (monJeu.getListe_joueurs().get(1).getChoix_tuile_tour().size() == 1)monJeu.addNb_roi_place();
+		 }
+	}
+	
+	
+	//Sélection deuxième roi joueur 2
+	public void placementRoiJ2d(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
+		if(StdDraw.mouseX()>=780-14  && StdDraw.mouseX()<=780+14 && StdDraw.mouseY()>=516 && StdDraw.mouseY()<=584 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 2 && this.choix_tuile_tour.size()==1){
+			while(StdDraw.isMousePressed());
+			while (!StdDraw.isMousePressed()){
+				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				monJeu.affichageGlobal(nbJoueur);
+				maPioche.AffichageTuilesTour();
+				
+				monJeu.getListe_joueurs().get(1).choix_tuile_tour(monJeu, nbJoueur, true);
+				//System.out.println("je prends " + monJeu.getListe_joueurs().get(1).getChoix_tuile_tour());
+				
+				StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiRouge.png");
+				StdDraw.show();
+				StdDraw.pause(1);
+				StdDraw.clear(StdDraw.GRAY);
+			}
+			if (monJeu.getListe_joueurs().get(1).getChoix_tuile_tour().size() == 2)monJeu.addNb_roi_place();
+		}
+	}
+	
+	//Sélection roi joueur 3
+	public void placementRoiJ3p(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
+		if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=416 && StdDraw.mouseY()<=484 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 3 && this.choix_tuile_tour.size()==0){
+			while(StdDraw.isMousePressed());
+			while (!StdDraw.isMousePressed()){
+				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				monJeu.affichageGlobal(nbJoueur);
+				maPioche.AffichageTuilesTour();
+				
+				monJeu.getListe_joueurs().get(2).choix_tuile_tour(monJeu, nbJoueur, false);
+				//System.out.println("je prends " + monJeu.getListe_joueurs().get(2).getChoix_tuile_tour());
+				
+				StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiVert.png");
+				StdDraw.show();
+				StdDraw.pause(1);
+				StdDraw.clear(StdDraw.GRAY);
+			}
+			if (monJeu.getListe_joueurs().get(2).getChoix_tuile_tour().size() == 1)monJeu.addNb_roi_place();
+		}
+	}
+	
+	//Sélection roi joueur 4
+	public void placementRoiJ4p(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
+		if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=316 && StdDraw.mouseY()<=384 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 4 && this.choix_tuile_tour.size()==0){
+			while(StdDraw.isMousePressed());
+			while (!StdDraw.isMousePressed()){
+				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				monJeu.affichageGlobal(nbJoueur);
+				maPioche.AffichageTuilesTour();
+				
+				monJeu.getListe_joueurs().get(3).choix_tuile_tour(monJeu, nbJoueur, false);
+				//System.out.println("je prends " + monJeu.getListe_joueurs().get(3).getChoix_tuile_tour());
+				
+				StdDraw.picture( StdDraw.mouseX(), StdDraw.mouseY(), "img/roiRose.png");
+				StdDraw.show();
+				StdDraw.pause(1);
+				StdDraw.clear(StdDraw.GRAY);
+			}
+			if (monJeu.getListe_joueurs().get(3).getChoix_tuile_tour().size() == 1)monJeu.addNb_roi_place();
+		}
 	}
 	
 	public void choix_tuile_tour(Jeu monJeu, int Nbjoueur, boolean flagRoi2){

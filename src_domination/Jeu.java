@@ -1,5 +1,6 @@
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Random;
 
 import edu.princeton.cs.introcs.StdDraw;
 
@@ -9,6 +10,7 @@ public class Jeu {
 	private int nb_tour;
 	private ArrayList<Tuile> liste_tuiles = new ArrayList<>();
 	private ArrayList<Integer> ordre_tour_joueur = new ArrayList<Integer>(); //attribut pierre
+	private int nb_roi_place = 0; // attribut pierre
 	
 	public Jeu(){}
 	
@@ -39,11 +41,76 @@ public class Jeu {
 	public void setOrdre_tour_joueur(ArrayList<Integer> ordre_tour_joueur) {
 		this.ordre_tour_joueur = ordre_tour_joueur;
 	}
+	public int getNb_roi_place() {
+		return nb_roi_place;
+	}
+	public void setNb_roi_place(int nb_roi_place) {
+		this.nb_roi_place = nb_roi_place;
+	}
+	public void addNb_roi_place() {
+		this.nb_roi_place = this.nb_roi_place+1;
+	}
 	
 	public void AffichageListeJoueurs()
 	{
 		for (int i = 0; i < liste_joueurs.size(); i++) {
 			System.out.println(liste_joueurs.get(i).getPseudo());
+		}
+	}
+	
+	public void initOrdreTour(int nbJoueur)
+	{
+		Random rand = new Random();
+		int joueur;
+		int occurence = 0;
+		
+		if (nbJoueur == 2){
+			while(this.ordre_tour_joueur.size()!=4) {
+				occurence = 0;
+				joueur = rand.nextInt(3);
+				if (joueur != 0) {
+					if (this.ordre_tour_joueur.size() == 0)this.ordre_tour_joueur.add(joueur); 
+					else {
+						for (int i =0; i<this.ordre_tour_joueur.size(); i++) {
+						if (this.ordre_tour_joueur.get(i) == joueur)occurence = occurence+1; 	
+						}
+						if (occurence<2)this.ordre_tour_joueur.add(joueur);  
+					}
+				} 
+			}
+			
+		}
+		
+		if (nbJoueur == 3){
+			while(this.ordre_tour_joueur.size()!=3) {
+				occurence = 0;
+				joueur = rand.nextInt(4);
+				if (joueur != 0) {
+					if (this.ordre_tour_joueur.size() == 0)this.ordre_tour_joueur.add(joueur); 
+					else {
+						for (int i =0; i<this.ordre_tour_joueur.size(); i++) {
+						if (this.ordre_tour_joueur.get(i) == joueur)occurence =1; 	
+						}
+						if (occurence==0)this.ordre_tour_joueur.add(joueur);  
+					}
+				}
+			}
+		}
+		
+		if (nbJoueur == 4){
+			while(this.ordre_tour_joueur.size()!=4) {
+				occurence = 0;
+				joueur = rand.nextInt(5);
+				if (joueur != 0) {
+					if (this.ordre_tour_joueur.size() == 0)this.ordre_tour_joueur.add(joueur); 
+					else {
+						for (int i =0; i<this.ordre_tour_joueur.size(); i++) {
+						if (this.ordre_tour_joueur.get(i) == joueur)occurence =1; 	
+						}
+						if (occurence == 0)this.ordre_tour_joueur.add(joueur); 
+					}	
+				}
+			}
 		}
 	}
 	
@@ -160,13 +227,11 @@ public class Jeu {
 	public void affichageMemoireJoueur1(){
 		final int TAILLE_CASE = 68;
 		final int TAILLE_LIGNE = 2;
-		
 		String contenu;
+		
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
-				contenu = this.getListe_joueurs().get(0).getPlateauJoueur(j,i);
-				System.out.println("contenu : " + contenu);
-				
+				contenu = this.getListe_joueurs().get(0).getPlateauJoueur(j,i);				
 				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
 				else if (("Champs").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
 				else if (("Mer").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
@@ -187,6 +252,12 @@ public class Jeu {
 			for(int j=0; j<5; j++){
 				contenu = this.getListe_joueurs().get(1).getPlateauJoueur(j,i);
 				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+				else if (("Champs").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+				else if (("Mer").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+				else if (("Foret").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+				else if (("Prairie").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+				else if (("Mine").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+				else if (("Montagne").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
 			}
 		}
 	}
@@ -200,6 +271,12 @@ public class Jeu {
 			for(int j=0; j<5; j++){
 				contenu = this.getListe_joueurs().get(2).getPlateauJoueur(j,i);
 				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+				else if (("Champs").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+				else if (("Mer").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+				else if (("Foret").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+				else if (("Prairie").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+				else if (("Mine").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+				else if (("Montagne").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
 			}
 		}
 	}
@@ -213,6 +290,12 @@ public class Jeu {
 			for(int j=0; j<5; j++){
 				contenu = this.getListe_joueurs().get(3).getPlateauJoueur(j,i);
 				if (contenu == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+				else if (("Champs").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+				else if (("Mer").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+				else if (("Foret").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+				else if (("Prairie").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+				else if (("Mine").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+				else if (("Montagne").equals(contenu)) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.HashMap;
 
 public class Plateau {
 	
@@ -59,6 +59,7 @@ public class Plateau {
 		}
 	}*/
 	
+	/*
 	public void CompterCouronnes() {
 		HashMap<Integer, Integer> casesVisitees = new HashMap<>();
 		int score = 0;
@@ -121,10 +122,10 @@ public class Plateau {
 				}
 				score = score + nbCouronnesDimension;
 			}
-		}
+		}*/
 	
 	
-	public void RemplirPlateau(int i, int j, String mot) {
+	public void RemplirPlateau(int i, int j, String mot) {			
 		tableau_tuiles_plateau[i][j]=mot;
 	}
 	

@@ -1,6 +1,6 @@
 import java.awt.Color;
 
-public class Chateau {
+public class Chateau { //sert à rien comme class
 	private Color couleur;
 	private int position_x;
 	private int position_y;
