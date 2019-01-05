@@ -312,9 +312,42 @@ public class Main {
 					}
 				}
 				
+				//Fin tour
+				if(num_joueur == 3 && flagTuile1 && flagTuile2 && flagTuile3) flagFinTourJeu=true;
+				else if (flagTuile1 && flagTuile2 && flagTuile3 && flagTuile4) flagFinTourJeu=true;
+				
 				//if (flagTuile1==true)MonJeu.getListe_joueurs().get(0).affichagePlateauJoueur();
 				
 				//System.out.println(MonJeu.ordre_tour_joueur);
+			}
+			
+			else if (flagChateau == true && MonJeu.getNb_roi_place() == sommeRoi() && flagFinTourJeu == true) {
+				//fonction de fin de tour (faire liste tour de jeu, tuile choisi joueur à 0, la lsite des tuile du tour )
+				//Remise à 0 des variables de jeu
+				MonJeu.setNb_roi_place(0);
+				CompteurOrdrejoueur = 0;
+				
+				for(int i=MonJeu.getListe_joueurs().get(0).getChoix_tuile_tour().size()-1; i>-1; i--)MonJeu.getListe_joueurs().get(0).getChoix_tuile_tour().remove(i);
+				for(int i=MonJeu.getListe_joueurs().get(1).getChoix_tuile_tour().size()-1; i>-1; i--)MonJeu.getListe_joueurs().get(1).getChoix_tuile_tour().remove(i);
+				try {
+					for(int i=MonJeu.getListe_joueurs().get(2).getChoix_tuile_tour().size()-1; i>-1; i--)MonJeu.getListe_joueurs().get(2).getChoix_tuile_tour().remove(i);
+				}
+				catch(java.lang.IndexOutOfBoundsException e) {}
+				
+				try {
+					for(int i=MonJeu.getListe_joueurs().get(3).getChoix_tuile_tour().size()-1; i>-1; i--)MonJeu.getListe_joueurs().get(3).getChoix_tuile_tour().remove(i);
+				}
+				catch(java.lang.IndexOutOfBoundsException e) {}
+				
+				//remise a 0 des flag de tuile
+				flagTuile1 = false;
+				flagTuile2 = false;
+				flagTuile3 = false;
+				flagTuile4 = false;
+				flagFinTourJeu = false;
+				
+				//Nouveau tour
+				MonJeu.setNb_tour(MonJeu.getNb_tour()+1);	
 			}
 			
 			//System.out.println("nb roi : " + NbRoiPlace);
@@ -641,7 +674,7 @@ public class Main {
 // ~ - ajouter les couronne sur le plateau et au deplacement de la tuile
 // l 156 le faire une fois
 //gérer changer sens tuile 
-// ~J1 - gérer le superposage (le second tour bug tuile) 
+// ~ - gérer le superposage (le second tour bug tuile) 
 // ~ - tu sors des bords du plateau tuile detruite (le second tour bug tuile)
 //victoire : pt = -> Royaume + grand
 //			 pt = & royaume = -> + couronne
