@@ -78,8 +78,14 @@ public class Main {
 		
 		//Boucle principal du jeu
 		while(jeu == true){
-			//préparation affichage de tous les éléments de la fenêtre
+			//Préparation affichage de tous les éléments de la fenêtre
 			MonJeu.affichageGlobal(num_joueur);
+			
+			//raccourci fin de jeu - echap
+			if(StdDraw.isKeyPressed(27)) {
+				System.out.println("Racc Fin du jeu");
+				jeu = false;
+			}
 			
 			//placement des chateaux pour chacun des joueurs
 			if(flagChateau == false){
@@ -358,13 +364,9 @@ public class Main {
 			StdDraw.clear(StdDraw.GRAY);
 		}
 		
-		StdDraw.show();		
-		
-		System.out.println(MonJeu.getListe_joueurs());
-		
-		//System.out.println(MonJeu.getNames());
-		//MonJeu.initGame(MonJeu.askNbPlayer());
-		//System.out.println(MonJeu.getNames());
+		//Affichage résultat gagnant
+		//ici
+		StdDraw.show();	
 		System.out.println("Vous avez fini de jouer");
 	}
 	
