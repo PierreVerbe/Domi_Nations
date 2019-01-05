@@ -115,49 +115,50 @@ public class Pioche {
 		for(int i=0; i<this.tuiles_tour.size(); i++){
 			switch (i) {
 			case 0:
-				this.AffichageTuile(1040, 540, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				this.AffichageTuile(1040, 540, this.tuiles_tour.get(i));
 				break;
 				
 			case 1:
-				this.AffichageTuile(1040, 450, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				this.AffichageTuile(1040, 450, this.tuiles_tour.get(i));
 				break;
 				
 			case 2:
-				this.AffichageTuile(1040, 360, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				this.AffichageTuile(1040, 360, this.tuiles_tour.get(i));
 				break;
 				
 			case 3:
-				this.AffichageTuile(1040, 270, this.tuiles_tour.get(i).getType_tuile1(), this.tuiles_tour.get(i).getNbCouronnes1(), this.tuiles_tour.get(i).getType_tuile2(), this.tuiles_tour.get(i).getNbCouronnes2());
+				this.AffichageTuile(1040, 270, this.tuiles_tour.get(i));
 				break;
 			}
 		}	
 	}
 	
-	public void AffichageTuile(double x, double y, String terrain1, int couronne1, String terrain2, int couronne2){	
+	public void AffichageTuile(double x, double y, Tuile maTuile){	
 		//première partie de la tuile (partie gauche)
-		//terrains
-		if (terrain1.equals("Champs"))StdDraw.picture(x, y, "img/champs.png");
-		else if (terrain1.equals("Mer"))StdDraw.picture(x, y, "img/mer.png");
-		else if (terrain1.equals("Foret"))StdDraw.picture(x, y, "img/foret.png");
-		else if (terrain1.equals("Prairie"))StdDraw.picture(x, y, "img/prairie.png");
-		else if (terrain1.equals("Mine"))StdDraw.picture(x, y, "img/mine.png");
-		else if (terrain1.equals("Montagne"))StdDraw.picture(x, y, "img/montagne.png");
-		//couronnes
-		if (couronne1 == 1)StdDraw.picture(x, y, "img/1couronne.png");
-		else if (couronne1 == 2)StdDraw.picture(x, y, "img/2couronnes.png");
-		else if (couronne1 == 3)StdDraw.picture(x, y, "img/3couronnes.png");
-		
-		//deuxième partie de la tuile (partie droite)
-		//terrains
-		if (terrain2.equals("Champs"))StdDraw.picture(x+68, y, "img/champs.png");
-		else if (terrain2.equals("Mer"))StdDraw.picture(x+68, y, "img/mer.png");
-		else if (terrain2.equals("Foret"))StdDraw.picture(x+68, y, "img/foret.png");
-		else if (terrain2.equals("Prairie"))StdDraw.picture(x+68, y, "img/prairie.png");
-		else if (terrain2.equals("Mine"))StdDraw.picture(x+68, y, "img/mine.png");
-		else if (terrain2.equals("Montagne"))StdDraw.picture(x+68, y, "img/montagne.png");	
-		//couronnes
-		if (couronne2 == 1)StdDraw.picture(x+68, y, "img/1couronne.png");
-		else if (couronne2 == 2)StdDraw.picture(x+68, y, "img/2couronnes.png");
-		else if (couronne2== 3)StdDraw.picture(x+68, y, "img/3couronnes.png");
+				//terrains
+				if (maTuile.getType_tuile1().equals("Champs"))StdDraw.picture(x, y, "img/champs.png");
+				else if (maTuile.getType_tuile1().equals("Mer"))StdDraw.picture(x, y, "img/mer.png");
+				else if (maTuile.getType_tuile1().equals("Foret"))StdDraw.picture(x, y, "img/foret.png");
+				else if (maTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(x, y, "img/prairie.png");
+				else if (maTuile.getType_tuile1().equals("Mine"))StdDraw.picture(x, y, "img/mine.png");
+				else if (maTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(x, y, "img/montagne.png");
+				//couronnes
+				if (maTuile.getNbCouronnes1() == 1)StdDraw.picture(x, y, "img/1couronne.png");
+				else if (maTuile.getNbCouronnes1() == 2)StdDraw.picture(x, y, "img/2couronnes.png");
+				else if (maTuile.getNbCouronnes1() == 3)StdDraw.picture(x, y, "img/3couronnes.png");
+				
+				//deuxième partie de la tuile (partie droite)
+				//terrains
+				if (maTuile.getType_tuile2().equals("Champs"))StdDraw.picture(x+68, y, "img/champs.png");
+				else if (maTuile.getType_tuile2().equals("Mer"))StdDraw.picture(x+68, y, "img/mer.png");
+				else if (maTuile.getType_tuile2().equals("Foret"))StdDraw.picture(x+68, y, "img/foret.png");
+				else if (maTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(x+68, y, "img/prairie.png");
+				else if (maTuile.getType_tuile2().equals("Mine"))StdDraw.picture(x+68, y, "img/mine.png");
+				else if (maTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(x+68, y, "img/montagne.png");	
+				//couronnes
+				if (maTuile.getNbCouronnes2() == 1)StdDraw.picture(x+68, y, "img/1couronne.png");
+				else if (maTuile.getNbCouronnes2() == 2)StdDraw.picture(x+68, y, "img/2couronnes.png");
+				else if (maTuile.getNbCouronnes2() == 3)StdDraw.picture(x+68, y, "img/3couronnes.png");
 	}
+	
 }

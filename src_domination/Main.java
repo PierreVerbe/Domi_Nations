@@ -118,17 +118,20 @@ public class Main {
 			}
 			
 			else if (flagChateau == true && MonJeu.getNb_roi_place() != sommeRoi()){
+				System.out.println(MaPioche.getTuiles_piochees().size());
 				//affichage des tuiles du plateaux déjà placé
 				if ((MaPioche.getTuiles_piochees().size() != 0 && flagFinTourJeu==true) || MonJeu.getNb_tour() == 0){
-					MonJeu.setNb_tour(MonJeu.getNb_tour()+1);
+					if (MonJeu.getNb_tour() == 0) MonJeu.setNb_tour(1);
+					System.out.println(MaPioche.getTuiles_piochees().size());
 					MaPioche.ViderTuilesTour();
 					//Reste à ranger dans l'ordre croissant les tuiles
 					//penser a vider la liste des tuile du tour 
 					MaPioche.PiocherTuilesTour(MonJeu);
+					flagFinTourJeu = false;
 				}
 				
-				MaPioche.AffichageTuilesTour();
-				
+				MaPioche.AffichageTuilesTour();	
+				System.out.println("tour : " + MonJeu.getNb_tour());
 				System.out.println(MonJeu.getOrdre_tour_joueur());
 				
 				//Lorsque un joueur a placé son roi on passe au second joueur, etc...
@@ -239,7 +242,14 @@ public class Main {
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
 							
-							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(0).getType_tuile1(), MaPioche.getTuiles_tour().get(0).getNbCouronnes1(), MaPioche.getTuiles_tour().get(0).getType_tuile2(), MaPioche.getTuiles_tour().get(0).getNbCouronnes2());
+							if(StdDraw.isKeyPressed(32)) {
+								while(!StdDraw.isKeyPressed(32));
+								System.out.println("Espace 1");
+								MaPioche.getTuiles_tour().get(0).rotationTuile();
+								System.out.println(MaPioche.getTuiles_tour().get(0).getRotation());	
+							}
+							
+							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(0));
 							if(MonJeu.getOrdre_tour_joueur().get(0) == 1)flagTuile1 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(0));
 							else if (MonJeu.getOrdre_tour_joueur().get(0) == 2)flagTuile1 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(0));
 							else if (MonJeu.getOrdre_tour_joueur().get(0) == 3)flagTuile1 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(0));
@@ -261,7 +271,7 @@ public class Main {
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
 							
-							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(1).getType_tuile1(), MaPioche.getTuiles_tour().get(1).getNbCouronnes1(), MaPioche.getTuiles_tour().get(1).getType_tuile2(), MaPioche.getTuiles_tour().get(1).getNbCouronnes2());
+							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(1));
 							if(MonJeu.getOrdre_tour_joueur().get(1) == 1)flagTuile1 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(1));
 							else if (MonJeu.getOrdre_tour_joueur().get(1) == 2)flagTuile2 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(1));
 							else if (MonJeu.getOrdre_tour_joueur().get(1) == 3)flagTuile2 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(1));
@@ -283,7 +293,7 @@ public class Main {
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
 							
-							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(2).getType_tuile1(), MaPioche.getTuiles_tour().get(2).getNbCouronnes1(), MaPioche.getTuiles_tour().get(2).getType_tuile2(), MaPioche.getTuiles_tour().get(2).getNbCouronnes2());
+							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(2));
 							if(MonJeu.getOrdre_tour_joueur().get(2) == 1)flagTuile3 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(2));
 							else if (MonJeu.getOrdre_tour_joueur().get(2) == 2)flagTuile3 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(2));
 							else if (MonJeu.getOrdre_tour_joueur().get(2) == 3)flagTuile3 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(2));
@@ -305,7 +315,7 @@ public class Main {
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
 							
-							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(3).getType_tuile1(), MaPioche.getTuiles_tour().get(3).getNbCouronnes1(), MaPioche.getTuiles_tour().get(3).getType_tuile2(), MaPioche.getTuiles_tour().get(3).getNbCouronnes2());
+							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(3));
 							if(MonJeu.getOrdre_tour_joueur().get(3) == 1)flagTuile4 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(3));
 							else if (MonJeu.getOrdre_tour_joueur().get(3) == 2)flagTuile4 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(3));
 							else if (MonJeu.getOrdre_tour_joueur().get(3) == 3)flagTuile4 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(3));
@@ -350,7 +360,6 @@ public class Main {
 				flagTuile2 = false;
 				flagTuile3 = false;
 				flagTuile4 = false;
-				flagFinTourJeu = false;
 				
 				//Nouveau tour
 				MonJeu.setNb_tour(MonJeu.getNb_tour()+1);	

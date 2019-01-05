@@ -6,10 +6,13 @@ public class Tuile {
 	private int nbCouronnes2;
 	private String type_tuile1;
 	private String type_tuile2;
+	
 	private int position_x1; //sert à rien
 	private int position_y1; //sert à rien
 	private int position_x2; //sert à rien
 	private int position_y2; //sert à rien
+	
+	private String rotation = "horizontal-croissant"; //attribut pierre -- 4 types differents : horizontal-croissant, horizontal-decroissant, vertical-croissant, vertical-decroissant 
 	
 	public Tuile(){}
 	
@@ -73,6 +76,19 @@ public class Tuile {
 	}
 	public void setPosition_y2(int position_y2) {
 		this.position_y2 = position_y2;
+	}
+	public String getRotation() {
+		return rotation;
+	}
+	public void setRotation(String rotation) {
+		this.rotation = rotation;
+	}
+	
+	public void rotationTuile(){
+		if(this.rotation == "horizontal-croissant")this.rotation = "vertical-croissant";
+		else if(this.rotation == "vertical-croissant")this.rotation = "horizontal-decroissant";
+		else if(this.rotation == "horizontal-decroissant")this.rotation = "vertical-decroissant";
+		else if(this.rotation == "vertical-decroissant")this.rotation = "horizontal-croissant";
 	}
 	
 	public void infoTuile(){
