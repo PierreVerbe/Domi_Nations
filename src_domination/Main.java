@@ -24,10 +24,6 @@ public class Main {
 		StdDraw.enableDoubleBuffering();
 		int num_joueur = 0;
 
-		//SetUp Font texte
-		Font font = new Font("Arial", Font.BOLD, 60);
-		StdDraw.setFont(font);
-		   
 		boolean jeu = true;	
 		
 		boolean flagChateau = false;
@@ -62,19 +58,10 @@ public class Main {
 		
 		//Définition de l'ordre des joueurs de manière random
 		MonJeu.initOrdreTour(num_joueur);
-		/*if(num_joueur == 2){
-		MonJeu.getOrdre_tour_joueur().add(1);
-		MonJeu.getOrdre_tour_joueur().add(2);
-		}*/
-		
-		System.out.println("premier " + MonJeu.getOrdre_tour_joueur());
 		
 		//Initialisation de la pioche
 		MaPioche.ImportationTuiles();
 		MaPioche.PiocherTuilesJeu(MonJeu);
-		
-		//initialisation du premier tour de jeu
-		//MonJeu.nb_tour = 1;
 		
 		//Boucle principal du jeu
 		while(jeu == true){
@@ -127,12 +114,11 @@ public class Main {
 					//Reste à ranger dans l'ordre croissant les tuiles
 					//penser a vider la liste des tuile du tour 
 					MaPioche.PiocherTuilesTour(MonJeu);
+					MaPioche.OrdonnerTuilesTour();
 					flagFinTourJeu = false;
 				}
 				
 				MaPioche.AffichageTuilesTour();	
-				System.out.println("tour : " + MonJeu.getNb_tour());
-				System.out.println(MonJeu.getOrdre_tour_joueur());
 				
 				//Lorsque un joueur a placé son roi on passe au second joueur, etc...
 				if(num_joueur == 2){
@@ -349,9 +335,8 @@ public class Main {
 				if(num_joueur == 3 && flagTuile1 && flagTuile2 && flagTuile3) flagFinTourJeu=true;
 				else if (flagTuile1 && flagTuile2 && flagTuile3 && flagTuile4) flagFinTourJeu=true;
 				
-				//if (flagTuile1==true)MonJeu.getListe_joueurs().get(0).affichagePlateauJoueur();
-				
-				//System.out.println(MonJeu.ordre_tour_joueur);
+				//Fin du jeu, plus de tuile dans la pioche
+				if(flagFinTourJeu==true && MaPioche.getTuiles_piochees().size()==0)jeu=false;
 			}
 			
 			else if (flagChateau == true && MonJeu.getNb_roi_place() == sommeRoi() && flagFinTourJeu == true) {
@@ -496,6 +481,7 @@ public class Main {
 									return true;
 								}
 							}
+							//mettre ici le retrun si on jeu que le joueur n'est pas plusieurs essaies 
 						}
 					}
 					
@@ -528,12 +514,11 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i>0) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i-1)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2());
+									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+									return true;
 								}
 							}
-							
-							return true;
 						}
 					}
 					
@@ -566,15 +551,14 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j>0) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j-1, i)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2());
+									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+									return true;
 								}
 							}
-							
-							return true;
 						}
-					
 					}
+					
 					else if (maPetiteTuile.getRotation().equals("vertical-decroissant")){
 						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
 						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
@@ -604,12 +588,11 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j<4) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j+1, i)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2());
+									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+									return true;
 								}
 							}
-							
-							return true;
 						}
 					}
 				}
@@ -1201,21 +1184,24 @@ public class Main {
 
 
 // TO DO
-//tuile départ ? p3 pdf
-// ranger les tuiles dans l'ordre croissant
+//OK - tuile départ ? p3 pdf
+// OK - ranger les tuiles dans l'ordre croissant
 // OK - test tuile pas deja prise
 // OK - nouvel ordre joueur prochain tour
 // OK - incrémenté les tours
-// ~ - fixe bug spam click sur roi
-// ~ - ajouter les couronne sur le plateau et au deplacement de la tuile
+// OK - fixe bug spam click sur roi
+// OK - ajouter les couronne sur le plateau et au deplacement de la tuile
 // l 156 le faire une fois
-//gérer changer sens tuile 
-// ~ - gérer le superposage (le second tour bug tuile) 
-// ~ - tu sors des bords du plateau tuile detruite (le second tour bug tuile)
+// OK - gérer changer sens tuile 
+// OK - gérer le superposage (le second tour bug tuile) 
+// OK - tu sors des bords du plateau tuile detruite (le second tour bug tuile)
 //victoire : pt = -> Royaume + grand
 //			 pt = & royaume = -> + couronne
 //			 pt = & royaume = & couronne = -> tous victoire
-// ~ - rotation piéce : tuile tour bouge, plateau, tableau plateau, pas de débordage
+// OK - rotation piéce : tuile tour bouge, plateau, tableau plateau, pas de débordage
+// ajouter un syster de "give up" si on peu pas poser la tuile (detruit la tuile)
+//rendre a fenetre plus jolie
+//test si on peut poser la tuile a coté
 
 //fonction de fin de tour (faire liste tour de jeu, tuile choisi joueur à 0, la lsite des tuile du tour )
 

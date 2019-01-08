@@ -189,6 +189,7 @@ public class Jeu {
 		affichagePlateauJoueurs(nombreJoueurs); //image des plateaux du jeu
 		affichageMemoireJoueur1(); //affichage des tuiles du plateaux 1
 		affichageMemoireJoueur2(); //affichage des tuiles du plateaux 1
+		interfaceControle();
 		try {
 			affichageMemoireJoueur3();
 		}
@@ -203,25 +204,33 @@ public class Jeu {
 	}
 	
 	public void affichagePlateauJoueurs(int nombreJoueurs){
-		Font font = new Font("Arial", Font.BOLD, 20);
-		StdDraw.setFont(font);
+		Font fontPlateau = new Font("Arial", Font.BOLD, 20);
+		StdDraw.setFont(fontPlateau);
 		
 		//affichage des 2 premiers plateaux
 		StdDraw.picture(180, 540, "img/Domination_plateau.png");
-		StdDraw.text(180, 540,"Plateau du joueur 1");
+		StdDraw.text(180, 540,"Plateau de " + getListe_joueurs().get(0).getPseudo());
 		StdDraw.picture(540, 180, "img/Domination_plateau.png");
-		StdDraw.text(540, 180,"Plateau du joueur 2");
+		StdDraw.text(540, 180,"Plateau de " + getListe_joueurs().get(1).getPseudo());
 		
 		//affichage des 2 derniers plateaux
 		if (nombreJoueurs >= 3){
 			StdDraw.picture(540, 540, "img/Domination_plateau.png");
-			StdDraw.text(540, 540,"Plateau du joueur 3");
+			StdDraw.text(540, 540,"Plateau de " + getListe_joueurs().get(2).getPseudo());
 		}
 		
 		if (nombreJoueurs == 4){
 			StdDraw.picture(180, 180, "img/Domination_plateau.png");
-			StdDraw.text(180, 180,"Plateau du joueur 4");
+			StdDraw.text(180, 180,"Plateau de " + getListe_joueurs().get(3).getPseudo());
 		}
+	}
+	
+	public void interfaceControle(){
+		Font fontFenetre = new Font("Verdana", Font.BOLD, 20);
+		StdDraw.setFont(fontFenetre);
+		StdDraw.text(1200, 700, "N° tour : " + this.getNb_tour());
+		if(this.liste_joueurs.size() == 3)	StdDraw.text(1100, 20, "Ordre de jeu : " + this.getOrdre_tour_joueur());
+		else StdDraw.text(1100, 20, "Ordre de jeu : " + this.getOrdre_tour_joueur());
 	}
 	
 	public void affichageMemoireJoueur1(){
