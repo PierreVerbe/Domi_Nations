@@ -12,6 +12,10 @@ public class Main {
 	public final static int X_MAX= 1280;
 	public final static int Y_MAX= 720;
 	public final static float WIDTH= 1;
+	//Obtenir score joueur
+	static Boolean[][] isCounted = new Boolean[5][5];
+	static String[][] monTableauBis = new String[5][5]; 
+	static ArrayList<String> dimension = new ArrayList<>();
 	
 	public static Jeu MonJeu = new Jeu();
 	public static Pioche MaPioche = new Pioche();
@@ -37,6 +41,8 @@ public class Main {
 		boolean flagTuile3 = false;
 		boolean flagTuile4 = false;
 		
+		boolean flagDestructionTuile = false;
+		
 		
 		//int NbRoiPlace = 0;
 		int CompteurOrdrejoueur = 0;
@@ -53,7 +59,6 @@ public class Main {
 		//Paramétrage du la police d'écriture de la librairie
 		Font fontPlateau = new Font("Arial", Font.BOLD, 20);
 		StdDraw.setFont(fontPlateau);
-		youWin("Yanis");
 		num_joueur = initNbJoueur();
 
 		//Paramétrage des joueurs
@@ -221,7 +226,7 @@ public class Main {
 				}
 				else if(num_joueur > 2 && MonJeu.liste_joueurs.get(CompteurOrdrejoueur).choix_tuile_tour.size()!=0)CompteurOrdrejoueur++;*/
 				
-				//Placement première tuile pioche
+				//Placement premiere tuile pioche
 				if (StdDraw.mouseX()>=1040-(136/4) && StdDraw.mouseX()<=1040+(136/2)+(136/4) && StdDraw.mouseY()>=540-(136/4) && StdDraw.mouseY()<=540+(136/4) && StdDraw.isMousePressed() && flagTuile1 == false){
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed()){
@@ -231,17 +236,29 @@ public class Main {
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
 							
-							if(StdDraw.isKeyPressed(32)) {
-								while(StdDraw.isKeyPressed(32));
-								MaPioche.getTuiles_tour().get(0).rotationTuile();
-								System.out.println(MaPioche.getTuiles_tour().get(0).getRotation());	
-							}
+							//affichage information destruction tuile
+							Font fontFenetre = new Font("Verdana", Font.BOLD, 20);
+							StdDraw.setFont(fontFenetre);
+							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(0));
 							if(MonJeu.getOrdre_tour_joueur().get(0) == 1)flagTuile1 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(0));
 							else if (MonJeu.getOrdre_tour_joueur().get(0) == 2)flagTuile1 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(0));
 							else if (MonJeu.getOrdre_tour_joueur().get(0) == 3)flagTuile1 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(0));
 							else if (MonJeu.getOrdre_tour_joueur().get(0) == 4)flagTuile1 = affichageTuileJoueur4(MaPioche.getTuiles_tour().get(0));
+							
+							//faire une rotation de la tuile en appuyant sur 'echap'
+							if(StdDraw.isKeyPressed(32)) {
+								while(StdDraw.isKeyPressed(32));
+								MaPioche.getTuiles_tour().get(0).rotationTuile();
+								System.out.println(MaPioche.getTuiles_tour().get(0).getRotation());	
+							}
+							
+							//detruire la tuile en appuyant sur 'a'
+							if(StdDraw.isKeyPressed(65)) {
+								while(StdDraw.isKeyPressed(65));
+								flagTuile1 = true;
+							}
 							
 							StdDraw.show();
 							StdDraw.pause(1);
@@ -250,6 +267,7 @@ public class Main {
 					}
 				}
 				
+				//Placement deuxieme tuile pioche
 				else if (StdDraw.mouseX()>=1040-(136/4) && StdDraw.mouseX()<=1040+(136/2)+(136/4) && StdDraw.mouseY()>=450-(136/4) && StdDraw.mouseY()<=450+(136/4) && StdDraw.isMousePressed() && flagTuile2 == false){
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed()){
@@ -259,17 +277,29 @@ public class Main {
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
 							
-							if(StdDraw.isKeyPressed(32)) {
-								while(StdDraw.isKeyPressed(32));
-								MaPioche.getTuiles_tour().get(1).rotationTuile();
-								System.out.println(MaPioche.getTuiles_tour().get(1).getRotation());	
-							}
+							//affichage informations destruction tuile
+							Font fontFenetre = new Font("Verdana", Font.BOLD, 20);
+							StdDraw.setFont(fontFenetre);
+							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(1));
 							if(MonJeu.getOrdre_tour_joueur().get(1) == 1)flagTuile2 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(1));
 							else if (MonJeu.getOrdre_tour_joueur().get(1) == 2)flagTuile2 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(1));
 							else if (MonJeu.getOrdre_tour_joueur().get(1) == 3)flagTuile2 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(1));
 							else if (MonJeu.getOrdre_tour_joueur().get(1) == 4)flagTuile2 = affichageTuileJoueur4(MaPioche.getTuiles_tour().get(1));
+							
+							//faire une rotation de la tuile en appuyant sur 'echap'
+							if(StdDraw.isKeyPressed(32)) {
+								while(StdDraw.isKeyPressed(32));
+								MaPioche.getTuiles_tour().get(1).rotationTuile();
+								System.out.println(MaPioche.getTuiles_tour().get(1).getRotation());	
+							}
+							
+							//detruire la tuile en appuyant sur 'a'
+							if(StdDraw.isKeyPressed(65)) {
+								while(StdDraw.isKeyPressed(65));
+								flagTuile2 = true;
+							}
 							
 							StdDraw.show();
 							StdDraw.pause(1);
@@ -278,6 +308,7 @@ public class Main {
 					}
 				}
 				
+				//Placement troisieme tuile pioche
 				else if (StdDraw.mouseX()>=1040-(136/4) && StdDraw.mouseX()<=1040+(136/2)+(136/4) && StdDraw.mouseY()>=360-(136/4) && StdDraw.mouseY()<=360+(136/4) && StdDraw.isMousePressed() && flagTuile3 == false){
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed()){
@@ -287,17 +318,29 @@ public class Main {
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
 							
-							if(StdDraw.isKeyPressed(32)) {
-								while(StdDraw.isKeyPressed(32));
-								MaPioche.getTuiles_tour().get(2).rotationTuile();
-								System.out.println(MaPioche.getTuiles_tour().get(2).getRotation());	
-							}
+							//affichage informations destruction tuile
+							Font fontFenetre = new Font("Verdana", Font.BOLD, 20);
+							StdDraw.setFont(fontFenetre);
+							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(2));
 							if(MonJeu.getOrdre_tour_joueur().get(2) == 1)flagTuile3 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(2));
 							else if (MonJeu.getOrdre_tour_joueur().get(2) == 2)flagTuile3 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(2));
 							else if (MonJeu.getOrdre_tour_joueur().get(2) == 3)flagTuile3 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(2));
 							else if (MonJeu.getOrdre_tour_joueur().get(2) == 4)flagTuile3 = affichageTuileJoueur4(MaPioche.getTuiles_tour().get(2));
+							
+							//faire une rotation de la tuile en appuyant sur 'echap'
+							if(StdDraw.isKeyPressed(32)) {
+								while(StdDraw.isKeyPressed(32));
+								MaPioche.getTuiles_tour().get(2).rotationTuile();
+								System.out.println(MaPioche.getTuiles_tour().get(2).getRotation());	
+							}
+							
+							//detruire la tuile en appuyant sur 'a'
+							if(StdDraw.isKeyPressed(65)) {
+								while(StdDraw.isKeyPressed(65));
+								flagTuile3 = true;
+							}
 							
 							StdDraw.show();
 							StdDraw.pause(1);
@@ -306,6 +349,7 @@ public class Main {
 					}
 				}
 				
+				//Placement quatrieme tuile pioche
 				else if (StdDraw.mouseX()>=1040-(136/4) && StdDraw.mouseX()<=1040+(136/2)+(136/4) && StdDraw.mouseY()>=270-(136/4) && StdDraw.mouseY()<=270+(136/4) && StdDraw.isMousePressed() && flagTuile4 == false){
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed()){
@@ -315,17 +359,29 @@ public class Main {
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
 							
-							if(StdDraw.isKeyPressed(32)) {
-								while(StdDraw.isKeyPressed(32));
-								MaPioche.getTuiles_tour().get(3).rotationTuile();
-								System.out.println(MaPioche.getTuiles_tour().get(3).getRotation());	
-							}
+							//affichage informations destruction tuile
+							Font fontFenetre = new Font("Verdana", Font.BOLD, 20);
+							StdDraw.setFont(fontFenetre);
+							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(3));
 							if(MonJeu.getOrdre_tour_joueur().get(3) == 1)flagTuile4 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(3));
 							else if (MonJeu.getOrdre_tour_joueur().get(3) == 2)flagTuile4 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(3));
 							else if (MonJeu.getOrdre_tour_joueur().get(3) == 3)flagTuile4 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(3));
 							else if (MonJeu.getOrdre_tour_joueur().get(3) == 4)flagTuile4 = affichageTuileJoueur4(MaPioche.getTuiles_tour().get(3));
+							
+							//faire une rotation de la tuile en appuyant sur 'echap'
+							if(StdDraw.isKeyPressed(32)) {
+								while(StdDraw.isKeyPressed(32));
+								MaPioche.getTuiles_tour().get(3).rotationTuile();
+								System.out.println(MaPioche.getTuiles_tour().get(3).getRotation());	
+							}
+							
+							//detruire la tuile en appuyant sur 'a'
+							if(StdDraw.isKeyPressed(65)) {
+								while(StdDraw.isKeyPressed(65));
+								flagTuile4 = true;
+							}
 							
 							StdDraw.show();
 							StdDraw.pause(1);
@@ -380,7 +436,22 @@ public class Main {
 		
 		//Affichage résultat gagnant
 		//ici
-		StdDraw.show();
+		MonJeu.affichageGlobal(num_joueur);
+		MaPioche.AffichageTuilesTour();
+		MonJeu.AffichageRoiTour();
+		couronneJoueur(MonJeu.getListe_joueurs().get(0), MonJeu.getListe_joueurs().get(0).getPlateauJoueur());
+		couronneJoueur(MonJeu.getListe_joueurs().get(1), MonJeu.getListe_joueurs().get(1).getPlateauJoueur());
+		
+		try {
+			couronneJoueur(MonJeu.getListe_joueurs().get(2), MonJeu.getListe_joueurs().get(2).getPlateauJoueur());
+		}
+		catch(Exception e) {}
+		
+		try {
+			couronneJoueur(MonJeu.getListe_joueurs().get(3), MonJeu.getListe_joueurs().get(3).getPlateauJoueur());
+		}
+		catch(Exception e) {}
+		StdDraw.show();	
 		youWin("Patrick");
 		System.out.println("Vous avez fini de jouer");
 	}
@@ -542,9 +613,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i<4) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i+1)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i))
+									{
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
 								}
 							}
 							//mettre ici le retrun si on jeu que le joueur n'est pas plusieurs essaies 
@@ -580,9 +654,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i>0) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i-1)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -617,9 +694,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j>0) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j-1, i)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -654,9 +734,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j<4) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j+1, i)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -705,9 +788,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i<4) {
 								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i+1)== null) {
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -742,9 +828,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i>0) {
 								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i-1)== null) {
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -779,9 +868,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j>0) {
 								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j-1, i)== null) {
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -816,9 +908,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j<4) {
 								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j+1, i)== null) {
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -868,9 +963,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i<4) {
 								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i+1)== null) {
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}	
 							}
 						}
@@ -906,9 +1004,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i>0) {
 								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i-1)== null) {
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}	
 							}
 						}
@@ -944,9 +1045,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j>0) {
 								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j-1, i)== null) {
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}	
 							}
 						}
@@ -982,9 +1086,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j<4) {
 								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j+1, i)== null) {
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}	
 							}
 						}	
@@ -1033,9 +1140,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i<4) {
 								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i+1)== null) {
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-								return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								
 								}
 							}	
 						}
@@ -1071,9 +1181,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i>0) {
 								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i-1)== null) {
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-								return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								
 								}
 							}	
 						}
@@ -1110,9 +1223,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j>0) {
 								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j-1, i)== null) {
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-								return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								
 								}
 							}	
 						}
@@ -1148,6 +1264,11 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j<4) {
 								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j+1, i)== null) {
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
 								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
 								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
 								return true;
@@ -1245,6 +1366,344 @@ public class Main {
 		return false;
 	}
 	
+	public static boolean tuileCompatible(Joueur joueur, Tuile tuile, int i, int j) {
+		
+		if(tuile.getRotation().equals("horizontal-croissant")) {
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j-1).split("-")[0]) || joueur.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i-1, j).split("-")[0]) || joueur.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i+1, j).split("-")[0]) || joueur.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i, j+2).split("-")[0]) || joueur.getPlateauJoueur(i, j+2).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			return false;
+		}
+		
+		else if(tuile.getRotation().equals("horizontal-decroissant")) {
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i-1, j).split("-")[0]) || joueur.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e){
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j+1).split("-")[0]) || joueur.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i+1, j).split("-")[0]) || joueur.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i, j-2).split("-")[0]) || joueur.getPlateauJoueur(i, j-2).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			return false;
+			
+		}
+		
+		else if(tuile.getRotation().equals("vertical-decroissant")) {
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j-1).split("-")[0]) || joueur.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e){
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i-1, j).split("-")[0]) || joueur.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j+1).split("-")[0]) || joueur.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+2, j).split("-")[0]) || joueur.getPlateauJoueur(i+2, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			return false;
+			
+		}
+		
+		else if(tuile.getRotation().equals("vertical-croissant")) {
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j-1).split("-")[0]) || joueur.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e){
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i+1, j).split("-")[0]) || joueur.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j+1).split("-")[0]) || joueur.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-2, j).split("-")[0]) || joueur.getPlateauJoueur(i-2, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			return false;
+			
+		}
+		
+		return false;
+			
+	}
+	
+	public static void CompterCouronnesV2(String[][] tableau, int i, int j) {
+		//if (!monTableauBis[i][j].equals("x"))
+			if (!(("x").equals(monTableauBis[i][j]))){
+				monTableauBis[i][j] = "x";
+			
+				try {
+					if (tableau[i][j].split("-")[0].equals(tableau[i+1][j].split("-")[0]) && !(("x").equals(monTableauBis[i+1][j]))) {
+						if(isCounted[i+1][j].equals(false)) {
+							dimension.add(tableau[i+1][j]);
+							isCounted[i+1][j] = true;
+							CompterCouronnesV2(tableau,i+1,j);
+						}
+						
+					}
+				}
+				catch(Exception e) {}
+				
+				try {
+					if (tableau[i][j].split("-")[0].equals(tableau[i][j+1].split("-")[0]) && !(("x").equals(monTableauBis[i][j+1]))) {
+						if(isCounted[i][j+1].equals(false)) {
+							dimension.add(tableau[i][j+1]);
+							isCounted[i][j+1] = true;
+							CompterCouronnesV2(tableau,i,j+1);
+						}
+						
+					}
+				}
+				catch(Exception e) {}
+				
+				try {
+					if (tableau[i][j].split("-")[0].equals(tableau[i-1][j].split("-")[0]) && !(("x").equals(monTableauBis[i-1][j]))) {
+						if(isCounted[i-1][j].equals(false)) {
+							dimension.add(tableau[i-1][j]);
+							isCounted[i-1][j] = true;
+							CompterCouronnesV2(tableau,i-1,j);
+						}
+					}
+				}
+				catch(Exception e) {}
+				
+				try {
+					if (tableau[i][j].split("-")[0].equals(tableau[i][j-1].split("-")[0]) && !(("x").equals(monTableauBis[i][j-1]))) {
+						if(isCounted[i][j-1].equals(false)) {
+							dimension.add(tableau[i][j-1]);
+							isCounted[i][j-1] = true;
+							CompterCouronnesV2(tableau,i,j-1);
+						}
+						
+					}
+				}
+				catch(Exception e) {}
+				
+				if(isCounted[i][j].equals(false)) {
+					dimension.add(tableau[i][j]);
+					isCounted[i][j] = true;
+				}
+				
+		}
+		
+	}
+	
+	public static void compterCouronne(Joueur joueur, String[][] tableau, int i, int j) {
+		int nombreCouronne = 0;
+		CompterCouronnesV2(tableau,i,j);
+		for(int cpt=0; cpt<dimension.size(); cpt++){
+			try {
+				nombreCouronne += Integer.parseInt(dimension.get(cpt).split("-")[1]);
+			}
+			catch(Exception e) {}
+			
+		}
+		joueur.setScoreJoueur(joueur.getScoreJoueur() + (nombreCouronne * dimension.size())); 
+		System.out.println(dimension);
+		dimension = new ArrayList<>();
+	}
+	
+	public static void couronneJoueur(Joueur joueur, String[][] tableau) {
+		isCounted = new Boolean[5][5];
+		monTableauBis = new String[5][5];
+		dimension = new ArrayList<>();
+		
+		for(int i = 0; i < 5; i++) {
+			for(int j = 0; j < 5; j++) {
+				isCounted[i][j] = false;
+			}
+		}
+		for (int i=0; i<5; i++) {
+			for(int j=0; j<5; j++) {
+				compterCouronne(joueur, tableau,i,j);
+			}
+		}
+		System.out.println("Score Joueur : " + joueur.getScoreJoueur());
+	}
+	
 	
 }
 
@@ -1268,6 +1727,7 @@ public class Main {
 // ajouter un syster de "give up" si on peu pas poser la tuile (detruit la tuile)
 //rendre a fenetre plus jolie
 //test si on peut poser la tuile a coté
+//avant de mettre le nombre de joueur mettre un petit texte
 
 //fonction de fin de tour (faire liste tour de jeu, tuile choisi joueur à 0, la lsite des tuile du tour )
 
