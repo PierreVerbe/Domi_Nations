@@ -229,8 +229,7 @@ public class Jeu {
 		Font fontFenetre = new Font("Verdana", Font.BOLD, 20);
 		StdDraw.setFont(fontFenetre);
 		StdDraw.text(1200, 700, "N° tour : " + this.getNb_tour());
-		if(this.liste_joueurs.size() == 3)	StdDraw.text(1100, 20, "Ordre de jeu : " + this.getOrdre_tour_joueur());
-		else StdDraw.text(1100, 20, "Ordre de jeu : " + this.getOrdre_tour_joueur());
+		StdDraw.text(1100, 20, "Ordre de jeu : " + this.getOrdre_tour_joueur());
 	}
 	
 	public void affichageMemoireJoueur1(){
