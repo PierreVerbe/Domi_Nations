@@ -12,6 +12,10 @@ public class Main {
 	public final static int X_MAX= 1280;
 	public final static int Y_MAX= 720;
 	public final static float WIDTH= 1;
+	//Obtenir score joueur
+	static Boolean[][] isCounted = new Boolean[5][5];
+	static String[][] monTableauBis = new String[5][5]; 
+	static ArrayList<String> dimension = new ArrayList<>();
 	
 	public static Jeu MonJeu = new Jeu();
 	public static Pioche MaPioche = new Pioche();
@@ -50,13 +54,10 @@ public class Main {
 		StdDraw.setCanvasSize(X_MAX, Y_MAX);
 		StdDraw.setXscale(-WIDTH, X_MAX+WIDTH);
 		StdDraw.setYscale(-WIDTH, Y_MAX+WIDTH);
-		StdDraw.clear(StdDraw.WHITE); 
-
-		Font fontPlateau = new Font("Arial", Font.BOLD, 20);
-		StdDraw.setFont(fontPlateau);
+		StdDraw.clear(StdDraw.GRAY); 
 		
 		//Sélection du nombre de joueur
-		num_joueur = initNbJoueur();
+		num_joueur= initNbJoueur();
 		
 		//Paramétrage des joueurs
 		CreationJoueurs(MonJeu, num_joueur);
@@ -433,107 +434,56 @@ public class Main {
 		
 		//Affichage résultat gagnant
 		//ici
-
-		StdDraw.show();
-		youWin("Patrick");
+		MonJeu.affichageGlobal(num_joueur);
+		MaPioche.AffichageTuilesTour();
+		MonJeu.AffichageRoiTour();
+		couronneJoueur(MonJeu.getListe_joueurs().get(0), MonJeu.getListe_joueurs().get(0).getPlateauJoueur());
+		couronneJoueur(MonJeu.getListe_joueurs().get(1), MonJeu.getListe_joueurs().get(1).getPlateauJoueur());
+		
+		try {
+			couronneJoueur(MonJeu.getListe_joueurs().get(2), MonJeu.getListe_joueurs().get(2).getPlateauJoueur());
+		}
+		catch(Exception e) {}
+		
+		try {
+			couronneJoueur(MonJeu.getListe_joueurs().get(3), MonJeu.getListe_joueurs().get(3).getPlateauJoueur());
+		}
+		catch(Exception e) {}
+		StdDraw.show();	
 		System.out.println("Vous avez fini de jouer");
 	}
 	
 	public static int initNbJoueur() {
 		int nbJoueur=0;
 		
-		StdDraw.picture(640, 620, "img/askNbj.png");
-		
-		StdDraw.picture(256, 350, "img/2joueurs.png");
-		StdDraw.picture(640, 350, "img/3joueurs.png");
-		StdDraw.picture(1024, 350, "img/4joueurs.png");
-		StdDraw.show(); 
-		while(nbJoueur==0) {
-			if(StdDraw.mouseX()>=256-(256/2) && StdDraw.mouseX()<=256+(256/2) && StdDraw.mouseY()>=350-(256/2) && StdDraw.mouseY()<=350+(256/2) && StdDraw.isMousePressed()) nbJoueur=2;
-			else if(StdDraw.mouseX()>=640-(256/2) && StdDraw.mouseX()<=640+(256/2) && StdDraw.mouseY()>=350-(256/2) && StdDraw.mouseY()<=350+(256/2) && StdDraw.isMousePressed()) nbJoueur=3;
-			else if(StdDraw.mouseX()>=1024-(256/2) && StdDraw.mouseX()<=1024+(256/2) && StdDraw.mouseY()>=350-(256/2) && StdDraw.mouseY()<=350+(256/2) && StdDraw.isMousePressed()) nbJoueur=4;
+		while (nbJoueur == 0) {
+			try {
+				System.out.println("Sélectionner un nombre de joueur: 2, 3 ou 4");
+				nbJoueur=scan.nextInt();
+			}
+			
+			catch (java.lang.IndexOutOfBoundsException | java.util.InputMismatchException e) { 
+				System.out.println("Erreur");
+				nbJoueur = 0;
+				scan.next();
+			 	}
+			
+			if( nbJoueur == 1 || nbJoueur == 0 || nbJoueur > 4) nbJoueur = 0;
 		}
-		StdDraw.clear(StdDraw.WHITE);
+		scan.nextLine();
 		return nbJoueur;
 	}
 	
 	
-	public static void youWin(String gagnant) {
-		while(true) {
-			Font fontPlateau = new Font("Arial", Font.BOLD, 50);
-			StdDraw.setFont(fontPlateau);
-			StdDraw.clear(StdDraw.YELLOW);
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.text(600, 400, gagnant.toUpperCase() + " EST LE GRAND GAGNANT !");
-			StdDraw.show();
-			StdDraw.pause(200);
-			
-			fontPlateau = new Font("Arial", Font.BOLD, 60);
-			StdDraw.clear(StdDraw.PINK);
-			StdDraw.setFont(fontPlateau);
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.text(600, 400, gagnant.toUpperCase() + " EST LE GRAND GAGNANT !");
-
-			StdDraw.show();
-			StdDraw.pause(200);
-			
-			fontPlateau = new Font("Arial", Font.BOLD, 60);
-			StdDraw.clear(StdDraw.YELLOW);
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.text(600, 400, gagnant.toUpperCase() + " EST LE GRAND GAGNANT !");
-			StdDraw.show();
-			StdDraw.pause(200);
-
-
-		}
-	}
-	
 	public static void CreationJoueurs(Jeu monJeu, int nbJoueur) {
 		for (int i=1; i<nbJoueur+1; i++){
-			Joueur monJoueur = new Joueur();
+			Joueur monJoueur = new Joueur();			
+			System.out.println("Bonjour joueur " + i);
+			System.out.println("Pseudo joueur :");
 			
-			String pseudo = "";
-			char lettreEnCours;
-			boolean isNotFinish = true;
-
-			while(pseudo.length() < 16 && isNotFinish) {
-				
-				StdDraw.picture(625, 545-i*75, "img/cadre"+i+".png");
-				StdDraw.text(450, 543-i*75, "Joueur " + i + " :");
-
-				if(StdDraw.hasNextKeyTyped()) {
-					lettreEnCours = StdDraw.nextKeyTyped();
-					if(lettreEnCours == '\b' && pseudo.length()>0) pseudo = pseudo.substring(0, pseudo.length()-1);
-					else if(lettreEnCours == '\n' && pseudo.length() >= 3) isNotFinish = false;
-					else if (Character.isLetter(lettreEnCours) || (lettreEnCours == ' ' && pseudo.length()>0)) pseudo = pseudo + lettreEnCours;
-				}
-				
-				StdDraw.text(625, 542-i*75, pseudo);
-				StdDraw.show();
-			}
-			
-			monJoueur.setPseudo(pseudo);
+			//initialisation de l'ordre des joueurs
+			//MonJeu.getOrdre_tour_joueur().add(i);
+			monJoueur.setPseudo(scan.nextLine());
 			
 			//définition des couleurs des joueurs
 			if (i == 1)monJoueur.setCouleur(Color.BLUE);
@@ -1593,6 +1543,100 @@ public class Main {
 		
 		return false;
 			
+	}
+	
+	public static void CompterCouronnesV2(String[][] tableau, int i, int j) {
+		//if (!monTableauBis[i][j].equals("x"))
+			if (!(("x").equals(monTableauBis[i][j]))){
+				monTableauBis[i][j] = "x";
+			
+				try {
+					if (tableau[i][j].split("-")[0].equals(tableau[i+1][j].split("-")[0]) && !(("x").equals(monTableauBis[i+1][j]))) {
+						if(isCounted[i+1][j].equals(false)) {
+							dimension.add(tableau[i+1][j]);
+							isCounted[i+1][j] = true;
+							CompterCouronnesV2(tableau,i+1,j);
+						}
+						
+					}
+				}
+				catch(Exception e) {}
+				
+				try {
+					if (tableau[i][j].split("-")[0].equals(tableau[i][j+1].split("-")[0]) && !(("x").equals(monTableauBis[i][j+1]))) {
+						if(isCounted[i][j+1].equals(false)) {
+							dimension.add(tableau[i][j+1]);
+							isCounted[i][j+1] = true;
+							CompterCouronnesV2(tableau,i,j+1);
+						}
+						
+					}
+				}
+				catch(Exception e) {}
+				
+				try {
+					if (tableau[i][j].split("-")[0].equals(tableau[i-1][j].split("-")[0]) && !(("x").equals(monTableauBis[i-1][j]))) {
+						if(isCounted[i-1][j].equals(false)) {
+							dimension.add(tableau[i-1][j]);
+							isCounted[i-1][j] = true;
+							CompterCouronnesV2(tableau,i-1,j);
+						}
+					}
+				}
+				catch(Exception e) {}
+				
+				try {
+					if (tableau[i][j].split("-")[0].equals(tableau[i][j-1].split("-")[0]) && !(("x").equals(monTableauBis[i][j-1]))) {
+						if(isCounted[i][j-1].equals(false)) {
+							dimension.add(tableau[i][j-1]);
+							isCounted[i][j-1] = true;
+							CompterCouronnesV2(tableau,i,j-1);
+						}
+						
+					}
+				}
+				catch(Exception e) {}
+				
+				if(isCounted[i][j].equals(false)) {
+					dimension.add(tableau[i][j]);
+					isCounted[i][j] = true;
+				}
+				
+		}
+		
+	}
+	
+	public static void compterCouronne(Joueur joueur, String[][] tableau, int i, int j) {
+		int nombreCouronne = 0;
+		CompterCouronnesV2(tableau,i,j);
+		for(int cpt=0; cpt<dimension.size(); cpt++){
+			try {
+				nombreCouronne += Integer.parseInt(dimension.get(cpt).split("-")[1]);
+			}
+			catch(Exception e) {}
+			
+		}
+		joueur.setScoreJoueur(joueur.getScoreJoueur() + (nombreCouronne * dimension.size())); 
+		System.out.println(dimension);
+		dimension = new ArrayList<>();
+	}
+	
+	public static void couronneJoueur(Joueur joueur, String[][] tableau) {
+		isCounted = new Boolean[5][5];
+		monTableauBis = new String[5][5];
+		dimension = new ArrayList<>();
+		
+		for(int i = 0; i < 5; i++) {
+			for(int j = 0; j < 5; j++) {
+				isCounted[i][j] = false;
+			}
+		}
+		for (int i=0; i<5; i++) {
+			for(int j=0; j<5; j++) {
+				compterCouronne(joueur, tableau,i,j);
+			}
+		}
+		System.out.println("Score Joueur : " + joueur.getScoreJoueur());
 	}
 	
 	

@@ -11,6 +11,7 @@ public class Joueur {
 	private Plateau plateau = new Plateau(5,5);
 	private int nbRois = 0;
 	private ArrayList<Integer> choix_tuile_tour = new ArrayList<Integer>(); //new attribut pierre
+	private int scoreJoueur = 0;
 	
 	public Joueur(){}
 
@@ -38,6 +39,10 @@ public class Joueur {
 	public String getPlateauJoueur(int i, int j) {
 		return this.plateau.RecupererPlateau(i,j);
 	}
+	
+	public String[][] getPlateauJoueur() {
+		return this.plateau.getTableau_tuiles_plateau();
+	}
 	public void affichagePlateauJoueur() {
 		this.plateau.affichagePlateau();
 	}
@@ -53,6 +58,15 @@ public class Joueur {
 	public void setChoix_tuile_tour(ArrayList<Integer> choix_tuile_tour) {
 		this.choix_tuile_tour = choix_tuile_tour;
 	}
+	
+	public int getScoreJoueur() {
+		return scoreJoueur;
+	}
+
+	public void setScoreJoueur(int scoreJoueur) {
+		this.scoreJoueur = scoreJoueur;
+	}
+
 	public void infoJoueur(){
 		System.out.println("Caractéristiques joueurs:");
 		System.out.println("Pseudo -> " + this.pseudo);

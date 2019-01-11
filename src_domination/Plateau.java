@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 //import java.util.HashMap;
+import java.util.HashMap;
 
 public class Plateau {
 	
@@ -7,6 +8,10 @@ public class Plateau {
 	private int largeur;
 	private ArrayList<Tuile> tuile_joueur = new ArrayList<>();
 	private String[][] tableau_tuiles_plateau = new String[longueur][largeur];
+	private ArrayList<String> dimension = new ArrayList<>();
+	private Boolean[][] isCounted = new Boolean[5][5];
+	private String[][] tableauParcours = new String[5][5];
+
 	
 	public Plateau(){}
 	
@@ -40,11 +45,38 @@ public class Plateau {
 	public void setTableau_tuiles_plateau(String[][] tableau_tuiles_plateau) {
 		this.tableau_tuiles_plateau = tableau_tuiles_plateau;
 	}
+	
+	public ArrayList<String> getDimension() {
+		return dimension;
+	}
 
-	public boolean TuilesCompatibles(Tuile tuile1, Tuile tuile2) {
+	public void setDimension(ArrayList<String> dimension) {
+		this.dimension = dimension;
+	}
+
+	public Boolean[][] getIsCounted() {
+		return isCounted;
+	}
+
+	public void setIsCounted(Boolean[][] isCounted) {
+		this.isCounted = isCounted;
+	}
+	
+	public String[][] getTableauParcours() {
+		return tableauParcours;
+	}
+
+	public void setTableauParcours(String[][] tableauParcours) {
+		this.tableauParcours = tableauParcours;
+	}
+
+
+	/*public boolean TuilesCompatibles(Tuile tuile1, Tuile tuile2) {
 		if ((tuile1.getType_tuile1() == tuile2.getType_tuile1()) || (tuile1.getType_tuile1() == tuile2.getType_tuile2()) || (tuile1.getType_tuile2() == tuile2.getType_tuile1()) || (tuile1.getType_tuile2() == tuile2.getType_tuile2()))return true;	
 		else return false;	
-	}
+	}*/
+	
+	
 	
 	/*public void CompterCouronnes() {
 		for (int i = 0; i < this.longueur; i++) {
@@ -59,7 +91,7 @@ public class Plateau {
 		}
 	}*/
 	
-	/*
+
 	public void CompterCouronnes() {
 		HashMap<Integer, Integer> casesVisitees = new HashMap<>();
 		int score = 0;
@@ -70,14 +102,14 @@ public class Plateau {
 				
 				if(!casesVisitees.containsKey(i) && j != casesVisitees.get(i)) {
 					casesVisitees.put(i, j);
-					String terrain = this.tableau_tuiles_plateau[i][j].split(",")[0];
+					String terrain = this.tableau_tuiles_plateau[i][j].split("-")[0];
 					
 					try {
-						String terrainHaut = this.tableau_tuiles_plateau[i-1][j].split(",")[0];
+						String terrainHaut = this.tableau_tuiles_plateau[i-1][j].split("-")[0];
 						
 						if (terrain.equals(terrainHaut)) {
 							nbCasesDimension = nbCasesDimension + 1;
-							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i-1][j].split(",")[1]);
+							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i-1][j].split("-")[1]);
 							casesVisitees.put(i-1, j);
 						}
 					}
@@ -85,23 +117,23 @@ public class Plateau {
 					catch(Exception e) {}
 						
 					try {
-						String terrainBas = this.tableau_tuiles_plateau[i+1][j].split(",")[0];
+						String terrainBas = this.tableau_tuiles_plateau[i+1][j].split("-")[0];
 		
 						if (terrain.equals(terrainBas)) {
-							nbCasesDimension = nbCasesDimension + 1;
-							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i+1][j].split(",")[1]);
+							nbCasesDimension += 1;
+							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i+1][j].split("-")[1]);
 							casesVisitees.put(i+1, j);
 						}
 					}
 					
-					catch(Exception e) {}					}
+					catch(Exception e) {}
 					
 					try {
-						String terrainGauche = this.tableau_tuiles_plateau[i][j-1].split(",")[0];
+						String terrainGauche = this.tableau_tuiles_plateau[i][j-1].split("-")[0];
 						
 						if (terrain.equals(terrainGauche)) {
 							nbCasesDimension = nbCasesDimension + 1;
-							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i][j-1].split(",")[1]);
+							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i][j-1].split("-")[1]);
 							casesVisitees.put(i, j-1);
 						}
 					}
@@ -109,20 +141,21 @@ public class Plateau {
 					catch(Exception e) {}
 					
 					try {
-						String terrainDroit = this.tableau_tuiles_plateau[i][j+1].split(",")[0];
+						String terrainDroit = this.tableau_tuiles_plateau[i][j+1].split("-")[0];
 						
 						if (terrain.equals(terrainDroit)) {
 							nbCasesDimension = nbCasesDimension + 1;
-							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i][j+1].split(",")[1]);
+							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i][j+1].split("-")[1]);
 							casesVisitees.put(i, j+1);
 						}
 					}
 					
 					catch(Exception e) {}
 				}
-				score = score + nbCouronnesDimension;
+				score = score + (nbCasesDimension * nbCouronnesDimension);
 			}
-		}*/
+		}
+	}
 	
 	
 	public void RemplirPlateau(int i, int j, String mot) {			
