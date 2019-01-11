@@ -1705,6 +1705,79 @@ public class Main {
 	}
 	
 	
+	public static String getVainqueur(){
+		int maxRoyaume1 = 0;
+		int nbCouronnes1 = 0;
+		int maxRoyaume2 = 0;
+		int nbCouronnes2 = 0;
+		if (MonJeu.getListe_joueurs().size() == 2) {
+			if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() > MonJeu.getListe_joueurs().get(1).getScoreJoueur()) {
+				return MonJeu.getListe_joueurs().get(0).getPseudo();
+			}
+			else if (MonJeu.getListe_joueurs().get(0).getScoreJoueur() < MonJeu.getListe_joueurs().get(1).getScoreJoueur()) {
+				return MonJeu.getListe_joueurs().get(1).getPseudo();
+			}
+			else {
+				for (int i=0; i<5; i++) {
+					for(int j=0; j<5; j++) {
+						if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j) != null) {
+							maxRoyaume1 +=1;
+						}
+						if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("1")) {
+							nbCouronnes1 +=1;
+						}
+						else if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("2")) {
+							nbCouronnes1 +=2;
+						}
+						else if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("3")) {
+							nbCouronnes1 +=3;
+						}
+					}
+				}
+				
+				for (int i=0; i<5; i++) {
+					for(int j=0; j<5; j++) {
+						if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j) != null) {
+							maxRoyaume2 +=1;
+						}
+						if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("1")) {
+							nbCouronnes2 +=1;
+						}
+						else if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("2")) {
+							nbCouronnes2 +=2;
+						}
+						else if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("3")) {
+							nbCouronnes2 +=3;
+						}
+						
+					}
+				}
+				
+				if(maxRoyaume1 > maxRoyaume2) {
+					return MonJeu.getListe_joueurs().get(0).getPseudo();
+				}
+				else if (maxRoyaume1 < maxRoyaume2) {
+					return MonJeu.getListe_joueurs().get(1).getPseudo();
+				}
+				
+				else if (maxRoyaume1 == maxRoyaume2) {
+					if(nbCouronnes1 > nbCouronnes2) {
+						return MonJeu.getListe_joueurs().get(0).getPseudo();
+					}
+					else if(nbCouronnes1 < nbCouronnes2) {
+						return MonJeu.getListe_joueurs().get(1).getPseudo();
+					}
+					else {
+						return "Egalité Joueur 1 Joueur 2";
+					}
+				}
+			}
+		}
+		
+		
+	}
+	
+	
 }
 
 
