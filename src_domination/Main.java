@@ -476,9 +476,13 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i<4) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i+1)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i))
+									{
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 							//mettre ici le retrun si on jeu que le joueur n'est pas plusieurs essaies 
@@ -514,9 +518,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i>0) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i-1)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -551,9 +558,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j>0) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j-1, i)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -588,9 +598,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j<4) {
 								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j+1, i)== null) {
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -639,9 +652,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i<4) {
 								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i+1)== null) {
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -676,9 +692,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i>0) {
 								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i-1)== null) {
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -713,9 +732,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j>0) {
 								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j-1, i)== null) {
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -750,9 +772,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j<4) {
 								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j+1, i)== null) {
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}
 							}
 						}
@@ -802,9 +827,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i<4) {
 								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i+1)== null) {
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}	
 							}
 						}
@@ -840,9 +868,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i>0) {
 								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i-1)== null) {
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}	
 							}
 						}
@@ -878,9 +909,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j>0) {
 								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j-1, i)== null) {
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}	
 							}
 						}
@@ -916,9 +950,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j<4) {
 								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j+1, i)== null) {
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-									MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-									return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
 								}	
 							}
 						}	
@@ -967,9 +1004,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i<4) {
 								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i+1)== null) {
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-								return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								
 								}
 							}	
 						}
@@ -1005,9 +1045,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (i>0) {
 								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i-1)== null) {
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-								return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								
 								}
 							}	
 						}
@@ -1044,9 +1087,12 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j>0) {
 								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j-1, i)== null) {
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-								return true;
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								
 								}
 							}	
 						}
@@ -1082,6 +1128,11 @@ public class Main {
 							// si deborde du tableau, la tuile est détruite (position horizontal)
 							if (j<4) {
 								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j+1, i)== null) {
+									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
 								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
 								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
 								return true;
@@ -1177,6 +1228,250 @@ public class Main {
 			}
 		}
 		return false;
+	}
+	
+	public static boolean tuileCompatible(Joueur joueur, Tuile tuile, int i, int j) {
+		
+		if(tuile.getRotation().equals("horizontal-croissant")) {
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j-1).split("-")[0]) || joueur.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i-1, j).split("-")[0]) || joueur.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i+1, j).split("-")[0]) || joueur.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i, j+2).split("-")[0]) || joueur.getPlateauJoueur(i, j+2).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			return false;
+		}
+		
+		else if(tuile.getRotation().equals("horizontal-decroissant")) {
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i-1, j).split("-")[0]) || joueur.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e){
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j+1).split("-")[0]) || joueur.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i+1, j).split("-")[0]) || joueur.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i, j-2).split("-")[0]) || joueur.getPlateauJoueur(i, j-2).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			return false;
+			
+		}
+		
+		else if(tuile.getRotation().equals("vertical-decroissant")) {
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j-1).split("-")[0]) || joueur.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e){
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i-1, j).split("-")[0]) || joueur.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j+1).split("-")[0]) || joueur.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+2, j).split("-")[0]) || joueur.getPlateauJoueur(i+2, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			return false;
+			
+		}
+		
+		else if(tuile.getRotation().equals("vertical-croissant")) {
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j-1).split("-")[0]) || joueur.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e){
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i+1, j).split("-")[0]) || joueur.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j+1).split("-")[0]) || joueur.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j-1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-2, j).split("-")[0]) || joueur.getPlateauJoueur(i-2, j).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e)
+			{
+				
+			}
+			
+			try {
+				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j+1).split("-")[0].equals("chateau")) {
+					return true;
+				}
+			}
+			catch(Exception e) {
+				
+			}
+			
+			return false;
+			
+		}
+		
+		return false;
+			
 	}
 	
 	
