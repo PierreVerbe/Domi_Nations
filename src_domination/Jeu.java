@@ -9,9 +9,8 @@ public class Jeu {
 	
 	private ArrayList<Joueur> liste_joueurs = new ArrayList<>();
 	private int nb_tour;
-	private ArrayList<Tuile> liste_tuiles = new ArrayList<>();
-	private ArrayList<Integer> ordre_tour_joueur = new ArrayList<Integer>(); //attribut pierre
-	private int nb_roi_place = 0; // attribut pierre
+	private ArrayList<Integer> ordre_tour_joueur = new ArrayList<Integer>();
+	private int nb_roi_place = 0;
 	
 	public Jeu(){}
 	
@@ -26,12 +25,6 @@ public class Jeu {
 	}
 	public void setNb_tour(int nb_tour) {
 		this.nb_tour = nb_tour;
-	}
-	public ArrayList<Tuile> getListe_tuiles() {
-		return liste_tuiles;
-	}
-	public void setListe_tuiles(ArrayList<Tuile> liste_tuiles) {
-		this.liste_tuiles = liste_tuiles;
 	}
 	public int getSizeList() {
 		return this.liste_joueurs.size();

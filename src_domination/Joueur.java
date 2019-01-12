@@ -7,7 +7,6 @@ public class Joueur {
 	
 	private String pseudo = "NONAME";
 	private Color couleur = Color.BLACK;
-	private int nb_points = 0;
 	private Plateau plateau = new Plateau(5,5);
 	private int nbRois = 0;
 	private ArrayList<Integer> choix_tuile_tour = new ArrayList<Integer>(); //new attribut pierre
@@ -26,12 +25,6 @@ public class Joueur {
 	}
 	public void setCouleur(Color couleur) {
 		this.couleur = couleur;
-	}
-	public int getNb_points() {
-		return nb_points;
-	}
-	public void setNb_points(int nb_points) {
-		this.nb_points = nb_points;
 	}
 	public Plateau getPlateau() {
 		return plateau;

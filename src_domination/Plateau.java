@@ -1,14 +1,10 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import edu.princeton.cs.introcs.StdDraw;
 
 public class Plateau {
-	
 	private int longueur;
 	private int largeur;
-	private ArrayList<Tuile> tuile_joueur = new ArrayList<>();
 	private String[][] tableau_tuiles_plateau = new String[longueur][largeur];
-
 	
 	public Plateau(){}
 	
@@ -29,12 +25,6 @@ public class Plateau {
 	}
 	public void setLargeur(int largeur) {
 		this.largeur = largeur;
-	}
-	public ArrayList<Tuile> getTuile_joueur() {
-		return tuile_joueur;
-	}
-	public void setTuile_joueur(ArrayList<Tuile> tuile_joueur) {
-		this.tuile_joueur = tuile_joueur;
 	}
 	public String[][] getTableau_tuiles_plateau() {
 		return tableau_tuiles_plateau;
