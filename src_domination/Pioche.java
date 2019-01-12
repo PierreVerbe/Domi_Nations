@@ -250,24 +250,16 @@ public class Pioche {
 		ArrayList<Integer> tuilesNumero = new ArrayList<>();
 		ArrayList<Tuile> tuiles_tour_ord = new ArrayList<>();
 		
-		for (int i = 0; i < tuiles_tour.size(); i++)
-		{
+		for (int i = 0; i < tuiles_tour.size(); i++){
 			tuilesNumero.add(tuiles_tour.get(i).getNumero());
-			
 			Collections.sort(tuilesNumero);
 		}
 		
-		for (int i = 0; i < tuilesNumero.size(); i++)
-		{
-			for (int j = 0; j < tuiles_tour.size(); j++)
-			{
-				if (tuiles_tour.get(j).getNumero() == tuilesNumero.get(i))
-				{
-					tuiles_tour_ord.add(tuiles_tour.get(j));
-				}
+		for (int i = 0; i < tuilesNumero.size(); i++){
+			for (int j = 0; j < tuiles_tour.size(); j++){
+				if (tuiles_tour.get(j).getNumero() == tuilesNumero.get(i))tuiles_tour_ord.add(tuiles_tour.get(j));
 			}
 		}
-		
 		tuiles_tour = tuiles_tour_ord;
 	}
 	

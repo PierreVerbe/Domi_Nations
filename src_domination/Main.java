@@ -1,6 +1,4 @@
 import edu.princeton.cs.introcs.StdDraw;
-
-import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,6 +10,7 @@ public class Main {
 	public final static int X_MAX= 1280;
 	public final static int Y_MAX= 720;
 	public final static float WIDTH= 1;
+	
 	//Obtenir score joueur
 	static Boolean[][] isCounted = new Boolean[5][5];
 	static String[][] monTableauBis = new String[5][5]; 
@@ -41,10 +40,6 @@ public class Main {
 		boolean flagTuile3 = false;
 		boolean flagTuile4 = false;
 		
-		boolean flagDestructionTuile = false;
-		
-		
-		//int NbRoiPlace = 0;
 		int CompteurOrdrejoueur = 0;
 		boolean flagFinTourJeu = false;
 
@@ -62,7 +57,7 @@ public class Main {
 		num_joueur = initNbJoueur();
 
 		//Paramétrage des joueurs
-		CreationJoueurs(MonJeu, num_joueur);
+		MonJeu.CreationJoueurs(num_joueur);
 		
 		//Définition de l'ordre des joueurs de manière random
 		MonJeu.initOrdreTour(num_joueur);
@@ -81,38 +76,38 @@ public class Main {
 				System.out.println("Racc Fin du jeu");
 				jeu = false;
 			}
-			
+			//MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,mot);
 			//placement des chateaux pour chacun des joueurs
 			if(flagChateau == false){
 				if (flagChateauJ1 == false){
-					flagChateauJ1 = affichagePieceJoueur1("chateau");
+					flagChateauJ1 = MonJeu.getListe_joueurs().get(0).getPlateau().affichagePieceJoueur1("chateau");
 					//pour debug
 					//MonJeu.liste_joueurs.get(0).affichagePlateauJoueur();
 				}
 				
 				else if(flagChateauJ2 == false){
-					flagChateauJ2 = affichagePieceJoueur2("chateau");
+					flagChateauJ2 = MonJeu.getListe_joueurs().get(1).getPlateau().affichagePieceJoueur2("chateau");
 					//pour debug
 					//MonJeu.liste_joueurs.get(1).affichagePlateauJoueur();
 					if(num_joueur==2 && flagChateauJ2==true)flagChateau=true;
 				}
 				
 				else if(num_joueur >= 3 && flagChateauJ3 == false){
-					flagChateauJ3 = affichagePieceJoueur3("chateau");
+					flagChateauJ3 = MonJeu.getListe_joueurs().get(2).getPlateau().affichagePieceJoueur3("chateau");
 					//pour debug
 					//MonJeu.liste_joueurs.get(2).affichagePlateauJoueur();
 					if(num_joueur==3 && flagChateauJ3==true)flagChateau=true;
 				}
 				
 				else if(num_joueur == 4 && flagChateauJ4 == false){
-					flagChateauJ4 = affichagePieceJoueur4("chateau");
+					flagChateauJ4 = MonJeu.getListe_joueurs().get(3).getPlateau().affichagePieceJoueur4("chateau");
 					//pour debug
 					//MonJeu.liste_joueurs.get(3).affichagePlateauJoueur();
 					if(num_joueur==4 && flagChateauJ4==true)flagChateau=true;
 				}
 			}
 			
-			else if (flagChateau == true && MonJeu.getNb_roi_place() != sommeRoi()){
+			else if (flagChateau == true && MonJeu.getNb_roi_place() != MonJeu.sommeRoi()){
 				System.out.println(MaPioche.getTuiles_piochees().size());
 				//affichage des tuiles du plateaux déjà placé
 				if ((MaPioche.getTuiles_piochees().size() != 0 && flagFinTourJeu==true) || MonJeu.getNb_tour() == 0){
@@ -196,7 +191,7 @@ public class Main {
 				for (int i=0; i<MonJeu.getListe_joueurs().size(); i++)MonJeu.getListe_joueurs().get(i).affichageRoi();
 			}
 			
-			else if (flagChateau == true && MonJeu.getNb_roi_place() == sommeRoi() && flagFinTourJeu == false){
+			else if (flagChateau == true && MonJeu.getNb_roi_place() == MonJeu.sommeRoi() && flagFinTourJeu == false){
 				//Vidage liste ordre de jeu
 				for(int i=MonJeu.getOrdre_tour_joueur().size()-1; i>-1; i--)MonJeu.getOrdre_tour_joueur().remove(i);
 				
@@ -242,10 +237,10 @@ public class Main {
 							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(0));
-							if(MonJeu.getOrdre_tour_joueur().get(0) == 1)flagTuile1 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(0));
-							else if (MonJeu.getOrdre_tour_joueur().get(0) == 2)flagTuile1 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(0));
-							else if (MonJeu.getOrdre_tour_joueur().get(0) == 3)flagTuile1 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(0));
-							else if (MonJeu.getOrdre_tour_joueur().get(0) == 4)flagTuile1 = affichageTuileJoueur4(MaPioche.getTuiles_tour().get(0));
+							if(MonJeu.getOrdre_tour_joueur().get(0) == 1)flagTuile1 = MonJeu.getListe_joueurs().get(0).affichageTuileJoueur1(MonJeu, MaPioche.getTuiles_tour().get(0));
+							else if (MonJeu.getOrdre_tour_joueur().get(0) == 2)flagTuile1 = MonJeu.getListe_joueurs().get(1).affichageTuileJoueur2(MonJeu, MaPioche.getTuiles_tour().get(0));
+							else if (MonJeu.getOrdre_tour_joueur().get(0) == 3)flagTuile1 = MonJeu.getListe_joueurs().get(2).affichageTuileJoueur3(MonJeu, MaPioche.getTuiles_tour().get(0));
+							else if (MonJeu.getOrdre_tour_joueur().get(0) == 4)flagTuile1 = MonJeu.getListe_joueurs().get(3).affichageTuileJoueur4(MonJeu, MaPioche.getTuiles_tour().get(0));
 							
 							//faire une rotation de la tuile en appuyant sur 'echap'
 							if(StdDraw.isKeyPressed(32)) {
@@ -283,10 +278,10 @@ public class Main {
 							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(1));
-							if(MonJeu.getOrdre_tour_joueur().get(1) == 1)flagTuile2 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(1));
-							else if (MonJeu.getOrdre_tour_joueur().get(1) == 2)flagTuile2 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(1));
-							else if (MonJeu.getOrdre_tour_joueur().get(1) == 3)flagTuile2 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(1));
-							else if (MonJeu.getOrdre_tour_joueur().get(1) == 4)flagTuile2 = affichageTuileJoueur4(MaPioche.getTuiles_tour().get(1));
+							if(MonJeu.getOrdre_tour_joueur().get(1) == 1)flagTuile2 = MonJeu.getListe_joueurs().get(0).affichageTuileJoueur1(MonJeu, MaPioche.getTuiles_tour().get(1));
+							else if (MonJeu.getOrdre_tour_joueur().get(1) == 2)flagTuile2 = MonJeu.getListe_joueurs().get(1).affichageTuileJoueur2(MonJeu, MaPioche.getTuiles_tour().get(1));
+							else if (MonJeu.getOrdre_tour_joueur().get(1) == 3)flagTuile2 = MonJeu.getListe_joueurs().get(2).affichageTuileJoueur3(MonJeu, MaPioche.getTuiles_tour().get(1));
+							else if (MonJeu.getOrdre_tour_joueur().get(1) == 4)flagTuile2 = MonJeu.getListe_joueurs().get(3).affichageTuileJoueur4(MonJeu, MaPioche.getTuiles_tour().get(1));
 							
 							//faire une rotation de la tuile en appuyant sur 'echap'
 							if(StdDraw.isKeyPressed(32)) {
@@ -324,10 +319,10 @@ public class Main {
 							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(2));
-							if(MonJeu.getOrdre_tour_joueur().get(2) == 1)flagTuile3 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(2));
-							else if (MonJeu.getOrdre_tour_joueur().get(2) == 2)flagTuile3 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(2));
-							else if (MonJeu.getOrdre_tour_joueur().get(2) == 3)flagTuile3 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(2));
-							else if (MonJeu.getOrdre_tour_joueur().get(2) == 4)flagTuile3 = affichageTuileJoueur4(MaPioche.getTuiles_tour().get(2));
+							if(MonJeu.getOrdre_tour_joueur().get(2) == 1)flagTuile3 = MonJeu.getListe_joueurs().get(0).affichageTuileJoueur1(MonJeu, MaPioche.getTuiles_tour().get(2));
+							else if (MonJeu.getOrdre_tour_joueur().get(2) == 2)flagTuile3 = MonJeu.getListe_joueurs().get(1).affichageTuileJoueur2(MonJeu, MaPioche.getTuiles_tour().get(2));
+							else if (MonJeu.getOrdre_tour_joueur().get(2) == 3)flagTuile3 = MonJeu.getListe_joueurs().get(2).affichageTuileJoueur3(MonJeu, MaPioche.getTuiles_tour().get(2));
+							else if (MonJeu.getOrdre_tour_joueur().get(2) == 4)flagTuile3 = MonJeu.getListe_joueurs().get(3).affichageTuileJoueur4(MonJeu, MaPioche.getTuiles_tour().get(2));
 							
 							//faire une rotation de la tuile en appuyant sur 'echap'
 							if(StdDraw.isKeyPressed(32)) {
@@ -365,10 +360,10 @@ public class Main {
 							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(3));
-							if(MonJeu.getOrdre_tour_joueur().get(3) == 1)flagTuile4 = affichageTuileJoueur1(MaPioche.getTuiles_tour().get(3));
-							else if (MonJeu.getOrdre_tour_joueur().get(3) == 2)flagTuile4 = affichageTuileJoueur2(MaPioche.getTuiles_tour().get(3));
-							else if (MonJeu.getOrdre_tour_joueur().get(3) == 3)flagTuile4 = affichageTuileJoueur3(MaPioche.getTuiles_tour().get(3));
-							else if (MonJeu.getOrdre_tour_joueur().get(3) == 4)flagTuile4 = affichageTuileJoueur4(MaPioche.getTuiles_tour().get(3));
+							if(MonJeu.getOrdre_tour_joueur().get(3) == 1)flagTuile4 = MonJeu.getListe_joueurs().get(0).affichageTuileJoueur1(MonJeu, MaPioche.getTuiles_tour().get(3));
+							else if (MonJeu.getOrdre_tour_joueur().get(3) == 2)flagTuile4 = MonJeu.getListe_joueurs().get(1).affichageTuileJoueur2(MonJeu, MaPioche.getTuiles_tour().get(3));
+							else if (MonJeu.getOrdre_tour_joueur().get(3) == 3)flagTuile4 = MonJeu.getListe_joueurs().get(2).affichageTuileJoueur3(MonJeu, MaPioche.getTuiles_tour().get(3));
+							else if (MonJeu.getOrdre_tour_joueur().get(3) == 4)flagTuile4 = MonJeu.getListe_joueurs().get(3).affichageTuileJoueur4(MonJeu, MaPioche.getTuiles_tour().get(3));
 							
 							//faire une rotation de la tuile en appuyant sur 'echap'
 							if(StdDraw.isKeyPressed(32)) {
@@ -398,7 +393,7 @@ public class Main {
 				if(flagFinTourJeu==true && MaPioche.getTuiles_piochees().size()==0)jeu=false;
 			}
 			
-			else if (flagChateau == true && MonJeu.getNb_roi_place() == sommeRoi() && flagFinTourJeu == true) {
+			else if (flagChateau == true && MonJeu.getNb_roi_place() == MonJeu.sommeRoi() && flagFinTourJeu == true) {
 				//fonction de fin de tour (faire liste tour de jeu, tuile choisi joueur à 0, la lsite des tuile du tour )
 				//Remise à 0 des variables de jeu
 				MonJeu.setNb_roi_place(0);
@@ -424,10 +419,7 @@ public class Main {
 				
 				//Nouveau tour
 				MonJeu.setNb_tour(MonJeu.getNb_tour()+1);	
-			}
-			
-			//System.out.println("nb roi : " + NbRoiPlace);
-			
+			}	
 			//affichage de tous les éléments de la fenêtre
 			StdDraw.show();
 			StdDraw.pause(1);
@@ -435,7 +427,6 @@ public class Main {
 		}
 		
 		//Affichage résultat gagnant
-		//ici
 		MonJeu.affichageGlobal(num_joueur);
 		MaPioche.AffichageTuilesTour();
 		MonJeu.AffichageRoiTour();
@@ -454,6 +445,7 @@ public class Main {
 		StdDraw.show();	
 		youWin("Patrick");
 		System.out.println("Vous avez fini de jouer");
+//#############################################################################################################################		
 	}
 	
 	public static int initNbJoueur() {
@@ -520,1155 +512,62 @@ public class Main {
 			StdDraw.text(600, 400, gagnant.toUpperCase() + " EST LE GRAND GAGNANT !");
 			StdDraw.show();
 			StdDraw.pause(200);
-
-
 		}
-	}
-	public static void CreationJoueurs(Jeu monJeu, int nbJoueur) {
-		for (int i=1; i<nbJoueur+1; i++){
-			Joueur monJoueur = new Joueur();
-			
-			String pseudo = "";
-			char lettreEnCours;
-			boolean isNotFinish = true;
-
-			while(pseudo.length() < 16 && isNotFinish) {
-				
-				StdDraw.picture(625, 545-i*75, "img/cadre"+i+".png");
-				StdDraw.text(450, 543-i*75, "Joueur " + i + " :");
-
-				if(StdDraw.hasNextKeyTyped()) {
-					lettreEnCours = StdDraw.nextKeyTyped();
-					if(lettreEnCours == '\b' && pseudo.length()>0) pseudo = pseudo.substring(0, pseudo.length()-1);
-					else if(lettreEnCours == '\n' && pseudo.length() >= 3) isNotFinish = false;
-					else if (Character.isLetter(lettreEnCours) || (lettreEnCours == ' ' && pseudo.length()>0)) pseudo = pseudo + lettreEnCours;
-				}
-				
-				StdDraw.text(625, 542-i*75, pseudo);
-				StdDraw.show();
-			}
-			
-			monJoueur.setPseudo(pseudo);
-			
-			//définition des couleurs des joueurs
-			if (i == 1)monJoueur.setCouleur(Color.BLUE);
-			else if (i == 2)monJoueur.setCouleur(Color.RED);
-			else if (i == 3) monJoueur.setCouleur(Color.GREEN);	
-			else if (i == 4)monJoueur.setCouleur(Color.PINK);
-			
-			//Définition du nombre de roi en fonction du nombre de joueur
-			if(nbJoueur == 2)monJoueur.setNbRois(2);
-			else monJoueur.setNbRois(1);
-			
-			//affichage parametres joueur
-			monJoueur.infoJoueur();
-			
-			//Ajout du joueur au jeu
-			monJeu.getListe_joueurs().add(monJoueur);
-		}
-	}
-	
-	
-	public static int sommeRoi(){
-		int somme =0;
-		for(int i=0; i<MonJeu.getListe_joueurs().size(); i++)somme = somme + MonJeu.getListe_joueurs().get(i).getNbRois();
-		return somme;
-	}
-	
-	public static boolean affichageTuileJoueur1(Tuile maPetiteTuile){
-		final int TAILLE_CASE = 68;
-		final int TAILLE_LIGNE = 2;
-		double x = StdDraw.mouseX();
-		double y = StdDraw.mouseY();
-		
-		for (int i=0; i<5; i++){
-			for (int j=0; j<5; j++){
-				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (maPetiteTuile.getRotation().equals("horizontal-croissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (i<4) {
-								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i+1)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i))
-									{
-										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-								}
-							}
-							//mettre ici le retrun si on jeu que le joueur n'est pas plusieurs essaies 
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("horizontal-decroissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (i>0) {
-								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i-1)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}
-							}
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("vertical-croissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (j>0) {
-								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j-1, i)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}
-							}
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("vertical-decroissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (j<4) {
-								if(MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(j+1, i)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(0), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static boolean affichageTuileJoueur2(Tuile maPetiteTuile){
-		final int TAILLE_CASE = 68;
-		final int TAILLE_LIGNE = 2;
-		double x = StdDraw.mouseX();
-		double y = StdDraw.mouseY();
-		
-		for (int i=0; i<5; i++){
-			for (int j=0; j<5; j++){
-				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (maPetiteTuile.getRotation().equals("horizontal-croissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (i<4) {
-								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i+1)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}
-							}
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("horizontal-decroissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (i>0) {
-								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i-1)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}
-							}
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("vertical-croissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (j>0) {
-								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j-1, i)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}
-							}
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("vertical-decroissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (j<4) {
-								if(MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(j+1, i)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(1), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}
-							}
-						}
-					}					
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static boolean affichageTuileJoueur3(Tuile maPetiteTuile){
-		final int TAILLE_CASE = 68;
-		final int TAILLE_LIGNE = 2;
-		double x = StdDraw.mouseX();
-		double y = StdDraw.mouseY();
-		
-		for (int i=0; i<5; i++){
-			for (int j=0; j<5; j++){
-				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (maPetiteTuile.getRotation().equals("horizontal-croissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (i<4) {
-								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i+1)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}	
-							}
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("horizontal-decroissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (i>0) {
-								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i-1)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}	
-							}
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("vertical-croissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (j>0) {
-								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j-1, i)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}	
-							}
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("vertical-decroissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (j<4) {
-								if(MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(j+1, i)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(2), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-									
-								}	
-							}
-						}	
-					}
-				}	
-			}
-		}
-		return false;
-	}
-	public static boolean affichageTuileJoueur4(Tuile maPetiteTuile){
-		final int TAILLE_CASE = 68;
-		final int TAILLE_LIGNE = 2;
-		double x = StdDraw.mouseX();
-		double y = StdDraw.mouseY();
-		
-		for (int i=0; i<5; i++){
-			for (int j=0; j<5; j++){
-				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (maPetiteTuile.getRotation().equals("horizontal-croissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (i<4) {
-								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i+1)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-								
-								}
-							}	
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("horizontal-decroissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (i>0) {
-								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i-1)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-								
-								}
-							}	
-						}
-					
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("vertical-croissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (j>0) {
-								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j-1, i)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-								
-								}
-							}	
-						}
-					}
-					
-					else if (maPetiteTuile.getRotation().equals("vertical-decroissant")){
-						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 
-						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						
-						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/champs.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mer.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/foret.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/prairie.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mine.png");
-						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/montagne.png");
-						
-						//couronnes 2
-						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/1couronne.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/2couronnes.png");
-						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
-						
-						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
-							if (j<4) {
-								if(MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(j+1, i)== null) {
-									if(tuileCompatible(MonJeu.getListe_joueurs().get(3), maPetiteTuile, j, i)) {
-										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-										MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-										return true;
-									}
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
-								MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
-								return true;
-								}
-							}	
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static boolean affichagePieceJoueur1(String mot){
-		final int TAILLE_CASE = 68;
-		final int TAILLE_LIGNE = 2;
-		double x = StdDraw.mouseX();
-		double y = StdDraw.mouseY();
-		
-		//test cases joueur 1 -- validé faire la même pour les autres joueurs 2,3,4
-		for (int i=0; i<5; i++){
-			for (int j=0; j<5; j++){
-				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
-					if (StdDraw.isMousePressed()) {	
-						MonJeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,mot);
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static boolean affichagePieceJoueur2(String mot){
-		final int TAILLE_CASE = 68;
-		final int TAILLE_LIGNE = 2;
-		double x = StdDraw.mouseX();
-		double y = StdDraw.mouseY();
-		
-		//test cases joueur 2
-		for (int i=0; i<5; i++){
-			for (int j=0; j<5; j++){
-				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
-					if (StdDraw.isMousePressed()) {	
-						MonJeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,mot);
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static boolean affichagePieceJoueur3(String mot){
-		final int TAILLE_CASE = 68;
-		final int TAILLE_LIGNE = 2;
-		double x = StdDraw.mouseX();
-		double y = StdDraw.mouseY();
-		
-		//test cases joueur 3
-		for (int i=0; i<5; i++){
-			for (int j=0; j<5; j++){
-				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
-					if (StdDraw.isMousePressed()) {	
-						MonJeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,mot);
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static boolean affichagePieceJoueur4(String mot){
-		final int TAILLE_CASE = 68;
-		final int TAILLE_LIGNE = 2;
-		double x = StdDraw.mouseX();
-		double y = StdDraw.mouseY();
-		
-		//test cases joueur 4
-		for (int i=0; i<5; i++){
-			for (int j=0; j<5; j++){
-				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
-					if (StdDraw.isMousePressed()) {	
-						MonJeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,mot);
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static boolean tuileCompatible(Joueur joueur, Tuile tuile, int i, int j) {
-		
-		if(tuile.getRotation().equals("horizontal-croissant")) {
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j-1).split("-")[0]) || joueur.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e){}
-			
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i-1, j).split("-")[0]) || joueur.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i+1, j).split("-")[0]) || joueur.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j+1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i, j+2).split("-")[0]) || joueur.getPlateauJoueur(i, j+2).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e)
-			{
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j+1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			return false;
-		}
-		
-		else if(tuile.getRotation().equals("horizontal-decroissant")) {
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i-1, j).split("-")[0]) || joueur.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e){
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j+1).split("-")[0]) || joueur.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i+1, j).split("-")[0]) || joueur.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j-1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i, j-2).split("-")[0]) || joueur.getPlateauJoueur(i, j-2).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e)
-			{
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j-1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			return false;
-			
-		}
-		
-		else if(tuile.getRotation().equals("vertical-decroissant")) {
-			
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j-1).split("-")[0]) || joueur.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e){
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i-1, j).split("-")[0]) || joueur.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j+1).split("-")[0]) || joueur.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j-1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+2, j).split("-")[0]) || joueur.getPlateauJoueur(i+2, j).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e)
-			{
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i+1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i+1, j+1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			return false;
-			
-		}
-		
-		else if(tuile.getRotation().equals("vertical-croissant")) {
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j-1).split("-")[0]) || joueur.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e){
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i+1, j).split("-")[0]) || joueur.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile1().equals(joueur.getPlateauJoueur(i, j+1).split("-")[0]) || joueur.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j-1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j-1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-2, j).split("-")[0]) || joueur.getPlateauJoueur(i-2, j).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e)
-			{
-				
-			}
-			
-			try {
-				if(tuile.getType_tuile2().equals(joueur.getPlateauJoueur(i-1, j+1).split("-")[0]) || joueur.getPlateauJoueur(i-1, j+1).split("-")[0].equals("chateau")) {
-					return true;
-				}
-			}
-			catch(Exception e) {
-				
-			}
-			
-			return false;
-			
-		}
-		
-		return false;
-			
 	}
 	
 	public static void CompterCouronnesV2(String[][] tableau, int i, int j) {
-		//if (!monTableauBis[i][j].equals("x"))
-			if (!(("x").equals(monTableauBis[i][j]))){
-				monTableauBis[i][j] = "x";
-			
-				try {
-					if (tableau[i][j].split("-")[0].equals(tableau[i+1][j].split("-")[0]) && !(("x").equals(monTableauBis[i+1][j]))) {
-						if(isCounted[i+1][j].equals(false)) {
-							dimension.add(tableau[i+1][j]);
-							isCounted[i+1][j] = true;
-							CompterCouronnesV2(tableau,i+1,j);
-						}
-						
-					}
-				}
-				catch(Exception e) {}
-				
-				try {
-					if (tableau[i][j].split("-")[0].equals(tableau[i][j+1].split("-")[0]) && !(("x").equals(monTableauBis[i][j+1]))) {
-						if(isCounted[i][j+1].equals(false)) {
-							dimension.add(tableau[i][j+1]);
-							isCounted[i][j+1] = true;
-							CompterCouronnesV2(tableau,i,j+1);
-						}
-						
-					}
-				}
-				catch(Exception e) {}
-				
-				try {
-					if (tableau[i][j].split("-")[0].equals(tableau[i-1][j].split("-")[0]) && !(("x").equals(monTableauBis[i-1][j]))) {
-						if(isCounted[i-1][j].equals(false)) {
-							dimension.add(tableau[i-1][j]);
-							isCounted[i-1][j] = true;
-							CompterCouronnesV2(tableau,i-1,j);
-						}
-					}
-				}
-				catch(Exception e) {}
-				
-				try {
-					if (tableau[i][j].split("-")[0].equals(tableau[i][j-1].split("-")[0]) && !(("x").equals(monTableauBis[i][j-1]))) {
-						if(isCounted[i][j-1].equals(false)) {
-							dimension.add(tableau[i][j-1]);
-							isCounted[i][j-1] = true;
-							CompterCouronnesV2(tableau,i,j-1);
-						}
-						
-					}
-				}
-				catch(Exception e) {}
-				
-				if(isCounted[i][j].equals(false)) {
-					dimension.add(tableau[i][j]);
-					isCounted[i][j] = true;
-				}
-				
-		}
+		if (!(("x").equals(monTableauBis[i][j]))){
+			monTableauBis[i][j] = "x";
 		
+			try {
+				if (tableau[i][j].split("-")[0].equals(tableau[i+1][j].split("-")[0]) && !(("x").equals(monTableauBis[i+1][j]))) {
+					if(isCounted[i+1][j].equals(false)) {
+						dimension.add(tableau[i+1][j]);
+						isCounted[i+1][j] = true;
+						CompterCouronnesV2(tableau,i+1,j);
+					}
+				}
+			}
+			catch(Exception e) {}
+			
+			try {
+				if (tableau[i][j].split("-")[0].equals(tableau[i][j+1].split("-")[0]) && !(("x").equals(monTableauBis[i][j+1]))) {
+					if(isCounted[i][j+1].equals(false)) {
+						dimension.add(tableau[i][j+1]);
+						isCounted[i][j+1] = true;
+						CompterCouronnesV2(tableau,i,j+1);
+					}
+				}
+			}
+			catch(Exception e) {}
+			
+			try {
+				if (tableau[i][j].split("-")[0].equals(tableau[i-1][j].split("-")[0]) && !(("x").equals(monTableauBis[i-1][j]))) {
+					if(isCounted[i-1][j].equals(false)) {
+						dimension.add(tableau[i-1][j]);
+						isCounted[i-1][j] = true;
+						CompterCouronnesV2(tableau,i-1,j);
+					}
+				}
+			}
+			catch(Exception e) {}
+			
+			try {
+				if (tableau[i][j].split("-")[0].equals(tableau[i][j-1].split("-")[0]) && !(("x").equals(monTableauBis[i][j-1]))) {
+					if(isCounted[i][j-1].equals(false)) {
+						dimension.add(tableau[i][j-1]);
+						isCounted[i][j-1] = true;
+						CompterCouronnesV2(tableau,i,j-1);
+					}
+				}
+			}
+			catch(Exception e) {}
+			
+			if(isCounted[i][j].equals(false)) {
+				dimension.add(tableau[i][j]);
+				isCounted[i][j] = true;
+			}	
+		}
 	}
 	
 	public static void compterCouronne(Joueur joueur, String[][] tableau, int i, int j) {
@@ -1705,7 +604,7 @@ public class Main {
 	}
 	
 	
-	public static String getVainqueur(){
+	/*public static String getVainqueur(){
 		int maxRoyaume1 = 0;
 		int nbCouronnes1 = 0;
 		int maxRoyaume2 = 0;
@@ -1775,10 +674,14 @@ public class Main {
 		}
 		
 		
-	}
+	}*/
 	
 	
 }
+
+
+
+
 
 
 // TO DO

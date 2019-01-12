@@ -33,13 +33,18 @@ public class Joueur {
 	public void setNb_points(int nb_points) {
 		this.nb_points = nb_points;
 	}
+	public Plateau getPlateau() {
+		return plateau;
+	}
+	public void setPlateau(Plateau plateau) {
+		this.plateau = plateau;
+	}
 	public void setPlateauJoueur(int i, int j, String mot) {
 		this.plateau.RemplirPlateau(i,j,mot);
 	}
 	public String getPlateauJoueur(int i, int j) {
 		return this.plateau.RecupererPlateau(i,j);
 	}
-	
 	public String[][] getPlateauJoueur() {
 		return this.plateau.getTableau_tuiles_plateau();
 	}
@@ -58,11 +63,9 @@ public class Joueur {
 	public void setChoix_tuile_tour(ArrayList<Integer> choix_tuile_tour) {
 		this.choix_tuile_tour = choix_tuile_tour;
 	}
-	
 	public int getScoreJoueur() {
 		return scoreJoueur;
 	}
-
 	public void setScoreJoueur(int scoreJoueur) {
 		this.scoreJoueur = scoreJoueur;
 	}
@@ -307,5 +310,846 @@ public class Joueur {
 				else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(4) == true)System.out.println("occupé");
 			}
 		}
+	}
+	
+	public boolean affichageTuileJoueur1(Jeu jeu, Tuile maPetiteTuile){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		for (int i=0; i<5; i++){
+			for (int j=0; j<5; j++){
+				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
+					if (maPetiteTuile.getRotation().equals("horizontal-croissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (i<4) {
+								if(jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i+1)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i))
+									{
+										jeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(0).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								}
+							}
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("horizontal-decroissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (i>0) {
+								if(jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i-1)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(0).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								}
+							}
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("vertical-croissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (j>0) {
+								if(jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(0).getPlateauJoueur(j-1, i)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(0).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								}
+							}
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("vertical-decroissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (j<4) {
+								if(jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(0).getPlateauJoueur(j+1, i)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(0).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(0).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean affichageTuileJoueur2(Jeu jeu, Tuile maPetiteTuile){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		for (int i=0; i<5; i++){
+			for (int j=0; j<5; j++){
+				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
+					if (maPetiteTuile.getRotation().equals("horizontal-croissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (i<4) {
+								if(jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i+1)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(1).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}	
+								}
+							}
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("horizontal-decroissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (i>0) {
+								if(jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i-1)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(1).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								}
+							}
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("vertical-croissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (j>0) {
+								if(jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(1).getPlateauJoueur(j-1, i)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(1).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								}
+							}
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("vertical-decroissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (j<4) {
+								if(jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(1).getPlateauJoueur(j+1, i)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(1).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(1).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								}
+							}
+						}
+					}					
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean affichageTuileJoueur3(Jeu jeu, Tuile maPetiteTuile){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		for (int i=0; i<5; i++){
+			for (int j=0; j<5; j++){
+				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
+					if (maPetiteTuile.getRotation().equals("horizontal-croissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (i<4) {
+								if(jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i+1)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(2).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
+								}	
+							}
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("horizontal-decroissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (i>0) {
+								if(jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i-1)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(2).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
+								}	
+							}
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("vertical-croissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (j>0) {
+								if(jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(2).getPlateauJoueur(j-1, i)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(2).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
+								}	
+							}
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("vertical-decroissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (j<4) {
+								if(jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(2).getPlateauJoueur(j+1, i)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(2).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(2).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									
+								}	
+							}
+						}	
+					}
+				}	
+			}
+		}
+		return false;
+	}
+	
+	public boolean affichageTuileJoueur4(Jeu jeu, Tuile maPetiteTuile){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		for (int i=0; i<5; i++){
+			for (int j=0; j<5; j++){
+				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
+					if (maPetiteTuile.getRotation().equals("horizontal-croissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (i<4) {
+								if(jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i+1)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(3).setPlateauJoueur(j,i+1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								
+								}
+							}	
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("horizontal-decroissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (i>0) {
+								if(jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i-1)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(3).setPlateauJoueur(j,i-1,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								
+								}
+							}	
+						}
+					
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("vertical-croissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (j>0) {
+								if(jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(3).getPlateauJoueur(j-1, i)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(3).setPlateauJoueur(j-1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+								
+								}
+							}	
+						}
+					}
+					
+					else if (maPetiteTuile.getRotation().equals("vertical-decroissant")){
+						if (maPetiteTuile.getType_tuile1().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile1().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 
+						if (maPetiteTuile.getNbCouronnes1() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes1() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						
+						if (maPetiteTuile.getType_tuile2().equals("Champs")) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/champs.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mer"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mer.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Foret"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/foret.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Prairie"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/prairie.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Mine"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/mine.png");
+						else if (maPetiteTuile.getType_tuile2().equals("Montagne"))StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/montagne.png");
+						
+						//couronnes 2
+						if (maPetiteTuile.getNbCouronnes2() == 1) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/1couronne.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 2) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/2couronnes.png");
+						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
+						
+						if (StdDraw.isMousePressed()) {	
+							// si deborde du tableau, la tuile est détruite (position horizontal)
+							if (j<4) {
+								if(jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(3).getPlateauJoueur(j+1, i)== null) {
+									if(this.tuileCompatible(maPetiteTuile, j, i)) {
+										jeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+										jeu.getListe_joueurs().get(3).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+										return true;
+									}
+									jeu.getListe_joueurs().get(3).setPlateauJoueur(j,i,maPetiteTuile.getType_tuile1() + "-" + maPetiteTuile.getNbCouronnes1());
+									jeu.getListe_joueurs().get(3).setPlateauJoueur(j+1,i,maPetiteTuile.getType_tuile2() + "-" + maPetiteTuile.getNbCouronnes2());
+								return true;
+								}
+							}	
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+public boolean tuileCompatible(Tuile tuile, int i, int j) {
+		
+	//test de compatibilité sur chacune des rotations
+		if(tuile.getRotation().equals("horizontal-croissant")) {
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i, j-1).split("-")[0]) || this.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i-1, j).split("-")[0]) || this.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i+1, j).split("-")[0]) || this.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i-1, j+1).split("-")[0]) || this.getPlateauJoueur(i-1, j+1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i, j+2).split("-")[0]) || this.getPlateauJoueur(i, j+2).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i+1, j+1).split("-")[0]) || this.getPlateauJoueur(i+1, j+1).split("-")[0].equals("chateau"))return true;	
+			}
+			catch(Exception e){}
+			
+			return false;
+		}
+		
+		else if(tuile.getRotation().equals("horizontal-decroissant")) {
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i-1, j).split("-")[0]) || this.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i, j+1).split("-")[0]) || this.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i+1, j).split("-")[0]) || this.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i-1, j-1).split("-")[0]) || this.getPlateauJoueur(i-1, j-1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i, j-2).split("-")[0]) || this.getPlateauJoueur(i, j-2).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i+1, j-1).split("-")[0]) || this.getPlateauJoueur(i+1, j-1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			return false;
+		}
+		
+		else if(tuile.getRotation().equals("vertical-decroissant")) {
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i, j-1).split("-")[0]) || this.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i-1, j).split("-")[0]) || this.getPlateauJoueur(i-1, j).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i, j+1).split("-")[0]) || this.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau"))return true;	
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i+1, j-1).split("-")[0]) || this.getPlateauJoueur(i+1, j-1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i+2, j).split("-")[0]) || this.getPlateauJoueur(i+2, j).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i+1, j+1).split("-")[0]) || this.getPlateauJoueur(i+1, j+1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			return false;	
+		}
+		
+		else if(tuile.getRotation().equals("vertical-croissant")) {
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i, j-1).split("-")[0]) || this.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i+1, j).split("-")[0]) || this.getPlateauJoueur(i+1, j).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i, j+1).split("-")[0]) || this.getPlateauJoueur(i, j+1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i-1, j-1).split("-")[0]) || this.getPlateauJoueur(i-1, j-1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i-2, j).split("-")[0]) || this.getPlateauJoueur(i-2, j).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			try {
+				if(tuile.getType_tuile2().equals(this.getPlateauJoueur(i-1, j+1).split("-")[0]) || this.getPlateauJoueur(i-1, j+1).split("-")[0].equals("chateau"))return true;
+			}
+			catch(Exception e){}
+			
+			return false;
+		}
+		return false;	
 	}
 }

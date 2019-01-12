@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-//import java.util.HashMap;
 import java.util.HashMap;
+import edu.princeton.cs.introcs.StdDraw;
 
 public class Plateau {
 	
@@ -42,29 +42,6 @@ public class Plateau {
 	public void setTableau_tuiles_plateau(String[][] tableau_tuiles_plateau) {
 		this.tableau_tuiles_plateau = tableau_tuiles_plateau;
 	}
-
-
-
-	/*public boolean TuilesCompatibles(Tuile tuile1, Tuile tuile2) {
-		if ((tuile1.getType_tuile1() == tuile2.getType_tuile1()) || (tuile1.getType_tuile1() == tuile2.getType_tuile2()) || (tuile1.getType_tuile2() == tuile2.getType_tuile1()) || (tuile1.getType_tuile2() == tuile2.getType_tuile2()))return true;	
-		else return false;	
-	}*/
-	
-	
-	
-	/*public void CompterCouronnes() {
-		for (int i = 0; i < this.longueur; i++) {
-			for (int j = 0; i <this.largeur; i++) {
-				for (int k = 0; k < this.tuile_joueur.size(); k++) {
-					Tuile tuile = this.tuile_joueur.get(k);
-					if ((tuile.getPosition_x1() == i && tuile.getPosition_y1() == j) || (tuile.getPosition_x2() == i && tuile.getPosition_y2() == j)) {
-						ArrayList<Tuile> domaine = new ArrayList<>();
-					}
-				}
-			}
-		}
-	}*/
-	
 
 	public void CompterCouronnes() {
 		HashMap<Integer, Integer> casesVisitees = new HashMap<>();
@@ -148,5 +125,89 @@ public class Plateau {
 			}
 			System.out.println();
 		}		
+	}
+	
+	public boolean affichagePieceJoueur1(String mot){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		//test cases joueur 1 -- validé faire la même pour les autres joueurs 2,3,4
+		for (int i=0; i<5; i++){
+			for (int j=0; j<5; j++){
+				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+					if (StdDraw.isMousePressed()) {	
+						this.RemplirPlateau(j,i,mot);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean affichagePieceJoueur2(String mot){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		//test cases joueur 2
+		for (int i=0; i<5; i++){
+			for (int j=0; j<5; j++){
+				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+					if (StdDraw.isMousePressed()) {	
+						this.RemplirPlateau(j,i,mot);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean affichagePieceJoueur3(String mot){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		//test cases joueur 3
+		for (int i=0; i<5; i++){
+			for (int j=0; j<5; j++){
+				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+					if (StdDraw.isMousePressed()) {	
+						this.RemplirPlateau(j,i,mot);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean affichagePieceJoueur4(String mot){
+		final int TAILLE_CASE = 68;
+		final int TAILLE_LIGNE = 2;
+		double x = StdDraw.mouseX();
+		double y = StdDraw.mouseY();
+		
+		//test cases joueur 4
+		for (int i=0; i<5; i++){
+			for (int j=0; j<5; j++){
+				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+					if (StdDraw.isMousePressed()) {	
+						this.RemplirPlateau(j,i,mot);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

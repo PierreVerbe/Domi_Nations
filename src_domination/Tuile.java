@@ -1,4 +1,3 @@
-
 public class Tuile {
 	
 	private int numero;

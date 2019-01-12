@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Random;
@@ -49,6 +50,49 @@ public class Jeu {
 	}
 	public void addNb_roi_place() {
 		this.nb_roi_place = this.nb_roi_place+1;
+	}
+	
+	public void CreationJoueurs(int nbJoueur) {
+		for (int i=1; i<nbJoueur+1; i++){
+			Joueur monJoueur = new Joueur();
+			
+			String pseudo = "";
+			char lettreEnCours;
+			boolean isNotFinish = true;
+
+			while(pseudo.length() < 16 && isNotFinish) {
+				StdDraw.picture(625, 545-i*75, "img/cadre"+i+".png");
+				StdDraw.text(450, 543-i*75, "Joueur " + i + " :");
+
+				if(StdDraw.hasNextKeyTyped()) {
+					lettreEnCours = StdDraw.nextKeyTyped();
+					if(lettreEnCours == '\b' && pseudo.length()>0) pseudo = pseudo.substring(0, pseudo.length()-1);
+					else if(lettreEnCours == '\n' && pseudo.length() >= 3) isNotFinish = false;
+					else if (Character.isLetter(lettreEnCours) || (lettreEnCours == ' ' && pseudo.length()>0)) pseudo = pseudo + lettreEnCours;
+				}
+				
+				StdDraw.text(625, 542-i*75, pseudo);
+				StdDraw.show();
+			}
+			
+			monJoueur.setPseudo(pseudo);
+			
+			//définition des couleurs des joueurs
+			if (i == 1)monJoueur.setCouleur(Color.BLUE);
+			else if (i == 2)monJoueur.setCouleur(Color.RED);
+			else if (i == 3) monJoueur.setCouleur(Color.GREEN);	
+			else if (i == 4)monJoueur.setCouleur(Color.PINK);
+			
+			//Définition du nombre de roi en fonction du nombre de joueur
+			if(nbJoueur == 2)monJoueur.setNbRois(2);
+			else monJoueur.setNbRois(1);
+			
+			//affichage parametres joueur
+			monJoueur.infoJoueur();
+			
+			//Ajout du joueur au jeu
+			this.getListe_joueurs().add(monJoueur);
+		}
 	}
 	
 	public void AffichageListeJoueurs()
@@ -114,77 +158,6 @@ public class Jeu {
 		}
 	}
 	
-	/* Pas utilisé 
-	public void AffichagePioche()
-	{
-		int posX = 1200;
-		int posY = 700;
-		
-		for (int i = 0; i < Pioche.getTuiles_tour().size(); i++) {
-			String terrain1 = Pioche.getTuiles_tour().get(i).getType_tuile1();
-			
-			if (terrain1.equals("Champs")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(StdDraw.YELLOW); //jaune champs
-			}
-			else if (terrain1.equals("Prairie")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(82,233,89); //vert clair prairie
-			}
-			else if (terrain1.equals("Foret")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(20,152,27); //vert foncé foret
-			}
-			else if (terrain1.equals("Mer")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(StdDraw.BLUE); //bleu mer
-			}
-			else if (terrain1.equals("Montagne")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(153,77,77); //marron montagnes
-			}
-			else if (terrain1.equals("Mine")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(82,233,89); //vert clair
-			}
-			
-			posX = posX + 30;
-			
-			String terrain2 = Pioche.getTuiles_tour().get(i).getType_tuile2();
-			
-			if (terrain2.equals("Champs")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(StdDraw.YELLOW); //jaune champs
-			}
-			else if (terrain2.equals("Prairie")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(82,233,89); //vert clair prairie
-			}
-			else if (terrain2.equals("Foret")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(20,152,27); //vert foncé foret
-			}
-			else if (terrain2.equals("Mer")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(StdDraw.BLUE); //bleu mer
-			}
-			else if (terrain2.equals("Montagne")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(153,77,77); //marron montagnes
-			}
-			else if (terrain2.equals("Mine")) {
-				StdDraw.filledRectangle(posX, posY, 10, 10);
-				StdDraw.setPenColor(82,233,89); //vert clair
-			}
-			
-			posX = posX - 30;
-			
-			posY = posY + 50;
-		}
-		/*StdDraw.filledRectangle(1200, 700, 10, 10);
-		StdDraw.setPenColor(StdDraw.RED);
-	} */
-	
 	public void affichageGlobal(int nombreJoueurs){
 		affichagePlateauJoueurs(nombreJoueurs); //image des plateaux du jeu
 		affichageMemoireJoueur1(); //affichage des tuiles du plateaux 1
@@ -230,6 +203,12 @@ public class Jeu {
 		StdDraw.setFont(fontFenetre);
 		StdDraw.text(1200, 700, "N° tour : " + this.getNb_tour());
 		StdDraw.text(1100, 20, "Ordre de jeu : " + this.getOrdre_tour_joueur());
+	}
+	
+	public int sommeRoi(){
+		int somme =0;
+		for(int i=0; i<this.getListe_joueurs().size(); i++)somme = somme + this.getListe_joueurs().get(i).getNbRois();
+		return somme;
 	}
 	
 	public void affichageMemoireJoueur1(){
