@@ -8,9 +8,6 @@ public class Plateau {
 	private int largeur;
 	private ArrayList<Tuile> tuile_joueur = new ArrayList<>();
 	private String[][] tableau_tuiles_plateau = new String[longueur][largeur];
-	private ArrayList<String> dimension = new ArrayList<>();
-	private Boolean[][] isCounted = new Boolean[5][5];
-	private String[][] tableauParcours = new String[5][5];
 
 	
 	public Plateau(){}
@@ -45,30 +42,7 @@ public class Plateau {
 	public void setTableau_tuiles_plateau(String[][] tableau_tuiles_plateau) {
 		this.tableau_tuiles_plateau = tableau_tuiles_plateau;
 	}
-	
-	public ArrayList<String> getDimension() {
-		return dimension;
-	}
 
-	public void setDimension(ArrayList<String> dimension) {
-		this.dimension = dimension;
-	}
-
-	public Boolean[][] getIsCounted() {
-		return isCounted;
-	}
-
-	public void setIsCounted(Boolean[][] isCounted) {
-		this.isCounted = isCounted;
-	}
-	
-	public String[][] getTableauParcours() {
-		return tableauParcours;
-	}
-
-	public void setTableauParcours(String[][] tableauParcours) {
-		this.tableauParcours = tableauParcours;
-	}
 
 
 	/*public boolean TuilesCompatibles(Tuile tuile1, Tuile tuile2) {
