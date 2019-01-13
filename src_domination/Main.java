@@ -612,22 +612,28 @@ public class Main {
 			for (int i=0; i<5; i++) {
 				for(int j=0; j<5; j++) {
 					//Comptage du royaume et du nom de couronne du joueur 1
-					if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j) != null)maxRoyaume1 +=1;
-					if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes1 +=1;					
-					else if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes1 +=2; 
-					else if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes1 +=3;
+					if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j) != null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j) != "chateau" ) {
+						maxRoyaume1 +=1;
+						if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes1 +=1;					
+						else if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes1 +=2; 
+						else if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes1 +=3;
+					}
 					
 					//Comptage du royaume et du nom de couronne du joueur 2
-					if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j) != null)maxRoyaume2 +=1;
-					if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes2 +=1;
-					else if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes2 +=2;
-					else if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes2 +=3;
+					if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j) != null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j) != "chateau" ) {
+						maxRoyaume2 +=1;
+						if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes2 +=1;
+						else if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes2 +=2;
+						else if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes2 +=3;
+					}
 					
 					//Comptage du royaume et du nom de couronne du joueur 3
-					if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j) != null)maxRoyaume2 +=1;
-					if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes2 +=1;
-					else if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes2 +=2;
-					else if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes2 +=3;
+					if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j) != null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j) != "chateau" ) {
+						maxRoyaume3 +=1;
+						if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes3 +=1;
+						else if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes3 +=2;
+						else if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes3 +=3;
+					}
 				}
 			}
 			
@@ -718,28 +724,36 @@ public class Main {
 			for (int i=0; i<5; i++) {
 				for(int j=0; j<5; j++) {
 					//Comptage du royaume et du nom de couronne du joueur 1
-					if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j) != null)maxRoyaume1 +=1;
-					if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes1 +=1;					
-					else if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes1 +=2; 
-					else if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes1 +=3;
+					if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j) != null && MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j) != "chateau" ) {
+						maxRoyaume1 +=1;
+						if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes1 +=1;					
+						else if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes1 +=2; 
+						else if (MonJeu.getListe_joueurs().get(0).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes1 +=3;
+					}
 					
 					//Comptage du royaume et du nom de couronne du joueur 2
-					if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j) != null)maxRoyaume2 +=1;
-					if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes2 +=1;
-					else if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes2 +=2;
-					else if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes2 +=3;
+					if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j) != null && MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j) != "chateau" ) {
+						maxRoyaume2 +=1;
+						if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes2 +=1;
+						else if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes2 +=2;
+						else if (MonJeu.getListe_joueurs().get(1).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes2 +=3;
+					}
 					
 					//Comptage du royaume et du nom de couronne du joueur 3
-					if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j) != null)maxRoyaume2 +=1;
-					if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes2 +=1;
-					else if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes2 +=2;
-					else if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes2 +=3;
+					if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j) != null && MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j) != "chateau" ) {
+						maxRoyaume3 +=1;
+						if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes3 +=1;
+						else if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes3 +=2;
+						else if (MonJeu.getListe_joueurs().get(2).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes3 +=3;
+					}
 					
 					//Comptage du royaume et du nom de couronne du joueur 4
-					if (MonJeu.getListe_joueurs().get(3).getPlateauJoueur(i, j) != null)maxRoyaume2 +=1;
-					if (MonJeu.getListe_joueurs().get(3).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes2 +=1;
-					else if (MonJeu.getListe_joueurs().get(3).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes2 +=2;
-					else if (MonJeu.getListe_joueurs().get(3).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes2 +=3;
+					if (MonJeu.getListe_joueurs().get(3).getPlateauJoueur(i, j) != null && MonJeu.getListe_joueurs().get(3).getPlateauJoueur(i, j) != "chateau" ) {
+						maxRoyaume4 +=1;
+						if (MonJeu.getListe_joueurs().get(3).getPlateauJoueur(i, j).split("-")[1].equals("1"))nbCouronnes4 +=1;
+						else if (MonJeu.getListe_joueurs().get(3).getPlateauJoueur(i, j).split("-")[1].equals("2"))nbCouronnes4 +=2;
+						else if (MonJeu.getListe_joueurs().get(3).getPlateauJoueur(i, j).split("-")[1].equals("3"))nbCouronnes4 +=3;
+					}
 				}
 			}
 			

@@ -6,7 +6,7 @@ public class Tuile {
 	private String type_tuile1;
 	private String type_tuile2;
 	
-	private String rotation = "horizontal-croissant"; //attribut pierre -- 4 types differents : horizontal-croissant, horizontal-decroissant, vertical-croissant, vertical-decroissant 
+	private String rotation = "horizontal-croissant"; //4 types differents : horizontal-croissant, horizontal-decroissant, vertical-croissant, vertical-decroissant 
 	
 	public Tuile(){}
 	
