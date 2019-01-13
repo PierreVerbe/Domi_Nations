@@ -54,6 +54,7 @@ public class Jeu {
 			boolean isNotFinish = true;
 
 			while(pseudo.length() < 16 && isNotFinish) {
+				StdDraw.text(650, 600, "Votre pseudo doit faire entre 3 et 16 caractères. Appuyez sur entrée pour valider votre pseudo.");
 				StdDraw.picture(625, 545-i*75, "img/cadre"+i+".png");
 				StdDraw.text(450, 543-i*75, "Joueur " + i + " :");
 

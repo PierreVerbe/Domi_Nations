@@ -50,7 +50,7 @@ public class Main {
 		StdDraw.setXscale(-WIDTH, X_MAX+WIDTH);
 		StdDraw.setYscale(-WIDTH, Y_MAX+WIDTH);
 		StdDraw.clear(StdDraw.WHITE);
-		
+				
 		//Paramétrage du la police d'écriture de la librairie
 		Font fontPlateau = new Font("Arial", Font.BOLD, 20);
 		StdDraw.setFont(fontPlateau);
@@ -448,18 +448,7 @@ public class Main {
 			Font fontPlateau = new Font("Arial", Font.BOLD, 50);
 			StdDraw.setFont(fontPlateau);
 			StdDraw.clear(StdDraw.YELLOW);
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
+			for(int i = 0; i < 11; i++) StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
 			StdDraw.text(600, 400, gagnant.toUpperCase() + " EST LE GRAND GAGNANT !");
 			StdDraw.show();
 			StdDraw.pause(200);
@@ -467,10 +456,8 @@ public class Main {
 			fontPlateau = new Font("Arial", Font.BOLD, 60);
 			StdDraw.clear(StdDraw.PINK);
 			StdDraw.setFont(fontPlateau);
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
+			for(int i = 0; i < 4; i++) StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
+
 			StdDraw.text(600, 400, gagnant.toUpperCase() + " EST LE GRAND GAGNANT !");
 
 			StdDraw.show();
@@ -478,14 +465,7 @@ public class Main {
 			
 			fontPlateau = new Font("Arial", Font.BOLD, 60);
 			StdDraw.clear(StdDraw.YELLOW);
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
-			StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
+			for(int i = 0; i < 8; i++) StdDraw.picture(Math.random()*(1200)+35, Math.random()*(650)+35, "img/chateau.png");
 			StdDraw.text(600, 400, gagnant.toUpperCase() + " EST LE GRAND GAGNANT !");
 			StdDraw.show();
 			StdDraw.pause(200);
