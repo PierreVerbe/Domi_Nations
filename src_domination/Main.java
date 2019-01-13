@@ -12,8 +12,8 @@ public class Main {
 	public final static float WIDTH= 1;
 	
 	//Obtenir score joueur
-	static Boolean[][] isCounted = new Boolean[5][5];
-	static String[][] monTableauBis = new String[5][5]; 
+	static Boolean[][] inDomaine = new Boolean[5][5];
+	static String[][] isVerified = new String[5][5]; 
 	static ArrayList<String> dimension = new ArrayList<>();
 	
 	public static Jeu MonJeu = new Jeu();
@@ -45,21 +45,21 @@ public class Main {
 
 		System.out.println("Bienvenue dans le jeu Domination !");
 		
-		//CrÃ©ation de la fenÃªtre de jeu
+		//Création de la fenêtre de jeu
 		StdDraw.setCanvasSize(X_MAX, Y_MAX);
 		StdDraw.setXscale(-WIDTH, X_MAX+WIDTH);
 		StdDraw.setYscale(-WIDTH, Y_MAX+WIDTH);
 		StdDraw.clear(StdDraw.WHITE);
 		
-		//ParamÃ©trage du la police d'Ã©criture de la librairie
+		//Paramétrage du la police d'écriture de la librairie
 		Font fontPlateau = new Font("Arial", Font.BOLD, 20);
 		StdDraw.setFont(fontPlateau);
 		num_joueur = initNbJoueur();
 
-		//ParamÃ©trage des joueurs
+		//Paramétrage des joueurs
 		MonJeu.CreationJoueurs(num_joueur);
 		
-		//DÃ©finition de l'ordre des joueurs de maniÃ¨re random
+		//Définition de l'ordre des joueurs de manière random
 		MonJeu.initOrdreTour(num_joueur);
 		
 		//Initialisation de la pioche
@@ -68,7 +68,7 @@ public class Main {
 		
 		//Boucle principal du jeu
 		while(jeu == true){
-			//PrÃ©paration affichage de tous les Ã©lÃ©ments de la fenÃªtre
+			//Préparation affichage de tous les éléments de la fenêtre
 			MonJeu.affichageGlobal(num_joueur);
 			
 			//raccourci fin de jeu - echap
@@ -98,7 +98,7 @@ public class Main {
 			
 			//placement des rois sur les tuiles
 			else if (flagChateau == true && MonJeu.getNb_roi_place() != MonJeu.sommeRoi()){
-				//affichage des tuiles du plateaux dÃ©jÃ  placÃ©
+				//affichage des tuiles du plateaux déjà placé
 				if ((MaPioche.getTuiles_piochees().size() != 0 && flagFinTourJeu==true) || MonJeu.getNb_tour() == 0){
 					if (MonJeu.getNb_tour() == 0) MonJeu.setNb_tour(1);
 					MaPioche.ViderTuilesTour();
@@ -109,7 +109,7 @@ public class Main {
 				
 				MaPioche.AffichageTuilesTour();	
 				
-				//Lorsque un joueur a placÃ© son roi on passe au second joueur, etc...
+				//Lorsque un joueur a placé son roi on passe au second joueur, etc...
 				CompteurOrdrejoueur = ordreJeuJoueur(num_joueur,CompteurOrdrejoueur);
 				
 				//Affectation des rois sur les tuiles
@@ -156,7 +156,7 @@ public class Main {
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed()){
 						while(flagTuile1 == false){
-							//prÃ©paration affichage de tous les Ã©lÃ©ments de la fenÃªtre (plateaux + pioche)
+							//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
 							MonJeu.affichageGlobal(num_joueur);
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
@@ -164,7 +164,7 @@ public class Main {
 							//affichage information destruction tuile
 							Font fontFenetre = new Font("Verdana", Font.BOLD, 20);
 							StdDraw.setFont(fontFenetre);
-							StdDraw.text(1070, 200, "DÃ©truire la tuile 'a' + click");
+							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(0));
 							if(MonJeu.getOrdre_tour_joueur().get(0) == 1)flagTuile1 = MonJeu.getListe_joueurs().get(0).affichageTuileJoueur1(MonJeu, MaPioche.getTuiles_tour().get(0));
@@ -197,7 +197,7 @@ public class Main {
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed()){
 						while(flagTuile2 == false){
-							//prÃ©paration affichage de tous les Ã©lÃ©ments de la fenÃªtre (plateaux + pioche)
+							//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
 							MonJeu.affichageGlobal(num_joueur);
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
@@ -205,7 +205,7 @@ public class Main {
 							//affichage informations destruction tuile
 							Font fontFenetre = new Font("Verdana", Font.BOLD, 20);
 							StdDraw.setFont(fontFenetre);
-							StdDraw.text(1070, 200, "DÃ©truire la tuile 'a' + click");
+							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(1));
 							if(MonJeu.getOrdre_tour_joueur().get(1) == 1)flagTuile2 = MonJeu.getListe_joueurs().get(0).affichageTuileJoueur1(MonJeu, MaPioche.getTuiles_tour().get(1));
@@ -238,7 +238,7 @@ public class Main {
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed()){
 						while(flagTuile3 == false){
-							//prÃ©paration affichage de tous les Ã©lÃ©ments de la fenÃªtre (plateaux + pioche)
+							//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
 							MonJeu.affichageGlobal(num_joueur);
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
@@ -246,7 +246,7 @@ public class Main {
 							//affichage informations destruction tuile
 							Font fontFenetre = new Font("Verdana", Font.BOLD, 20);
 							StdDraw.setFont(fontFenetre);
-							StdDraw.text(1070, 200, "DÃ©truire la tuile 'a' + click");
+							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(2));
 							if(MonJeu.getOrdre_tour_joueur().get(2) == 1)flagTuile3 = MonJeu.getListe_joueurs().get(0).affichageTuileJoueur1(MonJeu, MaPioche.getTuiles_tour().get(2));
@@ -279,7 +279,7 @@ public class Main {
 					while(StdDraw.isMousePressed());
 					while (!StdDraw.isMousePressed()){
 						while(flagTuile4 == false){
-							//prÃ©paration affichage de tous les Ã©lÃ©ments de la fenÃªtre (plateaux + pioche)
+							//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
 							MonJeu.affichageGlobal(num_joueur);
 							MaPioche.AffichageTuilesTour();
 							MonJeu.AffichageRoiTour();
@@ -287,7 +287,7 @@ public class Main {
 							//affichage informations destruction tuile
 							Font fontFenetre = new Font("Verdana", Font.BOLD, 20);
 							StdDraw.setFont(fontFenetre);
-							StdDraw.text(1070, 200, "DÃ©truire la tuile 'a' + click");
+							StdDraw.text(1070, 200, "Détruire la tuile 'a' + click");
 							
 							MaPioche.AffichageTuile(StdDraw.mouseX(), StdDraw.mouseY(),MaPioche.getTuiles_tour().get(3));
 							if(MonJeu.getOrdre_tour_joueur().get(3) == 1)flagTuile4 = MonJeu.getListe_joueurs().get(0).affichageTuileJoueur1(MonJeu, MaPioche.getTuiles_tour().get(3));
@@ -319,12 +319,12 @@ public class Main {
 				if(num_joueur == 3 && flagTuile1 && flagTuile2 && flagTuile3) flagFinTourJeu=true;
 				else if (flagTuile1 && flagTuile2 && flagTuile3 && flagTuile4) flagFinTourJeu=true;
 				
-				//Fin du jeu, vÃ©rification 0 tuile dans la pioche
+				//Fin du jeu, vérification 0 tuile dans la pioche
 				if(flagFinTourJeu==true && MaPioche.getTuiles_piochees().size()==0)jeu=false;
 			}
 			
 			else if (flagChateau == true && MonJeu.getNb_roi_place() == MonJeu.sommeRoi() && flagFinTourJeu == true) {
-				//Remise Ã  0 des variables de jeu
+				//Remise à 0 des variables de jeu
 				MonJeu.setNb_roi_place(0);
 				CompteurOrdrejoueur = 0;
 				
@@ -349,13 +349,13 @@ public class Main {
 				//Nouveau tour
 				MonJeu.setNb_tour(MonJeu.getNb_tour()+1);	
 			}	
-			//affichage de tous les Ã©lÃ©ments de la fenÃªtre
+			//affichage de tous les éléments de la fenêtre
 			StdDraw.show();
 			StdDraw.pause(1);
 			StdDraw.clear(StdDraw.GRAY);
 		}
 		
-		//Affichage rÃ©sultat gagnant
+		//Affichage résultat gagnant
 		MonJeu.affichageGlobal(num_joueur);
 		MaPioche.AffichageTuilesTour();
 		MonJeu.AffichageRoiTour();
@@ -492,64 +492,64 @@ public class Main {
 		}
 	}
 	
-	public static void CompterCouronnesV2(String[][] tableau, int i, int j) {
-		if (!(("x").equals(monTableauBis[i][j]))){
-			monTableauBis[i][j] = "x";
+	public static void domainePlateau(String[][] tableau, int i, int j) {
+		if (!(("x").equals(isVerified[i][j]))){
+			isVerified[i][j] = "x";
 		
 			try {
-				if (tableau[i][j].split("-")[0].equals(tableau[i+1][j].split("-")[0]) && !(("x").equals(monTableauBis[i+1][j]))) {
-					if(isCounted[i+1][j].equals(false)) {
+				if (tableau[i][j].split("-")[0].equals(tableau[i+1][j].split("-")[0]) && !(("x").equals(isVerified[i+1][j]))) {
+					if(inDomaine[i+1][j].equals(false)) {
 						dimension.add(tableau[i+1][j]);
-						isCounted[i+1][j] = true;
-						CompterCouronnesV2(tableau,i+1,j);
+						inDomaine[i+1][j] = true;
+						domainePlateau(tableau,i+1,j);
 					}
 				}
 			}
 			catch(Exception e) {}
 			
 			try {
-				if (tableau[i][j].split("-")[0].equals(tableau[i][j+1].split("-")[0]) && !(("x").equals(monTableauBis[i][j+1]))) {
-					if(isCounted[i][j+1].equals(false)) {
+				if (tableau[i][j].split("-")[0].equals(tableau[i][j+1].split("-")[0]) && !(("x").equals(isVerified[i][j+1]))) {
+					if(inDomaine[i][j+1].equals(false)) {
 						dimension.add(tableau[i][j+1]);
-						isCounted[i][j+1] = true;
-						CompterCouronnesV2(tableau,i,j+1);
+						inDomaine[i][j+1] = true;
+						domainePlateau(tableau,i,j+1);
 					}
 				}
 			}
 			catch(Exception e) {}
 			
 			try {
-				if (tableau[i][j].split("-")[0].equals(tableau[i-1][j].split("-")[0]) && !(("x").equals(monTableauBis[i-1][j]))) {
-					if(isCounted[i-1][j].equals(false)) {
+				if (tableau[i][j].split("-")[0].equals(tableau[i-1][j].split("-")[0]) && !(("x").equals(isVerified[i-1][j]))) {
+					if(inDomaine[i-1][j].equals(false)) {
 						dimension.add(tableau[i-1][j]);
-						isCounted[i-1][j] = true;
-						CompterCouronnesV2(tableau,i-1,j);
+						inDomaine[i-1][j] = true;
+						domainePlateau(tableau,i-1,j);
 					}
 				}
 			}
 			catch(Exception e) {}
 			
 			try {
-				if (tableau[i][j].split("-")[0].equals(tableau[i][j-1].split("-")[0]) && !(("x").equals(monTableauBis[i][j-1]))) {
-					if(isCounted[i][j-1].equals(false)) {
+				if (tableau[i][j].split("-")[0].equals(tableau[i][j-1].split("-")[0]) && !(("x").equals(isVerified[i][j-1]))) {
+					if(inDomaine[i][j-1].equals(false)) {
 						dimension.add(tableau[i][j-1]);
-						isCounted[i][j-1] = true;
-						CompterCouronnesV2(tableau,i,j-1);
+						inDomaine[i][j-1] = true;
+						domainePlateau(tableau,i,j-1);
 					}
 				}
 			}
 			catch(Exception e) {}
 			
-			if(isCounted[i][j].equals(false)) {
+			if(inDomaine[i][j].equals(false)) {
 				dimension.add(tableau[i][j]);
-				isCounted[i][j] = true;
+				inDomaine[i][j] = true;
 			}	
 		}
 	}
 	
-	public static void compterCouronne(Joueur joueur, String[][] tableau, int i, int j) {
+	public static void couronneDomaine(Joueur joueur, String[][] tableau, int i, int j) {
 		int nombreCouronne = 0;
-		CompterCouronnesV2(tableau,i,j);
+		domainePlateau(tableau,i,j);
 		for(int cpt=0; cpt<dimension.size(); cpt++){
 			try {
 				nombreCouronne += Integer.parseInt(dimension.get(cpt).split("-")[1]);
@@ -563,18 +563,18 @@ public class Main {
 	}
 	
 	public static void couronneJoueur(Joueur joueur, String[][] tableau) {
-		isCounted = new Boolean[5][5];
-		monTableauBis = new String[5][5];
+		inDomaine = new Boolean[5][5];
+		isVerified = new String[5][5];
 		dimension = new ArrayList<>();
 		
 		for(int i = 0; i < 5; i++) {
 			for(int j = 0; j < 5; j++) {
-				isCounted[i][j] = false;
+				inDomaine[i][j] = false;
 			}
 		}
 		for (int i=0; i<5; i++) {
 			for(int j=0; j<5; j++) {
-				compterCouronne(joueur, tableau,i,j);
+				couronneDomaine(joueur, tableau,i,j);
 			}
 		}
 		System.out.println("Score Joueur : " + joueur.getScoreJoueur());
@@ -615,15 +615,15 @@ public class Main {
 					}
 				}
 				
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume1 > maxRoyaume2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if (maxRoyaume1 < maxRoyaume2)return MonJeu.getListe_joueurs().get(1).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume1 == maxRoyaume2) {
 					if(nbCouronnes1 > nbCouronnes2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes1 < nbCouronnes2)return MonJeu.getListe_joueurs().get(1).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
 				}
 			}
 		}
@@ -657,69 +657,69 @@ public class Main {
 			else if (MonJeu.getListe_joueurs().get(1).getScoreJoueur() > MonJeu.getListe_joueurs().get(0).getScoreJoueur() && MonJeu.getListe_joueurs().get(1).getScoreJoueur() > MonJeu.getListe_joueurs().get(2).getScoreJoueur())return MonJeu.getListe_joueurs().get(1).getPseudo();
 			else if (MonJeu.getListe_joueurs().get(2).getScoreJoueur() > MonJeu.getListe_joueurs().get(0).getScoreJoueur() && MonJeu.getListe_joueurs().get(2).getScoreJoueur() > MonJeu.getListe_joueurs().get(1).getScoreJoueur())return MonJeu.getListe_joueurs().get(2).getPseudo();
 			
-			//si il y a des Ã©galitÃ©s
+			//si il y a des égalités
 			else if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(1).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume1 > maxRoyaume2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if (maxRoyaume1 < maxRoyaume2)return MonJeu.getListe_joueurs().get(1).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume1 == maxRoyaume2) {
 					if(nbCouronnes1 > nbCouronnes2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes1 < nbCouronnes2)return MonJeu.getListe_joueurs().get(1).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(2).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume1 > maxRoyaume3)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if (maxRoyaume1 < maxRoyaume3)return MonJeu.getListe_joueurs().get(2).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume1 == maxRoyaume3) {
 					if(nbCouronnes1 > nbCouronnes3)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes1 < nbCouronnes3)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(1).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(2).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume2 > maxRoyaume3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 				else if (maxRoyaume2 < maxRoyaume3)return MonJeu.getListe_joueurs().get(2).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume2 == maxRoyaume3) {
 					if(nbCouronnes2 > nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes2 < nbCouronnes3)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(1).getScoreJoueur() && MonJeu.getListe_joueurs().get(0).getScoreJoueur() == MonJeu.getListe_joueurs().get(2).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume1 > maxRoyaume3 && maxRoyaume1 > maxRoyaume2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if(maxRoyaume2 > maxRoyaume3 && maxRoyaume2 > maxRoyaume1)return MonJeu.getListe_joueurs().get(1).getPseudo();
 				else if(maxRoyaume3 > maxRoyaume1 && maxRoyaume3 > maxRoyaume2)return MonJeu.getListe_joueurs().get(2).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume1 == maxRoyaume2) {
 					if(nbCouronnes1 > nbCouronnes2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes2 > nbCouronnes1)return MonJeu.getListe_joueurs().get(1).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
 				}
 				
 				else if (maxRoyaume2 == maxRoyaume3) {
 					if(nbCouronnes2 > nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes3 > nbCouronnes2)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume3) {
 					if(nbCouronnes1 > nbCouronnes3)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes3> nbCouronnes1)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume2 && maxRoyaume1 == maxRoyaume3) {
@@ -727,10 +727,10 @@ public class Main {
 					else if(nbCouronnes2 > nbCouronnes3 && nbCouronnes2 > nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes3 > nbCouronnes1 && nbCouronnes3 > nbCouronnes2)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					
-					else if (nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes3) return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes2 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes3 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if(nbCouronnes2 == nbCouronnes3 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if (nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes3) return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes2 )return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes3 )return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes2 == nbCouronnes3 )return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 			}
 		}
@@ -771,108 +771,108 @@ public class Main {
 			else if (MonJeu.getListe_joueurs().get(3).getScoreJoueur() > MonJeu.getListe_joueurs().get(0).getScoreJoueur() && MonJeu.getListe_joueurs().get(3).getScoreJoueur() > MonJeu.getListe_joueurs().get(1).getScoreJoueur() && MonJeu.getListe_joueurs().get(3).getScoreJoueur() > MonJeu.getListe_joueurs().get(2).getScoreJoueur())return MonJeu.getListe_joueurs().get(3).getPseudo();
 			
 			
-			//si il y a des Ã©galitÃ©s
+			//si il y a des égalités
 			else if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(1).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume1 > maxRoyaume2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if (maxRoyaume1 < maxRoyaume2)return MonJeu.getListe_joueurs().get(1).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume1 == maxRoyaume2) {
 					if(nbCouronnes1 > nbCouronnes2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes1 < nbCouronnes2)return MonJeu.getListe_joueurs().get(1).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(2).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume1 > maxRoyaume3)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if (maxRoyaume1 < maxRoyaume3)return MonJeu.getListe_joueurs().get(2).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume1 == maxRoyaume3) {
 					if(nbCouronnes1 > nbCouronnes3)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes1 < nbCouronnes3)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(1).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(2).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume2 > maxRoyaume3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 				else if (maxRoyaume2 < maxRoyaume3)return MonJeu.getListe_joueurs().get(2).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume2 == maxRoyaume3) {
 					if(nbCouronnes2 > nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes2 < nbCouronnes3)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(3).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume1 > maxRoyaume4)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if (maxRoyaume1 < maxRoyaume4)return MonJeu.getListe_joueurs().get(3).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume1 == maxRoyaume4) {
 					if(nbCouronnes1 > nbCouronnes4)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes1 < nbCouronnes4)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(1).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(3).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume2 > maxRoyaume4)return MonJeu.getListe_joueurs().get(1).getPseudo();
 				else if (maxRoyaume2 < maxRoyaume4)return MonJeu.getListe_joueurs().get(3).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume2 == maxRoyaume4) {
 					if(nbCouronnes2 > nbCouronnes4)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes2 < nbCouronnes4)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(2).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(3).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume3 > maxRoyaume4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 				else if (maxRoyaume3 < maxRoyaume4)return MonJeu.getListe_joueurs().get(3).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume3 == maxRoyaume4) {
 					if(nbCouronnes3 > nbCouronnes4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					else if(nbCouronnes3 < nbCouronnes4)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(1).getScoreJoueur() && MonJeu.getListe_joueurs().get(0).getScoreJoueur() == MonJeu.getListe_joueurs().get(2).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume1 > maxRoyaume3 && maxRoyaume1 > maxRoyaume2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if(maxRoyaume2 > maxRoyaume3 && maxRoyaume2 > maxRoyaume1)return MonJeu.getListe_joueurs().get(1).getPseudo();
 				else if(maxRoyaume3 > maxRoyaume1 && maxRoyaume3 > maxRoyaume2)return MonJeu.getListe_joueurs().get(2).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume1 == maxRoyaume2) {
 					if(nbCouronnes1 > nbCouronnes2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes2 > nbCouronnes1)return MonJeu.getListe_joueurs().get(1).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
 				}
 				
 				else if (maxRoyaume2 == maxRoyaume3) {
 					if(nbCouronnes2 > nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes3 > nbCouronnes2)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume3) {
 					if(nbCouronnes1 > nbCouronnes3)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes3> nbCouronnes1)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume2 && maxRoyaume1 == maxRoyaume3) {
@@ -880,36 +880,36 @@ public class Main {
 					else if(nbCouronnes2 > nbCouronnes3 && nbCouronnes2 > nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes3 > nbCouronnes1 && nbCouronnes3 > nbCouronnes2)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					
-					else if(nbCouronnes1 == nbCouronnes2 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes3 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if(nbCouronnes2 == nbCouronnes3 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes2 )return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes3 )return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes2 == nbCouronnes3 )return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(1).getScoreJoueur() && MonJeu.getListe_joueurs().get(0).getScoreJoueur() == MonJeu.getListe_joueurs().get(3).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume1 > maxRoyaume4 && maxRoyaume1 > maxRoyaume2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if(maxRoyaume2 > maxRoyaume4 && maxRoyaume2 > maxRoyaume1)return MonJeu.getListe_joueurs().get(1).getPseudo();
 				else if(maxRoyaume4 > maxRoyaume1 && maxRoyaume4 > maxRoyaume2)return MonJeu.getListe_joueurs().get(2).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume1 == maxRoyaume2) {
 					if(nbCouronnes1 > nbCouronnes2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes2 > nbCouronnes1)return MonJeu.getListe_joueurs().get(1).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
 				}
 				
 				else if (maxRoyaume2 == maxRoyaume4) {
 					if(nbCouronnes2 > nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes3 > nbCouronnes2)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume4) {
 					if(nbCouronnes1 > nbCouronnes3)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes3> nbCouronnes1)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume2 && maxRoyaume1 == maxRoyaume4) {
@@ -917,36 +917,36 @@ public class Main {
 					else if(nbCouronnes2 > nbCouronnes3 && nbCouronnes2 > nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes3 > nbCouronnes1 && nbCouronnes3 > nbCouronnes2)return MonJeu.getListe_joueurs().get(3).getPseudo();
 					
-					else if(nbCouronnes1 == nbCouronnes2 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes3 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes2 == nbCouronnes3 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes2 )return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes3 )return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes2 == nbCouronnes3 )return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(3).getScoreJoueur() && MonJeu.getListe_joueurs().get(0).getScoreJoueur() == MonJeu.getListe_joueurs().get(2).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume1 > maxRoyaume3 && maxRoyaume1 > maxRoyaume4)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if(maxRoyaume3 > maxRoyaume1 && maxRoyaume3 > maxRoyaume4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 				else if(maxRoyaume4 > maxRoyaume3 && maxRoyaume4 > maxRoyaume3)return MonJeu.getListe_joueurs().get(3).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume1 == maxRoyaume4) {
 					if(nbCouronnes1 > nbCouronnes4)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes4 > nbCouronnes1)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume4 == maxRoyaume3) {
 					if(nbCouronnes3 > nbCouronnes4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					else if(nbCouronnes4 > nbCouronnes3)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume3) {
 					if(nbCouronnes1 > nbCouronnes3)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes3> nbCouronnes1)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume4 && maxRoyaume1 == maxRoyaume3) {
@@ -954,36 +954,36 @@ public class Main {
 					else if(nbCouronnes4 > nbCouronnes3 && nbCouronnes4 > nbCouronnes1)return MonJeu.getListe_joueurs().get(3).getPseudo();
 					else if(nbCouronnes3 > nbCouronnes1 && nbCouronnes3 > nbCouronnes4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					
-					else if(nbCouronnes1 == nbCouronnes4 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes3 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if(nbCouronnes4 == nbCouronnes3 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes4 )return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes3 )return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes4 == nbCouronnes3 )return "Egalité " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 			}
 			
 			else if(MonJeu.getListe_joueurs().get(1).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(3).getScoreJoueur() && MonJeu.getListe_joueurs().get(1).getScoreJoueur() == MonJeu.getListe_joueurs().get(2).getScoreJoueur()) {
-				// si les score sont Ã©gaux on teste la taille des royaumes
+				// si les score sont égaux on teste la taille des royaumes
 				if(maxRoyaume2 > maxRoyaume3 && maxRoyaume2 > maxRoyaume4)return MonJeu.getListe_joueurs().get(1).getPseudo();
 				else if(maxRoyaume3 > maxRoyaume2 && maxRoyaume3 > maxRoyaume4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 				else if(maxRoyaume4 > maxRoyaume3 && maxRoyaume4 > maxRoyaume3)return MonJeu.getListe_joueurs().get(3).getPseudo();
 				
-				// si la taille des royaumes sont Ã©gaux on teste le nombre de couronne
+				// si la taille des royaumes sont égaux on teste le nombre de couronne
 				else if (maxRoyaume2 == maxRoyaume4) {
 					if(nbCouronnes2 > nbCouronnes4)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes4 > nbCouronnes2)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume4 == maxRoyaume3) {
 					if(nbCouronnes3 > nbCouronnes4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					else if(nbCouronnes4 > nbCouronnes3)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume2 == maxRoyaume3) {
 					if(nbCouronnes2 > nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes3> nbCouronnes2)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 				
 				else if (maxRoyaume2 == maxRoyaume4 && maxRoyaume2 == maxRoyaume3) {
@@ -991,14 +991,14 @@ public class Main {
 					else if(nbCouronnes4 > nbCouronnes3 && nbCouronnes4 > nbCouronnes2)return MonJeu.getListe_joueurs().get(3).getPseudo();
 					else if(nbCouronnes3 > nbCouronnes2 && nbCouronnes3 > nbCouronnes4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					
-					else if(nbCouronnes2 == nbCouronnes4 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes2 == nbCouronnes3 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if(nbCouronnes4 == nbCouronnes3 )return "EgalitÃ© " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes2 == nbCouronnes4 )return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes2 == nbCouronnes3 )return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes4 == nbCouronnes3 )return "Egalité " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 			}
 			
-			//Le score chacun des joueurs est le mÃªme
+			//Le score chacun des joueurs est le même
 			else if(MonJeu.getListe_joueurs().get(0).getScoreJoueur() ==  MonJeu.getListe_joueurs().get(1).getScoreJoueur() && MonJeu.getListe_joueurs().get(0).getScoreJoueur() == MonJeu.getListe_joueurs().get(2).getScoreJoueur() && MonJeu.getListe_joueurs().get(0).getScoreJoueur() == MonJeu.getListe_joueurs().get(3).getScoreJoueur()) {
 				if(maxRoyaume1 > maxRoyaume2 && maxRoyaume1 > maxRoyaume3 && maxRoyaume1 > maxRoyaume4)return MonJeu.getListe_joueurs().get(0).getPseudo();
 				else if(maxRoyaume2 > maxRoyaume1 && maxRoyaume2 > maxRoyaume3 && maxRoyaume2 > maxRoyaume4)return MonJeu.getListe_joueurs().get(1).getPseudo();
@@ -1009,37 +1009,37 @@ public class Main {
 				else if (maxRoyaume1 == maxRoyaume4 && maxRoyaume1>maxRoyaume2 && maxRoyaume1>maxRoyaume3) {
 					if(nbCouronnes1> nbCouronnes4)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes4 > nbCouronnes1)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume3 && maxRoyaume1>maxRoyaume2 && maxRoyaume1>maxRoyaume4) {
 					if(nbCouronnes1> nbCouronnes3)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes3 > nbCouronnes1)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume2 && maxRoyaume1>maxRoyaume3 && maxRoyaume1>maxRoyaume4) {
 					if(nbCouronnes1> nbCouronnes2)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes2 > nbCouronnes1)return MonJeu.getListe_joueurs().get(1).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
 				}
 				
 				else if (maxRoyaume2 == maxRoyaume3 && maxRoyaume2>maxRoyaume1 && maxRoyaume2>maxRoyaume4) {
 					if(nbCouronnes2> nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes3 > nbCouronnes2)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 				
 				else if (maxRoyaume2 == maxRoyaume4 && maxRoyaume2>maxRoyaume3 && maxRoyaume2>maxRoyaume1) {
 					if(nbCouronnes2> nbCouronnes4)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes4 > nbCouronnes2)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume3== maxRoyaume4 && maxRoyaume3>maxRoyaume1 && maxRoyaume3>maxRoyaume2) {
 					if(nbCouronnes3> nbCouronnes4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					else if(nbCouronnes4 > nbCouronnes3)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else return "EgalitÃ© " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else return "Egalité " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				// Pour 3 royaumes egaux
@@ -1047,40 +1047,40 @@ public class Main {
 					if(nbCouronnes1> nbCouronnes2 && nbCouronnes1> nbCouronnes3)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes2> nbCouronnes1 && nbCouronnes2> nbCouronnes3)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes3> nbCouronnes1 && nbCouronnes3> nbCouronnes2)return MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if (nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes3)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes2)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes3)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if(nbCouronnes2 == nbCouronnes3)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if (nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes3)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes2)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes3)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes2 == nbCouronnes3)return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume2 && maxRoyaume1 == maxRoyaume4) {
 					if(nbCouronnes1> nbCouronnes2 && nbCouronnes1> nbCouronnes4)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes2> nbCouronnes1 && nbCouronnes2> nbCouronnes4)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes4> nbCouronnes1 && nbCouronnes4> nbCouronnes2)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if (nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes2)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes2 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if (nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes2)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes2 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume1 == maxRoyaume3 && maxRoyaume1 == maxRoyaume4) {
 					if(nbCouronnes1> nbCouronnes3 && nbCouronnes1> nbCouronnes4)return MonJeu.getListe_joueurs().get(0).getPseudo();
 					else if(nbCouronnes3> nbCouronnes1 && nbCouronnes3> nbCouronnes4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					else if(nbCouronnes4> nbCouronnes1 && nbCouronnes4> nbCouronnes3)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if (nbCouronnes1 == nbCouronnes3 && nbCouronnes1 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes3)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes3 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if (nbCouronnes1 == nbCouronnes3 && nbCouronnes1 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes3)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes3 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				else if (maxRoyaume2 == maxRoyaume3 && maxRoyaume2 == maxRoyaume4) {
 					if(nbCouronnes2> nbCouronnes3 && nbCouronnes2> nbCouronnes4)return MonJeu.getListe_joueurs().get(1).getPseudo();
 					else if(nbCouronnes3> nbCouronnes2 && nbCouronnes3> nbCouronnes4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					else if(nbCouronnes4> nbCouronnes2 && nbCouronnes4> nbCouronnes3)return MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if (nbCouronnes2 == nbCouronnes3 && nbCouronnes2 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes2 == nbCouronnes3)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if(nbCouronnes2 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes3 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if (nbCouronnes2 == nbCouronnes3 && nbCouronnes2 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes2 == nbCouronnes3)return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes2 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes3 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}
 				
 				// Pour 4 royaumes egaux
@@ -1091,22 +1091,22 @@ public class Main {
 					else if(nbCouronnes3>nbCouronnes1 && nbCouronnes3>nbCouronnes2 && nbCouronnes3>nbCouronnes4)return MonJeu.getListe_joueurs().get(2).getPseudo();
 					else if(nbCouronnes4>nbCouronnes1 && nbCouronnes4>nbCouronnes2 && nbCouronnes4>nbCouronnes3)return MonJeu.getListe_joueurs().get(3).getPseudo();
 					
-					//pour 2 joueurs avec couronnes Ã©gales
-					else if(nbCouronnes1 == nbCouronnes2 && nbCouronnes1>nbCouronnes3)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1);
-					else if(nbCouronnes1 == nbCouronnes3 && nbCouronnes1>nbCouronnes2)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2);
-					else if(nbCouronnes1 == nbCouronnes4 && nbCouronnes1>nbCouronnes2)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3);
-					else if(nbCouronnes2 == nbCouronnes3 && nbCouronnes2>nbCouronnes1)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2);
-					else if(nbCouronnes2 == nbCouronnes4 && nbCouronnes2>nbCouronnes1)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3);
-					else if(nbCouronnes3 == nbCouronnes4 && nbCouronnes3>nbCouronnes1)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3);
+					//pour 2 joueurs avec couronnes égales
+					else if(nbCouronnes1 == nbCouronnes2 && nbCouronnes1>nbCouronnes3)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(1);
+					else if(nbCouronnes1 == nbCouronnes3 && nbCouronnes1>nbCouronnes2)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2);
+					else if(nbCouronnes1 == nbCouronnes4 && nbCouronnes1>nbCouronnes2)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3);
+					else if(nbCouronnes2 == nbCouronnes3 && nbCouronnes2>nbCouronnes1)return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2);
+					else if(nbCouronnes2 == nbCouronnes4 && nbCouronnes2>nbCouronnes1)return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3);
+					else if(nbCouronnes3 == nbCouronnes4 && nbCouronnes3>nbCouronnes1)return "Egalité " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3);
 					
-					//pour 3 joueurs avec couronnes Ã©gales 
-					else if(nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes3)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes1 == nbCouronnes3 && nbCouronnes1 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
-					else if(nbCouronnes2 == nbCouronnes3 && nbCouronnes2 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(1).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					//pour 3 joueurs avec couronnes égales 
+					else if(nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes3)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(2).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes1 == nbCouronnes3 && nbCouronnes1 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					else if(nbCouronnes2 == nbCouronnes3 && nbCouronnes2 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(1).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 					
-					//pour 4 joueurs avec couronnes Ã©gales 
-					else if(nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes3 && nbCouronnes1 == nbCouronnes4)return "EgalitÃ© " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
+					//pour 4 joueurs avec couronnes égales 
+					else if(nbCouronnes1 == nbCouronnes2 && nbCouronnes1 == nbCouronnes3 && nbCouronnes1 == nbCouronnes4)return "Egalité " + MonJeu.getListe_joueurs().get(0).getPseudo() + ", " + MonJeu.getListe_joueurs().get(1).getPseudo() + ", " + MonJeu.getListe_joueurs().get(2).getPseudo() + " et " + MonJeu.getListe_joueurs().get(3).getPseudo();
 				}	
 			}
 		}

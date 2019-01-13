@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import edu.princeton.cs.introcs.StdDraw;
 
 public class Plateau {
@@ -31,71 +30,6 @@ public class Plateau {
 	}
 	public void setTableau_tuiles_plateau(String[][] tableau_tuiles_plateau) {
 		this.tableau_tuiles_plateau = tableau_tuiles_plateau;
-	}
-
-	public void CompterCouronnes() {
-		HashMap<Integer, Integer> casesVisitees = new HashMap<>();
-		int score = 0;
-		for (int i = 0; i < this.tableau_tuiles_plateau.length; i++) {
-			for (int j = 0; j < this.tableau_tuiles_plateau.length; j++) {
-				int nbCasesDimension = 0;
-				int nbCouronnesDimension = 0;
-				
-				if(!casesVisitees.containsKey(i) && j != casesVisitees.get(i)) {
-					casesVisitees.put(i, j);
-					String terrain = this.tableau_tuiles_plateau[i][j].split("-")[0];
-					
-					try {
-						String terrainHaut = this.tableau_tuiles_plateau[i-1][j].split("-")[0];
-						
-						if (terrain.equals(terrainHaut)) {
-							nbCasesDimension = nbCasesDimension + 1;
-							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i-1][j].split("-")[1]);
-							casesVisitees.put(i-1, j);
-						}
-					}
-					
-					catch(Exception e) {}
-						
-					try {
-						String terrainBas = this.tableau_tuiles_plateau[i+1][j].split("-")[0];
-		
-						if (terrain.equals(terrainBas)) {
-							nbCasesDimension += 1;
-							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i+1][j].split("-")[1]);
-							casesVisitees.put(i+1, j);
-						}
-					}
-					
-					catch(Exception e) {}
-					
-					try {
-						String terrainGauche = this.tableau_tuiles_plateau[i][j-1].split("-")[0];
-						
-						if (terrain.equals(terrainGauche)) {
-							nbCasesDimension = nbCasesDimension + 1;
-							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i][j-1].split("-")[1]);
-							casesVisitees.put(i, j-1);
-						}
-					}
-					
-					catch(Exception e) {}
-					
-					try {
-						String terrainDroit = this.tableau_tuiles_plateau[i][j+1].split("-")[0];
-						
-						if (terrain.equals(terrainDroit)) {
-							nbCasesDimension = nbCasesDimension + 1;
-							nbCouronnesDimension = Integer.parseInt(this.tableau_tuiles_plateau[i][j+1].split("-")[1]);
-							casesVisitees.put(i, j+1);
-						}
-					}
-					
-					catch(Exception e) {}
-				}
-				score = score + (nbCasesDimension * nbCouronnesDimension);
-			}
-		}
 	}
 	
 	
