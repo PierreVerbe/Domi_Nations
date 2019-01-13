@@ -14,7 +14,7 @@ public class Main {
 	//Obtenir score joueur
 	static Boolean[][] inDomaine = new Boolean[5][5];
 	static String[][] isVerified = new String[5][5]; 
-	static ArrayList<String> dimension = new ArrayList<>();
+	static ArrayList<String> domaine = new ArrayList<>();
 	
 	public static Jeu MonJeu = new Jeu();
 	public static Pioche MaPioche = new Pioche();
@@ -499,7 +499,7 @@ public class Main {
 			try {
 				if (tableau[i][j].split("-")[0].equals(tableau[i+1][j].split("-")[0]) && !(("x").equals(isVerified[i+1][j]))) {
 					if(inDomaine[i+1][j].equals(false)) {
-						dimension.add(tableau[i+1][j]);
+						domaine.add(tableau[i+1][j]);
 						inDomaine[i+1][j] = true;
 						domainePlateau(tableau,i+1,j);
 					}
@@ -510,7 +510,7 @@ public class Main {
 			try {
 				if (tableau[i][j].split("-")[0].equals(tableau[i][j+1].split("-")[0]) && !(("x").equals(isVerified[i][j+1]))) {
 					if(inDomaine[i][j+1].equals(false)) {
-						dimension.add(tableau[i][j+1]);
+						domaine.add(tableau[i][j+1]);
 						inDomaine[i][j+1] = true;
 						domainePlateau(tableau,i,j+1);
 					}
@@ -521,7 +521,7 @@ public class Main {
 			try {
 				if (tableau[i][j].split("-")[0].equals(tableau[i-1][j].split("-")[0]) && !(("x").equals(isVerified[i-1][j]))) {
 					if(inDomaine[i-1][j].equals(false)) {
-						dimension.add(tableau[i-1][j]);
+						domaine.add(tableau[i-1][j]);
 						inDomaine[i-1][j] = true;
 						domainePlateau(tableau,i-1,j);
 					}
@@ -532,7 +532,7 @@ public class Main {
 			try {
 				if (tableau[i][j].split("-")[0].equals(tableau[i][j-1].split("-")[0]) && !(("x").equals(isVerified[i][j-1]))) {
 					if(inDomaine[i][j-1].equals(false)) {
-						dimension.add(tableau[i][j-1]);
+						domaine.add(tableau[i][j-1]);
 						inDomaine[i][j-1] = true;
 						domainePlateau(tableau,i,j-1);
 					}
@@ -541,7 +541,7 @@ public class Main {
 			catch(Exception e) {}
 			
 			if(inDomaine[i][j].equals(false)) {
-				dimension.add(tableau[i][j]);
+				domaine.add(tableau[i][j]);
 				inDomaine[i][j] = true;
 			}	
 		}
@@ -550,22 +550,21 @@ public class Main {
 	public static void couronneDomaine(Joueur joueur, String[][] tableau, int i, int j) {
 		int nombreCouronne = 0;
 		domainePlateau(tableau,i,j);
-		for(int cpt=0; cpt<dimension.size(); cpt++){
+		for(int cpt=0; cpt<domaine.size(); cpt++){
 			try {
-				nombreCouronne += Integer.parseInt(dimension.get(cpt).split("-")[1]);
+				nombreCouronne += Integer.parseInt(domaine.get(cpt).split("-")[1]);
 			}
 			catch(Exception e) {}
 			
 		}
-		joueur.setScoreJoueur(joueur.getScoreJoueur() + (nombreCouronne * dimension.size())); 
-		System.out.println(dimension);
-		dimension = new ArrayList<>();
+		joueur.setScoreJoueur(joueur.getScoreJoueur() + (nombreCouronne * domaine.size())); 
+		domaine = new ArrayList<>();
 	}
 	
 	public static void couronneJoueur(Joueur joueur, String[][] tableau) {
 		inDomaine = new Boolean[5][5];
 		isVerified = new String[5][5];
-		dimension = new ArrayList<>();
+		domaine = new ArrayList<>();
 		
 		for(int i = 0; i < 5; i++) {
 			for(int j = 0; j < 5; j++) {
