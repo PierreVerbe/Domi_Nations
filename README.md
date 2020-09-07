@@ -10,13 +10,13 @@ Student project game
 ## Installation
 <b>For IntelliJ IDEA</b>
 
-* Importing jar to project
+* Importing jar to project <br>
 File &rarr; Project Structure &rarr; Modules &rarr; + &rarr; Library java
 
 ## Generate jar & execute
 <b>For IntelliJ IDEA</b>
 
-* Generating jar file
+* Generating jar file <br>
 File &rarr; Project Structure &rarr; Artifacts &rarr; + &rarr; JAR &rarr; From modules with dependencies ... <br>
 Select main class and click ok <br>
 Build &rarr; Build Artifacts &rarr; Build
