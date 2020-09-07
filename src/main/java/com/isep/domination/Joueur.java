@@ -1,3 +1,5 @@
+package com.isep.domination;
+
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -64,7 +66,7 @@ public class Joueur {
 	}
 
 	public void infoJoueur(){
-		System.out.println("Caractéristiques joueurs:");
+		System.out.println("Caractï¿½ristiques joueurs:");
 		System.out.println("Pseudo -> " + this.pseudo);
 		if (this.couleur == Color.BLUE) System.out.println("Votre couleur -> Bleu");
 		else if (this.couleur == Color.RED) System.out.println("Votre couleur -> Rouge");
@@ -96,12 +98,12 @@ public class Joueur {
 		if (this.couleur == Color.PINK)StdDraw.picture( 750, 350, "img/roiRose.png");
 	}
 	
-	//Sélection premier roi joueur 1
+	//Sï¿½lection premier roi joueur 1
 	public void placementRoiJ1p(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
 		if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=616 && StdDraw.mouseY()<=684 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 1 && this.choix_tuile_tour.size()==0){
 			while(StdDraw.isMousePressed());
 			while (!StdDraw.isMousePressed()){
-				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				//prï¿½paration affichage de tous les ï¿½lï¿½ments de la fenï¿½tre (plateaux + pioche)
 				monJeu.affichageGlobal(nbJoueur);
 				maPioche.AffichageTuilesTour();
 				
@@ -117,12 +119,12 @@ public class Joueur {
 			}
 	}
 	
-	//Sélection deuxième roi joueur 1
+	//Sï¿½lection deuxiï¿½me roi joueur 1
 	public void placementRoiJ1d(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
 		if(StdDraw.mouseX()>=780-14  && StdDraw.mouseX()<=780+14 && StdDraw.mouseY()>=616 && StdDraw.mouseY()<=684 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 1 && this.choix_tuile_tour.size()==1){
 			while(StdDraw.isMousePressed());
 			while (!StdDraw.isMousePressed()){
-				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				//prï¿½paration affichage de tous les ï¿½lï¿½ments de la fenï¿½tre (plateaux + pioche)
 				monJeu.affichageGlobal(nbJoueur);
 				maPioche.AffichageTuilesTour();
 				
@@ -138,12 +140,12 @@ public class Joueur {
 		}
 	}
 	
-	//Sélection premier roi joueur 2
+	//Sï¿½lection premier roi joueur 2
 	public void placementRoiJ2p(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
 		if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=516 && StdDraw.mouseY()<=584 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 2 && this.choix_tuile_tour.size()==0){
 			while(StdDraw.isMousePressed());
 			while (!StdDraw.isMousePressed()){
-				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				//prï¿½paration affichage de tous les ï¿½lï¿½ments de la fenï¿½tre (plateaux + pioche)
 				monJeu.affichageGlobal(nbJoueur);
 				maPioche.AffichageTuilesTour();
 				
@@ -160,12 +162,12 @@ public class Joueur {
 	}
 	
 	
-	//Sélection deuxième roi joueur 2
+	//Sï¿½lection deuxiï¿½me roi joueur 2
 	public void placementRoiJ2d(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
 		if(StdDraw.mouseX()>=780-14  && StdDraw.mouseX()<=780+14 && StdDraw.mouseY()>=516 && StdDraw.mouseY()<=584 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 2 && this.choix_tuile_tour.size()==1){
 			while(StdDraw.isMousePressed());
 			while (!StdDraw.isMousePressed()){
-				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				//prï¿½paration affichage de tous les ï¿½lï¿½ments de la fenï¿½tre (plateaux + pioche)
 				monJeu.affichageGlobal(nbJoueur);
 				maPioche.AffichageTuilesTour();
 				
@@ -181,12 +183,12 @@ public class Joueur {
 		}
 	}
 	
-	//Sélection roi joueur 3
+	//Sï¿½lection roi joueur 3
 	public void placementRoiJ3p(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
 		if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=416 && StdDraw.mouseY()<=484 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 3 && this.choix_tuile_tour.size()==0){
 			while(StdDraw.isMousePressed());
 			while (!StdDraw.isMousePressed()){
-				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				//prï¿½paration affichage de tous les ï¿½lï¿½ments de la fenï¿½tre (plateaux + pioche)
 				monJeu.affichageGlobal(nbJoueur);
 				maPioche.AffichageTuilesTour();
 				
@@ -202,12 +204,12 @@ public class Joueur {
 		}
 	}
 	
-	//Sélection roi joueur 4
+	//Sï¿½lection roi joueur 4
 	public void placementRoiJ4p(Jeu monJeu, Pioche maPioche, int nbJoueur, int ordonnanceurJoueur){	
 		if (StdDraw.mouseX()>=726  && StdDraw.mouseX()<=774 && StdDraw.mouseY()>=316 && StdDraw.mouseY()<=384 && StdDraw.isMousePressed() && monJeu.getOrdre_tour_joueur().get(ordonnanceurJoueur) == 4 && this.choix_tuile_tour.size()==0){
 			while(StdDraw.isMousePressed());
 			while (!StdDraw.isMousePressed()){
-				//préparation affichage de tous les éléments de la fenêtre (plateaux + pioche)
+				//prï¿½paration affichage de tous les ï¿½lï¿½ments de la fenï¿½tre (plateaux + pioche)
 				monJeu.affichageGlobal(nbJoueur);
 				maPioche.AffichageTuilesTour();
 				
@@ -236,13 +238,13 @@ public class Joueur {
 			StdDraw.show();
 			
 			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(1) == false){
-				//remédier au problème de remplissage de la liste
+				//remï¿½dier au problï¿½me de remplissage de la liste
 				if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(1);
 				else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(1);
-				System.out.println("validé");
+				System.out.println("validï¿½");
 				}
 			
-			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(1) == true)System.out.println("occupé");
+			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(1) == true)System.out.println("occupï¿½");
 		}
 		
 		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=450-(L_TUILE/4) && StdDraw.mouseY()<=450+(L_TUILE/4)){
@@ -255,13 +257,13 @@ public class Joueur {
 			StdDraw.show();
 			
 			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(2) == false){
-				//remédier au problème de remplissage de la liste
+				//remï¿½dier au problï¿½me de remplissage de la liste
 				if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(2);
 				else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(2);			
-				System.out.println("validé");
+				System.out.println("validï¿½");
 				}
 			
-			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(2) == true)System.out.println("occupé");
+			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(2) == true)System.out.println("occupï¿½");
 		}
 		
 		while(StdDraw.mouseX()>=1040-(L_TUILE/4) && StdDraw.mouseX()<=1040+(L_TUILE/2)+(L_TUILE/4) && StdDraw.mouseY()>=360-(L_TUILE/4) && StdDraw.mouseY()<=360+(L_TUILE/4)){
@@ -274,13 +276,13 @@ public class Joueur {
 			StdDraw.show();
 			
 			if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(3) == false){
-				//remédier au problème de remplissage de la liste
+				//remï¿½dier au problï¿½me de remplissage de la liste
 				if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(3);
 				else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(3);
-				System.out.println("validé");
+				System.out.println("validï¿½");
 				}
 			
-			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(3) == true)System.out.println("occupé");
+			else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(3) == true)System.out.println("occupï¿½");
 		}
 		
 		if(Nbjoueur != 3){
@@ -294,13 +296,13 @@ public class Joueur {
 				StdDraw.show();
 				
 				if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(4) == false){
-					//remédier au problème de remplissage de la liste
+					//remï¿½dier au problï¿½me de remplissage de la liste
 					if (flagRoi2 == false && this.choix_tuile_tour.size()==0) this.choix_tuile_tour.add(4);
 					else if (flagRoi2 == true && this.choix_tuile_tour.size()==1)this.choix_tuile_tour.add(4);
-					System.out.println("validé");
+					System.out.println("validï¿½");
 					}
 				
-				else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(4) == true)System.out.println("occupé");
+				else if (StdDraw.isMousePressed() && this.choix_tuile_tour.size()<=this.nbRois-1 && monJeu.isTuileOccupied(4) == true)System.out.println("occupï¿½");
 			}
 		}
 	}
@@ -340,7 +342,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (i<4) {
 								if(jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i+1)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i))
@@ -380,7 +382,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (i>0) {
 								if(jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i-1)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -419,7 +421,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (j>0) {
 								if(jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(0).getPlateauJoueur(j-1, i)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -458,7 +460,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (j<4) {
 								if(jeu.getListe_joueurs().get(0).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(0).getPlateauJoueur(j+1, i)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -511,7 +513,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (i<4) {
 								if(jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i+1)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -550,7 +552,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (i>0) {
 								if(jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i-1)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -589,7 +591,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (j>0) {
 								if(jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(1).getPlateauJoueur(j-1, i)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -628,7 +630,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (j<4) {
 								if(jeu.getListe_joueurs().get(1).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(1).getPlateauJoueur(j+1, i)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -682,7 +684,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (i<4) {
 								if(jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i+1)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -723,7 +725,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (i>0) {
 								if(jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i-1)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -764,7 +766,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (j>0) {
 								if(jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(2).getPlateauJoueur(j-1, i)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -805,7 +807,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (j<4) {
 								if(jeu.getListe_joueurs().get(2).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(2).getPlateauJoueur(j+1, i)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -860,7 +862,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (i<4) {
 								if(jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i+1)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -901,7 +903,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + (i-1)*TAILLE_CASE + (i-1)*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (i>0) {
 								if(jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i-1)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -943,7 +945,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j-1)*TAILLE_CASE - (j-1)*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (j>0) {
 								if(jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(3).getPlateauJoueur(j-1, i)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -984,7 +986,7 @@ public class Joueur {
 						else if (maPetiteTuile.getNbCouronnes2() == 3) StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE, "img/3couronnes.png");
 						
 						if (StdDraw.isMousePressed()) {	
-							// si deborde du tableau, la tuile est détruite (position horizontal)
+							// si deborde du tableau, la tuile est dï¿½truite (position horizontal)
 							if (j<4) {
 								if(jeu.getListe_joueurs().get(3).getPlateauJoueur(j, i) == null && jeu.getListe_joueurs().get(3).getPlateauJoueur(j+1, i)== null) {
 									if(this.tuileCompatible(maPetiteTuile, j, i)) {
@@ -1007,7 +1009,7 @@ public class Joueur {
 	
 public boolean tuileCompatible(Tuile tuile, int i, int j) {
 		
-	//test de compatibilité sur chacune des rotations
+	//test de compatibilitï¿½ sur chacune des rotations
 		if(tuile.getRotation().equals("horizontal-croissant")) {
 			try {
 				if(tuile.getType_tuile1().equals(this.getPlateauJoueur(i, j-1).split("-")[0]) || this.getPlateauJoueur(i, j-1).split("-")[0].equals("chateau"))return true;

@@ -1,3 +1,5 @@
+package com.isep.domination;
+
 public class Tuile {
 	
 	private int numero;
@@ -62,7 +64,7 @@ public class Tuile {
 	}
 	
 	public void infoTuile(){
-		System.out.println("numéro : " + this.numero);
+		System.out.println("numï¿½ro : " + this.numero);
 		System.out.println("nbCouronnes1 : " + this.nbCouronnes1);
 		System.out.println("nbCouronnes2 : " + this.nbCouronnes2);
 		System.out.println("type_tuile1 : " + this.type_tuile1);
