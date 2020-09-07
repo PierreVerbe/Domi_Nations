@@ -381,11 +381,11 @@ public class Main {
 	public static int initNbJoueur() {
 		int nbJoueur=0;
 		
-		StdDraw.picture(640, 620, "img/askNbj.png");
+		StdDraw.picture(640, 620, "src/main/resources/images/askNbj.png");
 		
-		StdDraw.picture(256, 350, "img/2joueurs.png");
-		StdDraw.picture(640, 350, "img/3joueurs.png");
-		StdDraw.picture(1024, 350, "img/4joueurs.png");
+		StdDraw.picture(256, 350, "src/main/resources/images/2joueurs.png");
+		StdDraw.picture(640, 350, "src/main/resources/images/3joueurs.png");
+		StdDraw.picture(1024, 350, "src/main/resources/images/4joueurs.png");
 		StdDraw.show(); 
 		while(nbJoueur==0) {
 			if(StdDraw.mouseX()>=256-(256/2) && StdDraw.mouseX()<=256+(256/2) && StdDraw.mouseY()>=350-(256/2) && StdDraw.mouseY()<=350+(256/2) && StdDraw.isMousePressed()) nbJoueur=2;
