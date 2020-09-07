@@ -38,7 +38,7 @@ public class Pioche {
 	}
 
 	public void ImportationTuiles() {
-		Path orderPath = Paths.get("dominos.csv");
+		Path orderPath = Paths.get("src/main/resources/dominos.csv");
 		List<String> lines = null;
 		
 		try {
