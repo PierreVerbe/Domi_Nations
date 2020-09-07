@@ -1,3 +1,5 @@
+package com.isep.domination;
+
 import edu.princeton.cs.introcs.StdDraw;
 
 public class Plateau {
@@ -57,11 +59,11 @@ public class Plateau {
 		double x = StdDraw.mouseX();
 		double y = StdDraw.mouseY();
 		
-		//test cases joueur 1 -- validé faire la même pour les autres joueurs 2,3,4
+		//test cases joueur 1 -- validï¿½ faire la mï¿½me pour les autres joueurs 2,3,4
 		for (int i=0; i<5; i++){
 			for (int j=0; j<5; j++){
 				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "src/main/resources/images/chateau.png");
 					if (StdDraw.isMousePressed()) {	
 						this.RemplirPlateau(j,i,mot);
 						return true;
@@ -82,7 +84,7 @@ public class Plateau {
 		for (int i=0; i<5; i++){
 			for (int j=0; j<5; j++){
 				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "src/main/resources/images/chateau.png");
 					if (StdDraw.isMousePressed()) {	
 						this.RemplirPlateau(j,i,mot);
 						return true;
@@ -103,7 +105,7 @@ public class Plateau {
 		for (int i=0; i<5; i++){
 			for (int j=0; j<5; j++){
 				if((x >= 365 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 365 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 715 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 715 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 365 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 647 - j*TAILLE_CASE - j*TAILLE_LIGNE, "src/main/resources/images/chateau.png");
 					if (StdDraw.isMousePressed()) {	
 						this.RemplirPlateau(j,i,mot);
 						return true;
@@ -124,7 +126,7 @@ public class Plateau {
 		for (int i=0; i<5; i++){
 			for (int j=0; j<5; j++){
 				if((x >= 5 + i*TAILLE_CASE + i*TAILLE_LIGNE && x<= 5 + (i+1)*TAILLE_CASE + (i+1)*TAILLE_LIGNE) && (y <= 355 - j*TAILLE_CASE - j*TAILLE_LIGNE && y >= 355 - (j+1)*TAILLE_CASE - (j+1)*TAILLE_LIGNE)){
-					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "img/chateau.png");
+					if (mot == "chateau") StdDraw.picture(TAILLE_CASE/2 + 5 + i*TAILLE_CASE + i*TAILLE_LIGNE, TAILLE_CASE/2 + 287 - j*TAILLE_CASE - j*TAILLE_LIGNE, "src/main/resources/images/chateau.png");
 					if (StdDraw.isMousePressed()) {	
 						this.RemplirPlateau(j,i,mot);
 						return true;
