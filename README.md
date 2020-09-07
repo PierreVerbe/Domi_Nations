@@ -1,7 +1,13 @@
 # Domi_Nations
 
 ## About this repository
-Student project game
+This project dates from December 2018. <br>
+It is a game developed during the first year of engineering studies at ISEP in Paris. <br>
+This board game is the digital version of the game "Kingdomino". It uses the official rules. <br>
+The game can be played by 2 to 4 players. <br>
+
+Regarding the technical part of the project, the game has been developed with the java language. <br>
+In order to have a graphical interface the library "stdlib" has been used.
 
 ## Prerequisite
 * Java 8 your can download here
